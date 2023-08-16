@@ -1,8 +1,11 @@
-# volumes:
+volumes:
+  nexus_volume:
+    external: true
 services:
   fastapi:
     environment:
       CORS_HOST: http://localhost:3000
+      DATABASE_URL: postgresql://nexus_user:nexus@database/nexus_db
     build:
       context: api
       dockerfile: Dockerfile.dev
@@ -10,7 +13,8 @@ services:
       - 8000:8000
     volumes:
       - ./api:/app
-
+    depends_on:
+      - database
   ghi:
     image: node:lts-bullseye
     command: /bin/bash run.sh
@@ -25,3 +29,13 @@ services:
       HOST: "0.0.0.0"
       PUBLIC_URL: http://localhost:3000
       REACT_APP_API_HOST: ${REACT_APP_API_HOST}
+  database:
+    image: postgres:15.3-bullseye
+    volumes:
+      - nexus_volume:/var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD: nexus
+      POSTGRES_USER: nexus_user
+      POSTGRES_DB: nexus_db
+    ports:
+      - 15432:5432
