@@ -93,7 +93,6 @@ POST /api/authors/ HTTP/1.1
 {
   "username": "william.shakespeare",
   "password": "tobeornottobe123!@",
-  "confirm_password": "tobeornottobe123!@",
 }
 
 ```
