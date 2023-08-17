@@ -6,6 +6,7 @@ services:
     environment:
       CORS_HOST: http://localhost:3000
       DATABASE_URL: postgresql://nexus_user:nexus@database/nexus_db
+      SIGNING_KEY: d2b84cf92924b3fcccd4ee33669c2f2b208f29231c68c9493e64af5a23580fe2
     build:
       context: api
       dockerfile: Dockerfile.dev
