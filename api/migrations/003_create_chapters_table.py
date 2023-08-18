@@ -4,7 +4,7 @@ steps = [
         """
         CREATE TABLE "chapters" (
             "id" SERIAL PRIMARY KEY,
-            "order" INTEGER,
+            "chapter_order" INTEGER,
             "book_id" INTEGER,
             "title" VARCHAR(255) NOT NULL,
             "content" TEXT NOT NULL,

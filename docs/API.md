@@ -567,7 +567,7 @@ Headers:
 GET /api/books/1/chapters/ HTTP/1.1
 ```
 
-- Response: Get the list of all chapters, their id, and the chapter title for a List view of all chapters of a specific book. ORDER BY chapter.order
+- Response: Get the list of all chapters, their id, and the chapter title for a List view of all chapters of a specific book. ORDER BY chapter.chapter_order
 
 - Response Shape (`JSON`):
 
@@ -575,12 +575,12 @@ GET /api/books/1/chapters/ HTTP/1.1
 "chapters":[
   {
     "id": 1,
-    "order": 1,
+    "chapter_order": 1,
     "title": "SCENE I. A public place."
   },
   {
     "id": 78,
-    "order": 2,
+    "chapter_order": 2,
     "title": "SCENE II. A Street."
   }
 ]
@@ -837,7 +837,7 @@ Project NovelNexus{
 
   Table chapters{
     id integer [primary key]
-    order integer
+    chapter_order integer
     book_id integer [ref: > books.id]
     title varchar(255) [not null]
     content text [not null]

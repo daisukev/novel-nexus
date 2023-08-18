@@ -1,7 +1,7 @@
 
 ## Aug 15, 2023
 
-- Today as team we were able to set up instruction how we want structure the application migrations, beside that  individually I had to update the test repo, and  create labels on gitlab for our  project issues inorder to categorize each issues based on its progress.
+- Today as team we were able to set up instruction how we want structure the application migrations, beside that  individually I had to update the test repo, and  create labels on gitlab for our  project issues inchapter_order to categorize each issues based on its progress.
 
 
 ## Aug 14, 2023
