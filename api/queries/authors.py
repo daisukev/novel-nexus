@@ -36,7 +36,6 @@ class AuthorQueries:
                     )
                     conn.commit()
                 except IntegrityError as e:
-                    print(e)
                     if (
                         "duplicate key value violates unique constraint"
                         in str(e)
@@ -144,7 +143,6 @@ class AuthorQueries:
 
                 return AuthorOut(**record)
 
-    # TODO: If this is a password update, handle correctly
     def update_author(
         self, author_id: int, author: AuthorUpdate
     ) -> AuthorUpdate | None:
@@ -152,35 +150,22 @@ class AuthorQueries:
             with conn.cursor() as cur:
                 update_author = author.dict(exclude_unset=True)
                 query_list = []
-                for index, (key, value) in enumerate(update_author.items()):
+                for key, value in update_author.items():
                     if isinstance(value, SecretStr):
                         value = value.get_secret_value()
                     if isinstance(value, HttpUrl):
-                        url = str(value)
-                        value = url
-                    if not value:
-                        value = "NULL"
-                    if len(update_author.items()) - 1 == index:
-                        if value != "NULL":
-                            join_str = key + " = '" + value + "'"
-                        else:
-                            join_str = key + " = " + value
-                    else:
-                        if value != "NULL":
-                            join_str = key + " = '" + value + "',\n"
-                        else:
-                            join_str = key + " = " + value + ",\n"
-                    query_list.append(join_str)
-
-                query_str = "".join(query_list)
-                q = f"""
+                        value = str(value)
+                    query_list.append(f"{key} = %s")
+                cur.execute(
+                    f"""
                     UPDATE authors
-                    SET {query_str}
-                    WHERE id={author_id}
+                    SET {', '.join(query_list)}
+                    WHERE id=%s
                     RETURNING *;
-                    """
-                cur.execute(q)
+                    """, (*update_author.values(), author_id)
+                )
                 row = cur.fetchone()
+                print(row)
                 if row is not None:
                     record = {}
                     for (
