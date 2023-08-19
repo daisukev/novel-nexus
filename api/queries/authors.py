@@ -162,7 +162,8 @@ class AuthorQueries:
                     SET {', '.join(query_list)}
                     WHERE id=%s
                     RETURNING *;
-                    """, (*update_author.values(), author_id)
+                    """,
+                    (*update_author.values(), author_id),
                 )
                 row = cur.fetchone()
                 print(row)

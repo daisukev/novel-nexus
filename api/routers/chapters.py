@@ -1,10 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException
 from typing import Optional
-from models.chapters import (
-    ChapterOut,
-    ChapterIn,
-    ChapterListOut
-)
+from models.chapters import ChapterOut, ChapterIn, ChapterListOut
 from queries.chapters import ChapterQueries
 from psycopg.errors import ForeignKeyViolation
 
@@ -47,6 +43,8 @@ def create_chapter(
     except ForeignKeyViolation:
         raise HTTPException(
             status_code=400,
-            detail=("Failed to create chapter due"
-                    "to foreign key violation with book")
+            detail=(
+                "Failed to create chapter due"
+                "to foreign key violation with book"
+            ),
         )
