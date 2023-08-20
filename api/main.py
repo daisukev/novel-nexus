@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from routers import authors, chapters, follows
+from routers import authors, chapters, follows, genres
 from authenticator import authenticator
 import os
 
@@ -33,3 +33,4 @@ app.include_router(authors.router)
 app.include_router(chapters.router)
 app.include_router(authenticator.router)
 app.include_router(follows.router)
+app.include_router(genres.router)
