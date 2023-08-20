@@ -4,12 +4,12 @@ steps = [
         """
         CREATE TABLE read_history (
             "id" SERIAL PRIMARY KEY,
-            "user_id" INTEGER,
+            "author_id" INTEGER,
             "chapter_id" INTEGER,
             "read_at" TIMESTAMP DEFAULT (NOW())
         );
         ALTER TABLE "read_history"
-        ADD FOREIGN KEY ("user_id") REFERENCES "authors" ("id");
+        ADD FOREIGN KEY ("author_id") REFERENCES "authors" ("id");
         ALTER TABLE "read_history"
         ADD FOREIGN KEY ("chapter_id") REFERENCES "chapters" ("id");
         """,

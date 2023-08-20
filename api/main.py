@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from routers import authors, chapters, follows, genres
+from routers import authors, chapters, follows, genres, genres_books
 from authenticator import authenticator
 import os
 
@@ -34,3 +34,4 @@ app.include_router(chapters.router)
 app.include_router(authenticator.router)
 app.include_router(follows.router)
 app.include_router(genres.router)
+app.include_router(genres_books.router)
