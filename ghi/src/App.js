@@ -2,6 +2,10 @@ import { useEffect, useState } from "react";
 import Construct from "./Construct.js";
 import ErrorNotification from "./ErrorNotification";
 import "./App.css";
+import React from 'react';
+import { Route, Routes } from 'react-router-dom';
+
+
 
 function App() {
   const [launchInfo, setLaunchInfo] = useState([]);
@@ -26,11 +30,23 @@ function App() {
     getData();
   }, []);
 
-  return (
-    <div>
-      <ErrorNotification error={error} />
-      <Construct info={launchInfo} />
+  const Index = () => {
+    return (
+      <div>
+        <h1>
+          Hello World!
+        </h1>
     </div>
+    )
+  }
+
+
+  return (
+    <Routes>
+      <Route index element={<Index/>}>
+
+      </Route>
+    </Routes>
   );
 }
 
