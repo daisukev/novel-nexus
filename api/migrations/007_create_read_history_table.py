@@ -3,22 +3,15 @@ steps = [
         # "Up" SQL statement
         """
         CREATE TABLE read_history (
-            "id" SERIAL PRIMARY KEY,
-            "author_id" INTEGER,
-            "chapter_id" INTEGER,
-            "read_at" TIMESTAMP DEFAULT (NOW())
+            "author_id" INTEGER REFERENCES authors(id) ON DELETE CASCADE,
+            "chapter_id" INTEGER REFERENCES chapters(id) ON DELETE CASCADE,
+            "book_id" INTEGER REFERENCES books(id) ON DELETE CASCADE,
+            "read_at" TIMESTAMP DEFAULT (NOW()),
+            CONSTRAINT read_history_pk PRIMARY KEY (author_id, chapter_id)
         );
-        ALTER TABLE "read_history"
-        ADD FOREIGN KEY ("author_id") REFERENCES "authors" ("id");
-        ALTER TABLE "read_history"
-        ADD FOREIGN KEY ("chapter_id") REFERENCES "chapters" ("id");
         """,
         # "Down" SQL statement
         """
-        ALTER TABLE "read_history"
-        DROP CONSTRAINT IF EXISTS "read_history_user_id_fkey";
-        ALTER TABLE "read_history"
-        DROP CONSTRAINT IF EXISTS "read_history_chapter_id_fkey";
         DROP TABLE "read_history";
         """,
     ]

@@ -19,9 +19,7 @@ def add_genre_book(
     book_id: int,
     request: GenreBookIn,
     queries: GenresBooksQueries = Depends(),
-    account_data: AuthorOut = Depends(
-        authenticator.try_get_current_account_data
-    ),
+    account_data: AuthorOut = Depends(authenticator.get_current_account_data),
 ) -> GenreBook | None:
     author_id = get_book_author(book_id)
     if author_id == account_data["id"]:
