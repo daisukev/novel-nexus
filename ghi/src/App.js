@@ -7,6 +7,7 @@ import { Route, Routes } from 'react-router-dom';
 
 
 
+
 function App() {
   const [launchInfo, setLaunchInfo] = useState([]);
   const [error, setError] = useState(null);
@@ -30,22 +31,20 @@ function App() {
     getData();
   }, []);
 
-  const Index = () => {
+  const LandingPage = () => {
     return (
       <div>
         <h1>
-          Hello World!
+          Landing Page
         </h1>
-    </div>
+      </div>
     )
   }
 
 
   return (
     <Routes>
-      <Route index element={<Index/>}>
-
-      </Route>
+      <Route index element={<LandingPage/>}/>
     </Routes>
   );
 }
