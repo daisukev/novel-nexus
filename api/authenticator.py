@@ -1,7 +1,7 @@
 import os
 from fastapi import Depends
 from jwtdown_fastapi.authentication import Authenticator
-from models.authors import AuthorPasswordOut
+from models.authors import AuthorPasswordOut, AuthorOut
 from queries.authors import AuthorQueries
 
 
@@ -28,10 +28,10 @@ class AuthorAuthenticator(Authenticator):
         # account object
         return account.password
 
-    def get_account_data_for_cookie(self, account: AuthorPasswordOut):
+    def get_account_data_for_cookie(self, account: AuthorOut):
         # Return the username and the data for the cookie.
         # You must return TWO values from this method.
-        return account.username, AuthorPasswordOut(**account.dict())
+        return account.username, AuthorOut(**account.dict())
 
 
 authenticator = AuthorAuthenticator(os.environ["SIGNING_KEY"])
