@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import useToken from "@galvanize-inc/jwtdown-for-react";
+import useToken from "../jwt.tsx";
 
 export default function SignupForm() {
   const { register } = useToken();

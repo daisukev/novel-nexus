@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import useToken from "@galvanize-inc/jwtdown-for-react";
+import useToken from "../jwt.tsx";
 import { useNavigate } from "react-router-dom";
 
 export default function Logout() {

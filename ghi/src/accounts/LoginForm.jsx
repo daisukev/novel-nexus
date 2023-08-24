@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
-import useToken from "@galvanize-inc/jwtdown-for-react";
+import useToken from "../jwt.tsx";
 
 import { useNavigate } from "react-router-dom";
 
 export default function LoginForm() {
   const navigate = useNavigate();
+  const [message, setMessage] = useState("");
   const { login, token } = useToken();
   const [formData, setFormData] = useState({
     username: "",
@@ -19,7 +20,11 @@ export default function LoginForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    login(formData.username, formData.password);
+    try {
+      await login(formData.username, formData.password);
+    } catch (error) {
+      setMessage("Incorrect username or password.");
+    }
   };
 
   const handleChange = (e) => {
@@ -47,6 +52,7 @@ export default function LoginForm() {
             onChange={handleChange}
             value={formData.password}
           />
+          <span style={{ color: "red" }}>{message}</span>
         </div>
         <button type="submit">Log In.</button>
       </form>

@@ -4,7 +4,7 @@ import ErrorNotification from "./ErrorNotification";
 import "./App.css";
 import React from "react";
 import { Link, Route, Routes } from "react-router-dom";
-import useToken from "@galvanize-inc/jwtdown-for-react";
+import useToken from "./jwt.tsx";
 
 import SignupForm from "./accounts/SignupForm.jsx";
 import LoginForm from "./accounts/LoginForm.jsx";
