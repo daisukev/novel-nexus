@@ -84,3 +84,30 @@ def create_chapter(
                 "to foreign key violation with book"
             ),
         )
+
+
+@router.post("/api/books/{book_id}/chapters", response_model=ChapterOut)
+def create_chapter_for_book(
+    book_id: int,
+    chapter: ChapterIn,
+    queries: ChapterQueries = Depends(),
+    account_data: dict = Depends(authenticator.get_current_account_data),
+):
+    book = queries.get_book(book_id)
+    if book is None:
+        raise HTTPException(
+            status_code=404,
+            detail="No book found with id {}".format(book_id),
+        )
+    if book["author_id"] != account_data["id"]:
+        raise HTTPException(
+            status_code=403,
+            detail="You do not have permission to create a chapter for this book.",
+        )
+    try:
+        return queries.create_chapter(chapter)
+    except ForeignKeyViolation:
+        raise HTTPException(
+            status_code=400,
+            detail="Failed to create chapter due to foreign key violation with book",
+        )
