@@ -9,7 +9,9 @@ import useToken from "./jwt.tsx";
 import SignupForm from "./accounts/SignupForm.jsx";
 import LoginForm from "./accounts/LoginForm.jsx";
 import Logout from "./accounts/Logout.jsx";
-//
+
+import BookList from "./pages/books/BookList.js";
+import BookDetail from "./pages/books/BookDetail.js";
 
 function App() {
   const { token } = useToken();
@@ -38,6 +40,8 @@ function App() {
         <Route path="login" element={<LoginForm />} />
         <Route path="logout" element={<Logout />} />
       </Route>
+      <Route path="/books" element={<BookList />} />
+      <Route path="/books/:bookId" element={<BookDetail />} />
     </Routes>
   );
 }

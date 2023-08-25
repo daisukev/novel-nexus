@@ -2,8 +2,8 @@ from fastapi import APIRouter, Depends, HTTPException
 from typing import Optional
 from models.chapters import ChapterOut, ChapterIn, ChapterListOut
 from queries.chapters import ChapterQueries
-from psycopg.errors import ForeignKeyViolation
 from authenticator import authenticator
+from utils import get_book_author
 
 router = APIRouter()
 
@@ -40,7 +40,9 @@ def delete_chapter(
             status_code=404,
             detail="No chapter found with id {}".format(chapter_id),
         )
-    if chapter["author_id"] != account_data["id"]:
+    book_id = chapter.dict().get("book_id")
+    author_id = get_book_author(book_id)
+    if author_id != account_data["id"]:
         raise HTTPException(
             status_code=403,
             detail="You do not have permission to delete this chapter.",
@@ -53,61 +55,24 @@ def delete_chapter(
 def get_chapters(
     queries: ChapterQueries = Depends(),
 ):
-    return {"chapters": queries.get_published_chapters()}
+    chapters = queries.get_chapters()
+    return {"chapters": chapters}
 
 
-@router.post("/api/chapters", response_model=ChapterOut)
-def create_chapter(
-    book_id: int,
+
+@router.post("/api/chapters", response_model=ChapterListOut)
+async def create_chapters(
     chapter: ChapterIn,
     queries: ChapterQueries = Depends(),
-    account_data: dict = Depends(authenticator.get_current_account_data),
 ):
-    book = queries.get_book(book_id)
-    if book is None:
-        raise HTTPException(
-            status_code=404,
-            detail="No book found with id {}".format(book_id),
-        )
-    if book["author_id"] != account_data["id"]:
-        raise HTTPException(
-            status_code=403,
-            detail="You do not have permission to create a chapter for this book.",
-        )
-    try:
-        return queries.create_chapter(chapter)
-    except ForeignKeyViolation:
-        raise HTTPException(
-            status_code=400,
-            detail=(
-                "Failed to create chapter due"
-                "to foreign key violation with book"
-            ),
-        )
+    created_chapter = queries.create_chapter(chapter)
+    return {"chapters": [created_chapter]}
 
 
-@router.post("/api/books/{book_id}/chapters", response_model=ChapterOut)
-def create_chapter_for_book(
+@router.get("/api/books/{book_id}/chapters", response_model=ChapterListOut)
+def get_all_chapters_by_book_id(
     book_id: int,
-    chapter: ChapterIn,
     queries: ChapterQueries = Depends(),
-    account_data: dict = Depends(authenticator.get_current_account_data),
 ):
-    book = queries.get_book(book_id)
-    if book is None:
-        raise HTTPException(
-            status_code=404,
-            detail="No book found with id {}".format(book_id),
-        )
-    if book["author_id"] != account_data["id"]:
-        raise HTTPException(
-            status_code=403,
-            detail="You do not have permission to create a chapter for this book.",
-        )
-    try:
-        return queries.create_chapter(chapter)
-    except ForeignKeyViolation:
-        raise HTTPException(
-            status_code=400,
-            detail="Failed to create chapter due to foreign key violation with book",
-        )
+    chapters = queries.get_chapters_by_book_id(book_id)
+    return {"chapters": chapters}

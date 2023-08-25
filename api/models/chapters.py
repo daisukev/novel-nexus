@@ -8,7 +8,6 @@ class ChapterIn(BaseModel):
     chapter_order: int
     title: str
     content: str
-    chapter_number: str
     is_published: bool
     updated_at: Optional[datetime]
     created_at: Optional[datetime]
@@ -18,7 +17,6 @@ class ChapterOut(BaseModel):
     id: int
     book_id: int
     chapter_order: int
-    chapter_number: str
     title: str
     content: str
     views: int

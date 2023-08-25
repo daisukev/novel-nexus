@@ -1,3 +1,19 @@
+## Aug 24, 2023
+As a team, we discussed regarding the design and the priorities. I finalize the frontend for booklist and bookdetail, it might need enhancement, but it is functioning.
+
+## Aug 23, 2023
+
+Mainly worked individually, I designed the home page of the application, and integrated the api endpoint to react front end to get bookList.
+
+## Aug 22, 2023
+
+We discussed and gathered possible design for the app various pages. I completed the frontend side of BookList and BookDetail also started home page.
+
+## Aug 21, 2023
+
+Started frontend, explored designs and styles of the brand, and plan the main function of the application with the frontend.
+
+
 ## Aug 17, 2023
 
 It was mainly a production day, since the each individual in the team has a specific responsibility, we were able to focus working individually, however since most of the features are dependent on each other some of us had to wait, but not all of them has high priority. I was able to test them out locally after pulling josh  code, and it went well, I just need to make sure to update some of the table and check compatibility tomorrow.
