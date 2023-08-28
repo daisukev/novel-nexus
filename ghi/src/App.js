@@ -9,7 +9,7 @@ import useToken from "./jwt.tsx";
 import SignupForm from "./accounts/SignupForm.jsx";
 import LoginForm from "./accounts/LoginForm.jsx";
 import Logout from "./accounts/Logout.jsx";
-
+import LandingPage from "./landingPage/index.js";
 import BookList from "./pages/books/BookList.js";
 import BookDetail from "./pages/books/BookDetail.js";
 
@@ -23,14 +23,15 @@ function App() {
     }
   }, [token]);
 
-  const LandingPage = () => {
-    return (
-      <div>
-        <h1>Landing Page</h1>
-        <h2>{token && "Welcome back," + user.username}</h2>
-      </div>
-    );
-  };
+  // const LandingPage = () => {
+  //   return (
+  //     <>
+  //       <LandingPage />
+  //       <h2>{token && "Welcome back," + user.username}</h2>
+  //     </>
+
+  //   )
+  // };
 
   return (
     <Routes>

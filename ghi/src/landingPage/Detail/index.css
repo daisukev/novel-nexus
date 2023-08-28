@@ -1,0 +1,20 @@
+.detail {
+    height: 500px;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    overflow: hidden;
+}
+
+.detail-description {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    width: 30%;
+}
+
+.detail-image {
+    height: 80%;
+    border: 1px solid white;
+    margin-right: -150px;
+}
