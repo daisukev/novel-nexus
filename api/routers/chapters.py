@@ -16,7 +16,6 @@ def get_current_account_data():
 def get_chapter(
     chapter_id: int,
     queries: ChapterQueries = Depends(),
-    account_data: dict = Depends(authenticator.get_current_account_data),
 ):
     record = queries.get_chapter(chapter_id)
     if record is None:
@@ -52,12 +51,17 @@ def delete_chapter(
 
 
 @router.get("/api/chapters", response_model=ChapterListOut)
-def get_chapters(
+def get_published_chapters(
     queries: ChapterQueries = Depends(),
 ):
-    chapters = queries.get_chapters()
-    return {"chapters": chapters}
+    chapters = queries.get_published_chapters()
 
+    if not chapters:
+        raise HTTPException(
+            status_code=404, detail="No published chapters found"
+        )
+
+    return {"chapters": chapters}
 
 
 @router.post("/api/chapters", response_model=ChapterListOut)
@@ -76,3 +80,47 @@ def get_all_chapters_by_book_id(
 ):
     chapters = queries.get_chapters_by_book_id(book_id)
     return {"chapters": chapters}
+
+
+@router.get("/api/chapters/{chapter_id}/navigation", response_model=dict)
+def get_chapter_navigation(
+    chapter_id: int,
+    queries: ChapterQueries = Depends(),
+    account_data: dict = Depends(get_current_account_data),
+):
+    chapters = queries.get_published_chapters()
+
+    current_index = None
+    for index, chapter in enumerate(chapters):
+        if chapter["id"] == chapter_id:
+            current_index = index
+            break
+
+    if current_index is None:
+        raise HTTPException(status_code=404, detail="Chapter not found")
+
+    previous_chapter_id = (
+        chapters[current_index - 1]["id"] if current_index > 0 else None
+    )
+    next_chapter_id = (
+        chapters[current_index + 1]["id"]
+        if current_index < len(chapters) - 1
+        else None
+    )
+
+    return {"previous": previous_chapter_id, "next": next_chapter_id}
+
+
+@router.get(
+    "/api/chapters/{chapter_id}/content", response_model=Optional[ChapterOut]
+)
+def get_published_chapter_content(
+    chapter_id: int,
+    queries: ChapterQueries = Depends(),
+    account_data: dict = Depends(get_current_account_data),
+):
+    chapter = queries.get_chapter(chapter_id)
+    if chapter is None or not chapter["published"]:
+        raise HTTPException(status_code=404, detail="Chapter not found")
+
+    return {"content": chapter["content"]}

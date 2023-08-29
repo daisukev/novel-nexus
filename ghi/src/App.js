@@ -12,6 +12,7 @@ import Logout from "./accounts/Logout.jsx";
 import LandingPage from "./landingPage/index.js";
 import BookList from "./pages/books/BookList.js";
 import BookDetail from "./pages/books/BookDetail.js";
+import ChapterView from "./pages/ChapterView.js";
 
 function App() {
   const { token } = useToken();
@@ -34,16 +35,19 @@ function App() {
   // };
 
   return (
-    <Routes>
-      <Route index element={<LandingPage />} />
-      <Route path="/accounts">
-        <Route path="signup" element={<SignupForm />} />
-        <Route path="login" element={<LoginForm />} />
-        <Route path="logout" element={<Logout />} />
-      </Route>
-      <Route path="/books" element={<BookList />} />
-      <Route path="/books/:bookId" element={<BookDetail />} />
-    </Routes>
+    <>
+      <Routes>
+        <Route index element={<LandingPage />} />
+        <Route path="/accounts">
+          <Route path="signup" element={<SignupForm />} />
+          <Route path="login" element={<LoginForm />} />
+          <Route path="logout" element={<Logout />} />
+        </Route>
+        <Route path="/books" element={<BookList />} />
+        <Route path="/books/:bookId" element={<BookDetail />} />
+        <Route path="/chapters/:chapterId" element={<ChapterView />} />
+      </Routes>
+    </>
   );
 }
 
