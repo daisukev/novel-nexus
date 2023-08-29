@@ -18,7 +18,7 @@ class ChapterQueries:
                     VALUES
                         (%s, %s, %s, %s, %s, %s)
                     RETURNING id, book_id, chapter_order, title,
-                            content, views, is_published, created_at, updated_at;
+                        content, views, is_published, created_at, updated_at;
                     """,
                     [
                         chapter.book_id,
@@ -114,7 +114,8 @@ class ChapterQueries:
             with conn.cursor() as db:
                 db.execute(
                     """
-                    SELECT id, book_id, chapter_order,  title, content, views, is_published, created_at, updated_at
+                    SELECT id, book_id, chapter_order,  title, content,
+                    views, is_published, created_at, updated_at
                     FROM chapters;
                     """
                 )
@@ -133,30 +134,6 @@ class ChapterQueries:
                     )
                     chapters.append(chapter)
         return chapters
-
-    def get_chapter(self, chapter_id) -> ChapterOut | None:
-        with pool.connection() as conn:
-            with conn.cursor() as cur:
-                cur.execute(
-                    """
-                    SELECT
-                        c.id AS chapter_id,
-                        c.book_id,
-                        c.chapter_order,
-                        c.title,
-                        c.content,
-                        c.views,
-                        c.is_published
-                    FROM
-                        chapters c
-                    WHERE
-                        c.id = %s;
-                    """,
-                    [chapter_id],
-                )
-
-                row = cur.fetchone()
-                return self.chapter_record_to_dict(row, cur.description)
 
     def delete_chapter(self, chapter_id) -> None:
         with pool.connection() as conn:
