@@ -10,9 +10,13 @@ import SignupForm from "./accounts/SignupForm.jsx";
 import LoginForm from "./accounts/LoginForm.jsx";
 import Logout from "./accounts/Logout.jsx";
 import LandingPage from "./landingPage/index.js";
+import BookListWorkspace from "./authors/BookListWorkspace";
+import BookDetailWorkspace from "./authors/BookDetailWorkspace.jsx";
+
+import ChapterView from "./pages/ChapterView.js";
 import BookList from "./pages/books/BookList.js";
 import BookDetail from "./pages/books/BookDetail.js";
-import ChapterView from "./pages/ChapterView.js";
+import ChapterEditor from "./authors/ChapterEditor.jsx";
 
 function App() {
   const { token } = useToken();
@@ -38,11 +42,21 @@ function App() {
     <>
       <Routes>
         <Route index element={<LandingPage />} />
+      <Route path="my">
+        <Route path="workspace">
+          <Route index element={<BookListWorkspace />} />
+          <Route path="books/:bookId" element={<BookDetailWorkspace />}>
+            <Route path="chapters/:chapterId" element={<ChapterEditor />} />
+          </Route>
+        </Route>
+      </Route>
         <Route path="/accounts">
           <Route path="signup" element={<SignupForm />} />
           <Route path="login" element={<LoginForm />} />
           <Route path="logout" element={<Logout />} />
         </Route>
+      <Route path="/books" element={<BookList />} />
+      <Route path="/books/:bookId" element={<BookDetail />} />
         <Route path="/books" element={<BookList />} />
         <Route path="/books/:bookId" element={<BookDetail />} />
         <Route path="/chapters/:chapterId" element={<ChapterView />} />

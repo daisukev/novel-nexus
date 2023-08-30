@@ -207,13 +207,16 @@ const useToken = () => {
     otherHeaders: object = {},
     options: object = {}
   ): Promise<any> => {
-    return fetch(url, {
+    const response = await fetch(url, {
       method: method,
       headers: { Authorization: `Bearer ${token}`, ...otherHeaders },
       ...options,
-    })
-      .then((resp: Response) => resp.json())
-      .catch(console.error);
+    });
+
+    if (!response.ok) {
+      throw new Error("Request Failed");
+    }
+    return await response.json();
   };
 
   return { token, register, login, logout, fetchWithCookie, fetchWithToken };

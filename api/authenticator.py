@@ -13,8 +13,7 @@ class AuthorAuthenticator(Authenticator):
     ):
         # Use your repo to get the account based on the
         # username (which could be an email)
-        test = username
-        return accounts.get_author_by_username(test)
+        return accounts.get_author_by_username(username)
 
     def get_account_getter(
         self,

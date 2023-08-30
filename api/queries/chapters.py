@@ -1,46 +1,125 @@
 import os
+from fastapi import HTTPException
+
 from psycopg_pool import ConnectionPool
 from typing import List
-from models.chapters import ChapterIn, ChapterOut
+from models.authors import Message
+from models.chapters import (
+    AllChaptersOut,
+    ChapterIn,
+    ChapterOrderUpdateList,
+    ChapterOut,
+    ChapterUpdate,
+    PublishedChaptersOut,
+)
+
+from psycopg.errors import DatabaseError
 
 pool = ConnectionPool(conninfo=os.environ["DATABASE_URL"])
 
 
 class ChapterQueries:
-    def create_chapter(self, chapter: ChapterIn) -> ChapterOut:
+    def create_chapter(self, chapter: ChapterIn, book_id: int) -> ChapterOut:
+        with pool.connection() as conn:
+            with conn.cursor() as cur:
+                try:
+                    cur.execute(
+                        """
+                        INSERT INTO
+                            chapters (book_id, chapter_order, title,
+                            content)
+                        VALUES
+                            (%s, %s, %s, %s)
+                        RETURNING id, book_id, chapter_order, title,
+                                content, views,
+                                is_published, created_at, updated_at;
+                        """,
+                        [
+                            book_id,
+                            chapter.chapter_order,
+                            chapter.title,
+                            chapter.content,
+                        ],
+                    )
+                    row = cur.fetchone()
+                    return ChapterOut(
+                        id=row[0],
+                        book_id=row[1],
+                        chapter_order=row[2],
+                        title=row[3],
+                        content=row[4],
+                        views=row[5],
+                        is_published=row[6],
+                        created_at=row[7],
+                        updated_at=row[8],
+                    )
+                except Exception as e:
+                    print(e)
+
+    def get_all_published_chapters_by_book_id(
+        self, book_id: int
+    ) -> List[PublishedChaptersOut]:
         with pool.connection() as conn:
             with conn.cursor() as cur:
                 cur.execute(
                     """
-                    INSERT INTO
-                        chapters (book_id, chapter_order, title,
-                        content, views, is_published)
-                    VALUES
-                        (%s, %s, %s, %s, %s, %s)
-                    RETURNING id, book_id, chapter_order, title,
-                        content, views, is_published, created_at, updated_at;
+                    SELECT
+                        c.id,
+                        c.book_id,
+                        c.chapter_order,
+                        c.title,
+                        c.views,
+                        c.updated_at,
+                        c.created_at
+                    FROM
+                        chapters c
+                    WHERE
+                        c.book_id = %s
+                    AND
+                        c.is_published = true
+                    ORDER BY
+                        c.chapter_order;
                     """,
-                    [
-                        chapter.book_id,
-                        chapter.chapter_order,
-                        chapter.title,
-                        chapter.content,
-                        0,
-                        chapter.is_published,
-                    ],
+                    (book_id,),
                 )
-                row = cur.fetchone()
-                return ChapterOut(
-                    id=row[0],
-                    book_id=row[1],
-                    chapter_order=row[2],
-                    title=row[3],
-                    content=row[4],
-                    views=row[5],
-                    is_published=row[6],
-                    created_at=row[7],
-                    updated_at=row[8],
+                results = []
+                for row in cur.fetchall():
+                    record = {}
+                    for i, column in enumerate(cur.description):
+                        record[column.name] = row[i]
+                    results.append(PublishedChaptersOut(**record))
+        return results
+
+    def get_chapters_by_book_id(self, book_id: int) -> List[AllChaptersOut]:
+        with pool.connection() as conn:
+            with conn.cursor() as cur:
+                cur.execute(
+                    """
+                    SELECT
+                        c.id,
+                        c.book_id,
+                        c.chapter_order,
+                        c.title,
+                        c.is_published,
+                        c.views,
+                        c.updated_at,
+                        c.created_at
+                    FROM
+                        chapters c
+                    WHERE
+                        c.book_id = %s
+                    ORDER BY
+                        c.chapter_order;
+                    """,
+                    (book_id,),
                 )
+                results = []
+                for row in cur.fetchall():
+                    record = {}
+                    for i, column in enumerate(cur.description):
+                        record[column.name] = row[i]
+                    results.append(AllChaptersOut(**record))
+        return results
 
     def get_chapter(self, chapter_id) -> ChapterOut | None:
         with pool.connection() as conn:
@@ -65,48 +144,6 @@ class ChapterQueries:
 
                 row = cur.fetchone()
                 return self.chapter_record_to_dict(row, cur.description)
-
-    def get_chapters_by_book_id(self, book_id: int) -> List[ChapterOut]:
-        chapters = []
-        with pool.connection() as conn:
-            with conn.cursor() as db:
-                db.execute(
-                    """
-                    SELECT
-                        c.id,
-                        c.book_id,
-                        c.chapter_order,
-                        c.title,
-                        c.content,
-                        c.is_published,
-                        c.views,
-                        c.updated_at,
-                        c.created_at
-                    FROM
-                        chapters c
-                    WHERE
-                        c.book_id = %s
-                    ORDER BY
-                        c.chapter_order;
-                    """,
-                    (book_id,),
-                )
-                chapters = []
-                rows = db.fetchall()
-                for row in rows:
-                    chapter = ChapterOut(
-                        id=row[0],
-                        book_id=row[1],
-                        chapter_order=row[2],
-                        title=row[3],
-                        content=row[4],
-                        views=row[5],
-                        is_published=row[6],
-                        created_at=row[7],
-                        updated_at=row[8],
-                    )
-                    chapters.append(chapter)
-        return chapters
 
     def get_chapters(self) -> List[ChapterOut]:
         chapters = []
@@ -169,6 +206,67 @@ class ChapterQueries:
                     chapter["is_published"] = row[i]
             return ChapterOut(**chapter)
         return None
+
+    def update_chapter(
+        self, chapter_id: int, chapter: ChapterUpdate
+    ) -> ChapterOut | None:
+        with pool.connection() as conn:
+            with conn.cursor() as cur:
+                update_chapter = chapter.dict(exclude_unset=True)
+                query_list = []
+                for key, value in update_chapter.items():
+                    query_list.append(f"{key} = %s")
+                cur.execute(
+                    f"""
+                    UPDATE chapters
+                    SET {', '.join(query_list)}
+                    WHERE id=%s
+                    RETURNING *;
+                    """,
+                    (*update_chapter.values(), chapter_id),
+                )
+                row = cur.fetchone()
+                print(row)
+                if row is not None:
+                    record = {}
+                    for (
+                        i,
+                        column,
+                    ) in enumerate(cur.description):
+                        record[column.name] = row[i]
+                else:
+                    return None
+
+                return ChapterOut(**record)
+
+    def update_chapter_order(
+        self, chapter_list: ChapterOrderUpdateList
+    ) -> Message:
+        with pool.connection() as conn:
+            with conn.cursor() as cur:
+                chapters = [
+                    chapter.dict() for chapter in chapter_list.chapters
+                ]
+                try:
+                    for chapter in chapters:
+                        print(chapter)
+                        query = """
+                        UPDATE chapters
+                        SET chapter_order = %s
+                        WHERE id = %s
+                        """
+                        cur.execute(
+                            query, (chapter["chapter_order"], chapter["id"])
+                        )
+                    conn.commit()
+                    return Message(message="Updated Successfully.")
+                except DatabaseError as e:
+                    conn.rollback()
+                    raise HTTPException(
+                        status_code=403,
+                        detail=f"""Database error has occurred.
+                        Rolling back update. {e}""",
+                    )
 
     def get_published_chapters(self, chapter_id) -> ChapterOut | None:
         with pool.connection() as conn:

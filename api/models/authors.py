@@ -4,6 +4,10 @@ from typing import Optional, Union
 from jwtdown_fastapi.authentication import Token
 
 
+class Message(BaseModel):
+    message: str
+
+
 class AuthorIn(BaseModel):
     username: str
     password: str

@@ -3,14 +3,19 @@ from datetime import datetime
 from typing import List, Optional
 
 
-class ChapterIn(BaseModel):
-    book_id: int
+class ChapterOrderUpdate(BaseModel):
+    id: int
     chapter_order: int
+
+
+class ChapterOrderUpdateList(BaseModel):
+    chapters: List[ChapterOrderUpdate]
+
+
+class ChapterIn(BaseModel):
+    chapter_order: Optional[int]
     title: str
-    content: str
-    is_published: bool
-    updated_at: Optional[datetime]
-    created_at: Optional[datetime]
+    content: Optional[str]
 
 
 class ChapterOut(BaseModel):
@@ -20,10 +25,38 @@ class ChapterOut(BaseModel):
     title: str
     content: str
     views: int
-    is_published: bool
+    is_published: Optional[bool]
+    created_at: Optional[datetime]
+    updated_at: Optional[datetime]
+
+
+class AllChaptersOut(BaseModel):
+    id: int
+    book_id: int
+    chapter_order: int
+    title: str
+    views: int
+    is_published: Optional[bool]
+    created_at: Optional[datetime]
+    updated_at: Optional[datetime]
+
+
+class PublishedChaptersOut(BaseModel):
+    id: int
+    book_id: int
+    chapter_order: int
+    title: str
+    views: int
     created_at: Optional[datetime]
     updated_at: Optional[datetime]
 
 
 class ChapterListOut(BaseModel):
     chapters: List[ChapterOut]
+
+
+class ChapterUpdate(BaseModel):
+    chapter_order: Optional[int]
+    title: Optional[str]
+    content: Optional[str]
+    is_published: Optional[bool]

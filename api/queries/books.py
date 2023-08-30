@@ -1,10 +1,10 @@
-import os
-from psycopg_pool import ConnectionPool
+# from psycopg_pool import ConnectionPool
 from pydantic import BaseModel, Field
 from typing import Optional, List, Union
 from datetime import datetime
+from api_pool import pool
 
-pool = ConnectionPool(conninfo=os.environ["DATABASE_URL"])
+# pool = ConnectionPool(conninfo=os.environ["DATABASE_URL"])
 
 
 class BookIn(BaseModel):
@@ -12,20 +12,31 @@ class BookIn(BaseModel):
     author_id: Optional[int]
     summary: Optional[str]
     cover: Optional[str] = Field(None, max_length=255)
-    is_published: bool = Field(default=False)
+    is_published: Optional[bool] = Field(default=False)
     created_at: datetime = Field(default_factory=datetime)
-    updated_at: datetime
+    updated_at: Optional[datetime]
+
+
+class BookInNew(BaseModel):
+    title: str
 
 
 class BookOut(BaseModel):
     id: int
-    title: str
+    title: Optional[str]
     author_id: Optional[int]
     summary: Optional[str]
     cover: Optional[str] = Field(None, max_length=255)
     is_published: bool = Field(default=False)
     created_at: datetime = Field(default_factory=datetime)
-    updated_at: datetime
+    updated_at: Optional[datetime]
+
+
+class BookUpdate(BaseModel):
+    title: Optional[str]
+    summary: Optional[str]
+    cover: Optional[str]
+    is_published: Optional[bool]
 
 
 class Error(BaseModel):
@@ -84,38 +95,26 @@ class BookRepository:
             print(e)
             return {"message": "Error at get a book"}
 
-    def update(self, book_id: int, book: BookIn) -> Union[BookOut, Error]:
+    def update(self, book_id: int, book: BookUpdate) -> Union[dict, Error]:
         try:
             # connect the database
             with pool.connection() as conn:
                 # get a cursor (something to run SQL with)
                 with conn.cursor() as db:
                     # Run our SELECT statement
+                    update_book = book.dict(exclude_unset=True)
+                    query_list = []
+                    for key, value in update_book.items():
+                        query_list.append(f"{key} = %s")
                     db.execute(
-                        """
+                        f"""
                         UPDATE books
-                        SET
-                        title = %s,
-                        author_id = %s,
-                        summary = %s,
-                        cover = %s,
-                        is_published = %s,
-                        created_at = %s,
-                        updated_at = %s
+                        SET {','.join(query_list)}
                         WHERE id = %s
                         """,
-                        [
-                            book.title,
-                            book.author_id,
-                            book.summary,
-                            book.cover,
-                            book.is_published,
-                            book.created_at,
-                            book.updated_at,
-                            book_id,
-                        ],
+                        [*update_book.values(), book_id],
                     )
-                    return self.book_in_to_out(book_id, book)
+                    return {"message": "Successfully updated book!"}
         except Exception:
             return {"message": "Error at update book"}
 
@@ -124,9 +123,9 @@ class BookRepository:
             # connect the database
             with pool.connection() as conn:
                 # get a cursor (something to run SQL with)
-                with conn.cursor() as db:
+                with conn.cursor() as cur:
                     # Run our SELECT statement
-                    result = db.execute(
+                    cur.execute(
                         """
                         SELECT id, title, author_id, summary,
                         cover, is_published, created_at,
@@ -135,46 +134,94 @@ class BookRepository:
                         ORDER BY id
                         """
                     )
-                    return [
-                        self.record_to_book_out(record) for record in result
-                    ]
+                    results = []
+                    for row in cur.fetchall():
+                        record = {}
+                        for i, column in enumerate(cur.description):
+                            record[column.name] = row[i]
+                        results.append(BookOut(**record))
+                    print("the query: ", results)
+
+                    return results
 
         except Exception as e:
             print(e)
             return {"message": "Error at get all books"}
 
-    def create(self, book: BookIn) -> BookOut:
+    def get_books_by_author(
+        self, author_id: int
+    ) -> Union[Error, List[BookOut]]:
+        with pool.connection() as conn:
+            with conn.cursor() as cur:
+                try:
+                    cur.execute(
+                        """
+                        SELECT id,
+                        author_id,
+                        title,
+                        summary,
+                        cover,
+                        is_published,
+                        created_at,
+                        updated_at
+                        FROM books
+                        WHERE author_id = %s
+                        """,
+                        [author_id],
+                    )
+
+                    results = []
+                    for row in cur.fetchall():
+                        record = {}
+                        for i, column in enumerate(cur.description):
+                            record[column.name] = row[i]
+                        results.append(BookOut(**record))
+                    print("the authors query: ", results)
+
+                    return results
+                except Exception as e:
+                    print(e)
+
+    def create(self, book: BookInNew, author_id: int) -> Union[BookOut, Error]:
         try:
-            # connect the database
+            # connect to the database
             with pool.connection() as conn:
                 # get a cursor (something to run SQL with)
                 with conn.cursor() as db:
                     # Run our INSERT statement
-                    result = db.execute(
+                    db.execute(
                         """
                         INSERT INTO books
-                            (title, author_id, summary,
-                            cover, is_published, created_at,
-                            updated_at)
+                        (title, author_id)
                         VALUES
-                            (%s, %s, %s, %s, %s, %s, %s)
-                        RETURNING id;
+                        (%s, %s)
+                        RETURNING
+                        id,
+                        title,
+                        author_id,
+                        summary,
+                        cover,
+                        is_published,
+                        created_at,
+                        updated_at;
                         """,
                         [
                             book.title,
-                            book.author_id,
-                            book.summary,
-                            book.cover,
-                            book.is_published,
-                            book.created_at,
-                            book.updated_at,
+                            author_id,
                         ],
                     )
-                    id = result.fetchone()[0]
-                    # Return new data
-                    return self.book_in_to_out(id, book)
+                    row = db.fetchone()
+
+                    if row is not None:
+                        record = {}
+                        for (
+                            i,
+                            column,
+                        ) in enumerate(db.description):
+                            record[column.name] = row[i]
+                        return BookOut(**record)
         except Exception as e:
-            return {"meesage": e}
+            return {"message": str(e)}
 
     def book_in_to_out(self, id: int, book: BookIn):
         old_data = book.dict()

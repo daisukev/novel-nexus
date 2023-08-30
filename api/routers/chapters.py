@@ -1,9 +1,21 @@
 from fastapi import APIRouter, Depends, HTTPException
-from typing import Optional
-from models.chapters import ChapterOut, ChapterIn, ChapterListOut
+from typing import Dict, Optional, List
+
+from models.authors import Message
+from models.chapters import (
+    AllChaptersOut,
+    ChapterOrderUpdateList,
+    ChapterOut,
+    ChapterIn,
+    ChapterListOut,
+    ChapterUpdate,
+    PublishedChaptersOut,
+)
+
 from queries.chapters import ChapterQueries
 from authenticator import authenticator
 from utils import get_book_author
+from psycopg.errors import ForeignKeyViolation
 
 router = APIRouter()
 
@@ -51,76 +63,117 @@ def delete_chapter(
 
 
 @router.get("/api/chapters", response_model=ChapterListOut)
-def get_published_chapters(
+def get_chapters(
     queries: ChapterQueries = Depends(),
 ):
-    chapters = queries.get_published_chapters()
-
-    if not chapters:
-        raise HTTPException(
-            status_code=404, detail="No published chapters found"
-        )
-
+    chapters = queries.get_chapters()
     return {"chapters": chapters}
 
 
-@router.post("/api/chapters", response_model=ChapterListOut)
-async def create_chapters(
+@router.post("/api/books/{book_id}/chapters", response_model=ChapterOut)
+async def create_chapter(
+    book_id: int,
     chapter: ChapterIn,
     queries: ChapterQueries = Depends(),
+    account_data: dict = Depends(authenticator.get_current_account_data),
 ):
-    created_chapter = queries.create_chapter(chapter)
-    return {"chapters": [created_chapter]}
+    book_author = get_book_author(book_id)
 
-
-@router.get("/api/books/{book_id}/chapters", response_model=ChapterListOut)
-def get_all_chapters_by_book_id(
-    book_id: int,
-    queries: ChapterQueries = Depends(),
-):
-    chapters = queries.get_chapters_by_book_id(book_id)
-    return {"chapters": chapters}
-
-
-@router.get("/api/chapters/{chapter_id}/navigation", response_model=dict)
-def get_chapter_navigation(
-    chapter_id: int,
-    queries: ChapterQueries = Depends(),
-    account_data: dict = Depends(get_current_account_data),
-):
-    chapters = queries.get_published_chapters()
-
-    current_index = None
-    for index, chapter in enumerate(chapters):
-        if chapter["id"] == chapter_id:
-            current_index = index
-            break
-
-    if current_index is None:
-        raise HTTPException(status_code=404, detail="Chapter not found")
-
-    previous_chapter_id = (
-        chapters[current_index - 1]["id"] if current_index > 0 else None
-    )
-    next_chapter_id = (
-        chapters[current_index + 1]["id"]
-        if current_index < len(chapters) - 1
-        else None
-    )
-
-    return {"previous": previous_chapter_id, "next": next_chapter_id}
+    if book_author != account_data["id"]:
+        raise HTTPException(
+            status_code=403,
+            detail="You do not have permission to"
+            " create a chapter for this book.",
+        )
+    try:
+        return queries.create_chapter(chapter, book_id)
+    except ForeignKeyViolation:
+        raise HTTPException(
+            status_code=400,
+            detail=(
+                "Failed to create chapter due"
+                "to foreign key violation with book"
+            ),
+        )
 
 
 @router.get(
-    "/api/chapters/{chapter_id}/content", response_model=Optional[ChapterOut]
+    "/api/books/{book_id}/chapters",
+    tags=["Chapters"],
+    response_model=Dict[str, List[PublishedChaptersOut]],
 )
-def get_published_chapter_content(
-    chapter_id: int,
+def get_all_published_chapters_by_book_id(
+    book_id: int,
     queries: ChapterQueries = Depends(),
-    account_data: dict = Depends(get_current_account_data),
 ):
-    chapter = queries.get_chapter(chapter_id)
-    if chapter is None or not chapter["published"]:
-        raise HTTPException(status_code=404, detail="Chapter not found")
+    chapters = queries.get_all_published_chapters_by_book_id(book_id)
+    return {"chapters": chapters}
 
-    return {"content": chapter["content"]}
+
+# This is the protected endpoint for authors, which includes
+# the unpublished chapters of the book.
+@router.get(
+    "/api/authors/books/{book_id}/chapters",
+    tags=["Chapters"],
+    response_model=dict[str, List[AllChaptersOut]],
+)
+def get_all_chapters_by_book_id(
+    book_id: int,
+    queries: ChapterQueries = Depends(),
+    account_data: dict = Depends(authenticator.get_current_account_data),
+):
+    author_id = get_book_author(book_id)
+    if author_id == account_data["id"]:
+        chapters = queries.get_chapters_by_book_id(book_id)
+        return {"chapters": chapters}
+
+
+@router.put(
+    "/api/books/{book_id}/chapters/{chapter_id}",
+    tags=["Chapters"],
+    response_model=ChapterOut,
+)
+def update_chapter(
+    book_id: int,
+    chapter_id: int,
+    chapter: ChapterUpdate,
+    queries: ChapterQueries = Depends(),
+    account_data: dict = Depends(authenticator.get_current_account_data),
+):
+    book_author = get_book_author(book_id)
+    if book_author != account_data["id"]:
+        raise HTTPException(
+            status_code=403,
+            detail="You do not have permission to update this chapter.",
+        )
+    try:
+        return queries.update_chapter(chapter_id, chapter)
+    except Exception as e:
+        print(e)
+        raise HTTPException(
+            status_code=500, detail="Could not update chapter."
+        )
+
+
+@router.put(
+    "/api/books/{book_id}/chapters", tags=["Chapters"], response_model=Message
+)
+def update_chapter_order(
+    book_id: int,
+    chapter_list: ChapterOrderUpdateList,
+    queries: ChapterQueries = Depends(),
+    account_data: dict = Depends(authenticator.get_current_account_data),
+):
+    book_author = get_book_author(book_id)
+    if book_author != account_data["id"]:
+        raise HTTPException(
+            status_code=403,
+            detail="You do not have permission to update these chapters",
+        )
+    try:
+        return queries.update_chapter_order(chapter_list)
+    except Exception as e:
+        print(e)
+        raise HTTPException(
+            status_code=500, detail="Could not update chapter."
+        )
