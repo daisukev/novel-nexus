@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import './books.css'
-import originalAtomic  from '../../images/atomic-original.png'
-import ChapterCover  from '../../images/gray-chapter-img.png'
+import originalAtomic  from '../images/atomic-original.png'
+import ChapterCover  from '../images/gray-chapter-img.png'
 import {Link, useParams} from 'react-router-dom'
 
 function BookDetail(){

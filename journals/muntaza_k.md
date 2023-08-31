@@ -1,3 +1,12 @@
+## Aug 30, 2023
+I made merge request for user profile.
+
+## Aug 29, 2023
+Finally resolved the blocker i have had with user authentication and navigation.
+
+## Aug 28, 2023
+I have been working on user profile.
+
 ## Aug 24, 2023
 As a team, we discussed regarding the design and the priorities. I finalize the frontend for booklist and bookdetail, it might need enhancement, but it is functioning.
 

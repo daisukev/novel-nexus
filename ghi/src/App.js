@@ -12,6 +12,9 @@ import Logout from "./accounts/Logout.jsx";
 import LandingPage from "./landingPage/index.js";
 import BookListWorkspace from "./authors/BookListWorkspace";
 import BookDetailWorkspace from "./authors/BookDetailWorkspace.jsx";
+import Home from "./pages/main/Home.js";
+import ProfilePage from "./pages/profiles/ProfilePage.js";
+
 import ChapterView from "./pages/ChapterView.js";
 import BookList from "./pages/books/BookList.js";
 import BookDetail from "./pages/books/BookDetail.js";
@@ -25,26 +28,18 @@ function App() {
 
   useEffect(() => {
     if (token) {
-      // setUser(JSON.parse(atob(token.split(".")[1])).account);
+      setUser(JSON.parse(atob(token.split(".")[1])).account);
       // const tokenExpiration = JSON.parse(atob(token.split(".")[1])).exp;
       // console.log("expired?", tokenExpiration);
     }
   }, [token]);
 
-  // const LandingPage = () => {
-  //   return (
-  //     <>
-  //       <LandingPage />
-  //       <h2>{token && "Welcome back," + user.username}</h2>
-  //     </>
-
-  //   )
-  // };
 
   return (
     <>
       <Routes>
         <Route index element={<LandingPage />} />
+        <Route path="/home" element={< Home token={token} user={user} />} />
         <Route path="my">
           <Route path="workspace">
             <Route index element={<BookListWorkspace />} />
@@ -60,9 +55,11 @@ function App() {
         </Route>
         <Route path="/books" element={<BookList />} />
         <Route path="/books/:bookId" element={<BookDetail />} />
-        <Route path="/books" element={<BookList />} />
-        <Route path="/books/:bookId" element={<BookDetail />} />
         <Route path="/chapters/:chapterId" element={<ChapterView />} />
+        
+        <Route path="/profile">
+            <Route path="view/:author_id" element={ < ProfilePage authenticatedUser={user} />} />
+        </Route>
       </Routes>
     </>
   );

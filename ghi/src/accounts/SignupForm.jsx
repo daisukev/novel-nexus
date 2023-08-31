@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import useToken from "../jwt.tsx";
-
+import { useNavigate } from 'react-router-dom'
 export default function SignupForm() {
+  const navigate = useNavigate();
   const { register } = useToken();
   const [formData, setFormData] = useState({
     username: "",
@@ -31,6 +32,9 @@ export default function SignupForm() {
 
     const url = `${process.env.REACT_APP_API_HOST}/api/authors`;
     register(userData, url);
+
+    // navigate to home page
+    navigate("/home")
   };
 
   useEffect(() => {

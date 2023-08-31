@@ -14,7 +14,7 @@ export default function LoginForm() {
 
   useEffect(() => {
     if (token) {
-      navigate("/");
+      navigate("/home");
     }
   }, [token]);
 
