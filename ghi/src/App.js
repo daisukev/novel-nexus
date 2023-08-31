@@ -1,8 +1,5 @@
 import { useEffect, useState } from "react";
-import Construct from "./Construct.js";
-import ErrorNotification from "./ErrorNotification";
 import "./App.css";
-import React from "react";
 import { Link, Route, Routes } from "react-router-dom";
 import useToken from "./jwt.tsx";
 
@@ -19,6 +16,7 @@ import ChapterView from "./pages/ChapterView.js";
 import BookList from "./pages/books/BookList.js";
 import BookDetail from "./pages/books/BookDetail.js";
 import ChapterEditor from "./authors/ChapterEditor.jsx";
+import withAuthRedirect from "./components/withAuthRedirect";
 
 function App() {
   const { token } = useToken();
@@ -29,22 +27,25 @@ function App() {
   useEffect(() => {
     if (token) {
       setUser(JSON.parse(atob(token.split(".")[1])).account);
-      // const tokenExpiration = JSON.parse(atob(token.split(".")[1])).exp;
-      // console.log("expired?", tokenExpiration);
     }
   }, [token]);
 
+  const AuthChapterEditor = withAuthRedirect(ChapterEditor);
+  const AuthBookDetailWorkspace = withAuthRedirect(BookDetailWorkspace);
 
   return (
     <>
       <Routes>
         <Route index element={<LandingPage />} />
-        <Route path="/home" element={< Home token={token} user={user} />} />
+        <Route path="/home" element={<Home token={token} user={user} />} />
         <Route path="my">
           <Route path="workspace">
             <Route index element={<BookListWorkspace />} />
-            <Route path="books/:bookId" element={<BookDetailWorkspace />}>
-              <Route path="chapters/:chapterId" element={<ChapterEditor />} />
+            <Route path="books/:bookId" element={<AuthBookDetailWorkspace />}>
+              <Route
+                path="chapters/:chapterId"
+                element={<AuthChapterEditor />}
+              />
             </Route>
           </Route>
         </Route>
@@ -56,9 +57,12 @@ function App() {
         <Route path="/books" element={<BookList />} />
         <Route path="/books/:bookId" element={<BookDetail />} />
         <Route path="/chapters/:chapterId" element={<ChapterView />} />
-        
+
         <Route path="/profile">
-            <Route path="view/:author_id" element={ < ProfilePage authenticatedUser={user} />} />
+          <Route
+            path="view/:author_id"
+            element={<ProfilePage authenticatedUser={user} />}
+          />
         </Route>
       </Routes>
     </>
