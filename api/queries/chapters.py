@@ -267,28 +267,3 @@ class ChapterQueries:
                         detail=f"""Database error has occurred.
                         Rolling back update. {e}""",
                     )
-
-    def get_published_chapters(self, chapter_id) -> ChapterOut | None:
-        with pool.connection() as conn:
-            with conn.cursor() as cur:
-                cur.execute(
-                    """
-                        SELECT
-                            c.id AS chapter_id,
-                            c.book_id,
-                            c.chapter_order,
-                            c.title,
-                            c.content,
-                            c.views,
-                            c.is_published
-                        FROM
-                            chapters c
-                        WHERE
-                            c.id = %s
-                            AND c.is_published = true
-                        """,
-                    [chapter_id],
-                )
-
-                row = cur.fetchone()
-                return self.chapter_record_to_dict(row, cur.description)

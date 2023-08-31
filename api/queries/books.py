@@ -86,8 +86,6 @@ class BookRepository:
                         [book_id],
                     )
                     record = result.fetchone()
-                    print("****************")
-                    print(record)
                     if record is None:
                         return None
                     return self.record_to_book_out(record)
@@ -140,7 +138,6 @@ class BookRepository:
                         for i, column in enumerate(cur.description):
                             record[column.name] = row[i]
                         results.append(BookOut(**record))
-                    print("the query: ", results)
 
                     return results
 
@@ -176,7 +173,6 @@ class BookRepository:
                         for i, column in enumerate(cur.description):
                             record[column.name] = row[i]
                         results.append(BookOut(**record))
-                    print("the authors query: ", results)
 
                     return results
                 except Exception as e:

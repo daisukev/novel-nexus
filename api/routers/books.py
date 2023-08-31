@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, Response, HTTPException
+from fastapi import APIRouter, Depends, Response, HTTPException, UploadFile
 from queries.books import (
     BookInNew,
     BookRepository,
@@ -9,6 +9,7 @@ from queries.books import (
 
 from typing import Union, List, Optional
 from authenticator import authenticator
+from utils import get_book_author, upload_image
 
 router = APIRouter()
 
@@ -77,3 +78,28 @@ def get_one_book(
     if book is None:
         response.status_code = 404
     return book
+
+
+@router.post(
+    "/api/books/{book_id}/cover",
+    tags=["Books", "Image Upload"],
+)
+async def upload_cover_image(
+    image: UploadFile,
+    book_id: int,
+    repo: BookRepository = Depends(),
+    account: dict = Depends(authenticator.get_current_account_data),
+):
+    author = get_book_author(book_id)
+    if author != account["id"]:
+        raise HTTPException(
+            status_code=403, detail="Book Covers must be updated by author."
+        )
+
+    image_href = await upload_image(image)
+    if not image_href:
+        raise HTTPException(status_code=400, detail="Something went wrong.")
+    update_book = BookUpdate(cover=image_href["href"])
+    repo.update(book_id, update_book)
+
+    return image_href

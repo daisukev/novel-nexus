@@ -7,6 +7,7 @@ import React, {
   useEffect,
   useState,
 } from "react";
+import { useNavigate } from "react-router";
 
 interface LoginInterface {
   username: string;
@@ -92,10 +93,14 @@ export const useAuthContext = () => useContext(AuthContext);
  */
 const useToken = () => {
   const { token, setToken, baseUrl } = useAuthContext();
+  const [tokenFetchError, setTokenFetchError] = useState(false);
 
   useEffect(() => {
     const fetchToken = async () => {
       const token = await getToken(baseUrl);
+      if (token === null) {
+        setTokenFetchError(true);
+      }
       setToken(token);
     };
     if (!token) {
@@ -219,7 +224,15 @@ const useToken = () => {
     return await response.json();
   };
 
-  return { token, register, login, logout, fetchWithCookie, fetchWithToken };
+  return {
+    token,
+    register,
+    login,
+    logout,
+    fetchWithCookie,
+    fetchWithToken,
+    tokenFetchError,
+  };
 };
 
 export default useToken;

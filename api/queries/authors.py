@@ -153,9 +153,11 @@ class AuthorQueries:
                 for key, value in update_author.items():
                     if isinstance(value, SecretStr):
                         value = value.get_secret_value()
+                        update_author["password"] = value
                     if isinstance(value, HttpUrl):
                         value = str(value)
                     query_list.append(f"{key} = %s")
+                print(update_author)
                 cur.execute(
                     f"""
                     UPDATE authors

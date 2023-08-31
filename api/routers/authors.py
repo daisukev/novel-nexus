@@ -1,5 +1,13 @@
 from typing import Optional, Union
-from fastapi import APIRouter, Depends, HTTPException, Request, Response
+from fastapi import (
+    APIRouter,
+    Depends,
+    HTTPException,
+    Request,
+    Response,
+    UploadFile,
+)
+from utils import upload_image
 
 from models.authors import (
     AuthorIn,
@@ -132,3 +140,22 @@ def update_author_by_id(
         raise HTTPException(
             status_code=403, detail="You cannot modify other user's data"
         )
+
+
+@router.post(
+    "/api/authors/avatar",
+    tags=["Authors", "Image Upload"],
+)
+async def upload_cover_image(
+    image: UploadFile,
+    queries: AuthorQueries = Depends(),
+    account_data: dict = Depends(authenticator.get_current_account_data),
+):
+    author_id = account_data["id"]
+    image_href = await upload_image(image)
+    if not image_href:
+        raise HTTPException(status_code=400, detail="Something went wrong.")
+    author_update = AuthorUpdate(avatar=image_href["href"])
+    queries.update_author(author_id, author_update)
+
+    return image_href

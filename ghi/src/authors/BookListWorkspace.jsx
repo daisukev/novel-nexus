@@ -1,17 +1,24 @@
 import { useEffect, useState } from "react";
 import useToken from "../jwt.tsx";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function BookListWorkspace() {
-  const { token, fetchWithToken } = useToken();
+  const { token, fetchWithToken, tokenFetchError } = useToken();
   const [books, setBooks] = useState([]);
   const [bookTitle, setBookTitle] = useState("");
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (token) {
       fetchBooks();
     }
   }, [token]);
+
+  useEffect(() => {
+    if (tokenFetchError) {
+      navigate("/accounts/login");
+    }
+  }, [tokenFetchError]);
 
   const addBook = async (e) => {
     e.preventDefault();

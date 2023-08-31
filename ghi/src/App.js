@@ -12,7 +12,6 @@ import Logout from "./accounts/Logout.jsx";
 import LandingPage from "./landingPage/index.js";
 import BookListWorkspace from "./authors/BookListWorkspace";
 import BookDetailWorkspace from "./authors/BookDetailWorkspace.jsx";
-
 import ChapterView from "./pages/ChapterView.js";
 import BookList from "./pages/books/BookList.js";
 import BookDetail from "./pages/books/BookDetail.js";
@@ -22,9 +21,13 @@ function App() {
   const { token } = useToken();
   const [user, setUser] = useState({});
 
+  useEffect(() => {}, []);
+
   useEffect(() => {
     if (token) {
-      setUser(JSON.parse(atob(token.split(".")[1])).account);
+      // setUser(JSON.parse(atob(token.split(".")[1])).account);
+      // const tokenExpiration = JSON.parse(atob(token.split(".")[1])).exp;
+      // console.log("expired?", tokenExpiration);
     }
   }, [token]);
 
@@ -42,21 +45,21 @@ function App() {
     <>
       <Routes>
         <Route index element={<LandingPage />} />
-      <Route path="my">
-        <Route path="workspace">
-          <Route index element={<BookListWorkspace />} />
-          <Route path="books/:bookId" element={<BookDetailWorkspace />}>
-            <Route path="chapters/:chapterId" element={<ChapterEditor />} />
+        <Route path="my">
+          <Route path="workspace">
+            <Route index element={<BookListWorkspace />} />
+            <Route path="books/:bookId" element={<BookDetailWorkspace />}>
+              <Route path="chapters/:chapterId" element={<ChapterEditor />} />
+            </Route>
           </Route>
         </Route>
-      </Route>
         <Route path="/accounts">
           <Route path="signup" element={<SignupForm />} />
           <Route path="login" element={<LoginForm />} />
           <Route path="logout" element={<Logout />} />
         </Route>
-      <Route path="/books" element={<BookList />} />
-      <Route path="/books/:bookId" element={<BookDetail />} />
+        <Route path="/books" element={<BookList />} />
+        <Route path="/books/:bookId" element={<BookDetail />} />
         <Route path="/books" element={<BookList />} />
         <Route path="/books/:bookId" element={<BookDetail />} />
         <Route path="/chapters/:chapterId" element={<ChapterView />} />
