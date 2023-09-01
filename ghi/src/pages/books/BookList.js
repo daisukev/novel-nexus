@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
-import "./books.css";
-import { Link } from "react-router-dom";
+import React, {useState, useEffect} from 'react'
+import "./books.css"
+import {Link} from 'react-router-dom'
 
 function BookList() {
   const [bookList, setBookList] = useState([]);
@@ -68,7 +68,10 @@ function BookList() {
     <>
       <div className="book-list-page">
         <div className="banner">
-          <div className="banner-content">
+          <div>
+          <Link className='book-list-search' to='/books/search'>Search...</Link>
+        </div>
+        <div className="banner-content">
             <h1 className="book-list-h1-header">Ultimate Books</h1>
             <h2>Explore knowledge</h2>
             <p className="book-list-banner-paragraph">

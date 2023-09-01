@@ -16,6 +16,7 @@ import ChapterView from "./pages/ChapterView.js";
 import BookList from "./pages/books/BookList.js";
 import BookDetail from "./pages/books/BookDetail.js";
 import ChapterEditor from "./authors/ChapterEditor.jsx";
+import SearchBar from "./pages/books/SearchBar/index.js";
 import withAuthRedirect from "./components/withAuthRedirect";
 
 function App() {
@@ -54,8 +55,9 @@ function App() {
           <Route path="login" element={<LoginForm />} />
           <Route path="logout" element={<Logout />} />
         </Route>
-        <Route path="/books" element={<BookList />} />
-        <Route path="/books/:bookId" element={<BookDetail />} />
+      <Route path="/books" element={<BookList />} />
+      <Route path="/books/search" element={<SearchBar />}/>
+      <Route path="/books/:bookId" element={<BookDetail />} />
         <Route path="/chapters/:chapterId" element={<ChapterView />} />
 
         <Route path="/profile">

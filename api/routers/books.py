@@ -49,6 +49,17 @@ def get_books_by_author(
     return repo.get_books_by_author(author_id)
 
 
+@router.get(
+    "/api/books/search/{key_word}",
+    tags=["Books"],
+    response_model=Union[List[BookOut], Error],
+)
+def get_books_by_search(
+    key_word: str, repo: BookRepository = Depends()
+) -> Union[BookOut, Error]:
+    return repo.search(key_word)
+
+
 @router.put(
     "/api/books/{book_id}",
     tags=["Books"],

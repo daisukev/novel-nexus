@@ -234,3 +234,48 @@ class BookRepository:
             created_at=record[6],
             updated_at=record[7],
         )
+
+    def search(self, key_word: str) -> Union[Error, List[BookOut]]:
+        try:
+            # connect the database
+            with pool.connection() as conn:
+                # get a cursor (something to run SQL with)
+                with conn.cursor() as db:
+                    # Run our SELECT statement
+                    db.execute(
+                        """
+                        SELECT id, title, author_id, summary,
+                        cover, is_published, created_at,
+                        updated_at
+                        FROM books
+                        WHERE title ILIKE %s
+                        OR CAST(author_id AS TEXT) ILIKE %s
+                        OR summary ILIKE %s
+                        OR CAST(cover AS TEXT) ILIKE %s
+                        OR CAST(is_published AS TEXT) ILIKE %s
+                        OR CAST(created_at AS TEXT) ILIKE %s
+                        OR CAST(updated_at AS TEXT) ILIKE %s
+                        ORDER BY id
+                        """,
+                        (
+                            '%' + key_word + '%',
+                            '%' + key_word + '%',
+                            '%' + key_word + '%',
+                            '%' + key_word + '%',
+                            '%' + key_word + '%',
+                            '%' + key_word + '%',
+                            '%' + key_word + '%',
+                        )
+                    )
+                    results = []
+                    for row in db.fetchall():
+                        record = {}
+                        for i, column in enumerate(db.description):
+                            record[column.name] = row[i]
+                        results.append(BookOut(**record))
+                    if not results:
+                        raise Exception()
+                    return results
+        except Exception as e:
+            print(e)
+            return []

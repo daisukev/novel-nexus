@@ -1,0 +1,25 @@
+.search {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 500px;
+    align-items: center;
+    position: relative;
+}
+
+.search-input {
+    text-align: center;
+    height: 50px;
+    margin-right: 5px;
+}
+
+.back {
+    position: absolute;
+    top:10px;
+    left: 20px;
+}
+
+.book-search-prompt {
+    text-align: center;
+}
