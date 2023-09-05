@@ -5,6 +5,7 @@ from queries.books import (
     BookOut,
     BookUpdate,
     Error,
+    SearchListOut,
 )
 
 from typing import Union, List, Optional
@@ -50,14 +51,31 @@ def get_books_by_author(
 
 
 @router.get(
-    "/api/books/search/{key_word}",
+    "/api/books/search",
     tags=["Books"],
-    response_model=Union[List[BookOut], Error],
+    response_model=SearchListOut,
 )
 def get_books_by_search(
-    key_word: str, repo: BookRepository = Depends()
-) -> Union[BookOut, Error]:
-    return repo.search(key_word)
+    q: str, repo: BookRepository = Depends()
+) -> SearchListOut:
+    exclude_set = {
+        "a",
+        "an",
+        "the",
+        "in",
+        "of",
+        "on",
+        "are",
+        "be",
+        "if",
+        "into",
+        "which",
+    }
+    query_list = set(q.split())
+    filteredQuery = " ".join(list(query_list.difference(exclude_set))).strip()
+    if filteredQuery == "":
+        return repo.search(q)
+    return repo.search(filteredQuery)
 
 
 @router.put(

@@ -1,0 +1,62 @@
+.searchResults {
+  padding: 1rem;
+  padding-inline: 5rem;
+  color: var(--text);
+}
+
+.noResults {
+  margin-block: 3rem;
+}
+
+.searchCard {
+  margin-block: 2rem;
+  display: flex;
+  gap: 1rem;
+}
+
+.coverContainer {
+  height: 8rem;
+  aspect-ratio: 6/9;
+  overflow: hidden;
+  background: var(--background-darker);
+}
+.coverContainer img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.searchCard * {
+  color: var(--text);
+}
+.searchCard h2 {
+  font-size: 1.3rem;
+  font-weight: 500;
+}
+
+.summary p {
+  font-size: 0.8rem;
+}
+.summary {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.genresContainer {
+  display: flex;
+  gap: 0.5rem;
+}
+.genreTag {
+  padding-block: 0.25rem;
+  padding-inline: 0.5rem;
+  font-size: 0.8rem;
+  font-weight: 500;
+  background: var(--secondary);
+  color: var(--background-lighter);
+}
+
+.bookCard {
+}

@@ -1,0 +1,140 @@
+.bookDetails {
+  height: 100%;
+  width: 100%;
+  color: var(--text);
+  justify-items: center;
+  --padding-input: 0.5rem;
+  display: grid;
+  padding: 0.5rem;
+  grid-template-columns: auto;
+  grid-template-rows: 80px 1fr 100%;
+  overflow-y: auto;
+  align-items: start;
+}
+
+.checkbox {
+  display: grid;
+  grid-template-columns: auto auto 1fr;
+  place-items: center;
+  gap: 0.5rem;
+}
+.checkbox input[type="checkbox"] {
+  width: 20px;
+  padding: 0.5rem;
+}
+
+.bookDetails h2 {
+  font-size: 3rem;
+}
+.bookDetails h3 {
+  font-size: 1.5rem;
+}
+
+.bookDetails h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--sans-serif-font);
+  font-weight: 700;
+}
+.bookDetails label {
+  font-family: var(--sans-serif-font);
+  font-weight: 600;
+}
+
+.saveButton {
+  background: var(--primary);
+  color: var(--background);
+  border: none;
+  padding: 0.5rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  min-width: 5rem;
+  height: 2.5rem;
+}
+.saveButton:hover {
+  background: var(--primary-lighter);
+  cursor: pointer;
+}
+.saveButton:active {
+  transform: translate(1px, 1px);
+}
+
+.bookDetails textarea,
+input {
+  width: 100%;
+  background: hsl(36, 27%, 93%);
+  border-radius: 5px;
+  border: 2px solid transparent;
+  padding: var(--padding-input);
+  resize: none;
+}
+
+.bookDetails textarea:focus,
+input:focus {
+  /* border: 1px solid var(--accent); */
+  outline: none;
+}
+
+.bookDetails h2 {
+  line-height: 3rem;
+  margin-bottom: 3rem;
+}
+.bookDetails h3 {
+  font-weight: 600;
+}
+
+.bookDetails input {
+  height: 2rem;
+  padding-inline: 0.5rem;
+  padding: 0.25rem;
+  line-height: 1.5rem;
+  /* border-bottom: 1px solid var(--accent); */
+  transition: background 200ms ease-in-out;
+}
+
+.bookDetails input:focus,
+textarea:focus {
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+  background: var(--background);
+  border-bottom: 1px solid var(--accent);
+}
+
+.bookDetails input,
+textarea {
+  font-family: var(--serif-font);
+  font-size: 1rem;
+  line-height: 1.5rem;
+  max-height: 400px;
+}
+
+@media (min-width: 768px) {
+  .bookDetails {
+    padding-top: 3rem;
+    padding-inline: 1rem;
+    gap: 20px;
+    grid-template-columns: 50px 1fr 4fr 50px;
+  }
+
+  .bookDetailsForm {
+    width: min(650px, 100%);
+    justify-self: start;
+    padding-inline: 2rem;
+    grid-column: 3/6;
+  }
+  .upload {
+    grid-column: 2;
+    justify-self: end;
+    align-self: start;
+  }
+}
+
+/* Media query for desktop screens */
+@media (min-width: 1200px) {
+  .bookDetails {
+    grid-template-columns: 50px 1fr 4fr 50px;
+  }
+}

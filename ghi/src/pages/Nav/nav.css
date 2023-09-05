@@ -1,151 +1,151 @@
-
-.nexus-header{
-    display: flex;
-    position: relative;
-    z-index: 1000;
-    height: 90px;
-
-}
-
-.header-flex{
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    background-color:#D8BFD8;
-    width: 100%;
-}
-
- .nexus-logo {
-   width:50px;
-   height:50px;
-}
-
-.nexus-logo .logo-icon{
-    color: purple;
-    font-size: 1.8rem;
-}
-
-.logo-img{
-    width:150px;
-    height:100px;
-}
-
-#nav{
-   align-items: center;
-}
-
-#nav ul li{
-
-    display: inline-block;
-}
-
-.nav-list{
-    margin: 30px;
-    font-size: 1.5rem;
-}
-
-
-
-a{
-    text-decoration: None;
-}
-
-.username-greet{
-    font-size: 1.2rem;
-}
+/**/
+/* .nexus-header{ */
+/*     display: flex; */
+/*     position: relative; */
+/*     z-index: 1000; */
+/*     height: 90px; */
+/**/
+/* } */
+/**/
+/* .header-flex{ */
+/*     display: flex; */
+/*     justify-content: space-around; */
+/*     align-items: center; */
+/*     background-color:#D8BFD8; */
+/*     width: 100%; */
+/* } */
+/**/
+/*  .nexus-logo { */
+/*    width:50px; */
+/*    height:50px; */
+/* } */
+/**/
+/* .nexus-logo .logo-icon{ */
+/*     color: purple; */
+/*     font-size: 1.8rem; */
+/* } */
+/**/
+/* .logo-img{ */
+/*     width:150px; */
+/*     height:100px; */
+/* } */
+/**/
+/* #nav{ */
+/*    align-items: center; */
+/* } */
+/**/
+/* #nav ul li{ */
+/**/
+/*     display: inline-block; */
+/* } */
+/**/
+/* .nav-list{ */
+/*     margin: 30px; */
+/*     font-size: 1.5rem; */
+/* } */
+/**/
+/**/
+/**/
+/* a{ */
+/*     text-decoration: None; */
+/* } */
+/**/
+/* .username-greet{ */
+/*     font-size: 1.2rem; */
+/* } */
 /* ================================= FOOTER ====================== */
-
-.footer-container {
-    background-color: #333;
-    color: #fff;
-    padding: 20px 0;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-}
-
-.branding {
-    width: 100%;
-    text-align: center;
-    margin-bottom: 20px;
-}
-
-.branding img {
-    max-width: 200px;
-}
-
-.footer-section {
-    flex: 1;
-    min-width: 200px;
-    margin-bottom: 20px;
-}
-
-.footer-section h3 {
-    border-bottom: 1px solid #555;
-    padding-bottom: 10px;
-    margin-bottom: 10px;
-}
-
-.footer-section ul {
-    list-style-type: none;
-    padding: 0;
-}
-
-.footer-section li {
-    margin-bottom: 10px;
-}
-
-.footer-section a {
-    color: #fff;
-    text-decoration: none;
-    transition: color 0.3s;
-}
-
-.footer-section a:hover {
-    color: #ddd;
-}
-
-.copyright {
-    width: 100%;
-    text-align: center;
-    margin-top: 20px;
-}
-
+/**/
+/* .footer-container { */
+/*     background-color: #333; */
+/*     color: #fff; */
+/*     padding: 20px 0; */
+/*     display: flex; */
+/*     flex-wrap: wrap; */
+/*     justify-content: space-between; */
+/* } */
+/**/
+/* .branding { */
+/*     width: 100%; */
+/*     text-align: center; */
+/*     margin-bottom: 20px; */
+/* } */
+/**/
+/* .branding img { */
+/*     max-width: 200px; */
+/* } */
+/**/
+/* .footer-section { */
+/*     flex: 1; */
+/*     min-width: 200px; */
+/*     margin-bottom: 20px; */
+/* } */
+/**/
+/* .footer-section h3 { */
+/*     border-bottom: 1px solid #555; */
+/*     padding-bottom: 10px; */
+/*     margin-bottom: 10px; */
+/* } */
+/**/
+/* .footer-section ul { */
+/*     list-style-type: none; */
+/*     padding: 0; */
+/* } */
+/**/
+/* .footer-section li { */
+/*     margin-bottom: 10px; */
+/* } */
+/**/
+/* .footer-section a { */
+/*     color: #fff; */
+/*     text-decoration: none; */
+/*     transition: color 0.3s; */
+/* } */
+/**/
+/* .footer-section a:hover { */
+/*     color: #ddd; */
+/* } */
+/**/
+/* .copyright { */
+/*     width: 100%; */
+/*     text-align: center; */
+/*     margin-top: 20px; */
+/* } */
+/**/
 /* ########################### USER ICON ################# */
-
-
-.dropdown-menu {
-    position: absolute;
-    top: 70%;
-    right: 120px;
-    background-color: #fff;
-    border: 1px solid #ccc;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    padding: 10px;
-    z-index: 1;
-  }
-
-  .dropdown-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-  }
-
-  .dropdown-list li {
-    padding: 5px 0;
-    display: block;
-  }
-
-  .nested-dropdown-list {
-
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    margin-top: 5px;
-
-  }
-
-  .nested-dropdown-list li {
-    padding: 5px 0;
-    display: block;
-  }
+/**/
+/**/
+/* .dropdown-menu { */
+/*     position: absolute; */
+/*     top: 70%; */
+/*     right: 120px; */
+/*     background-color: #fff; */
+/*     border: 1px solid #ccc; */
+/*     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); */
+/*     padding: 10px; */
+/*     z-index: 1; */
+/*   } */
+/**/
+/*   .dropdown-list { */
+/*     list-style: none; */
+/*     padding: 0; */
+/*     margin: 0; */
+/*   } */
+/**/
+/*   .dropdown-list li { */
+/*     padding: 5px 0; */
+/*     display: block; */
+/*   } */
+/**/
+/*   .nested-dropdown-list { */
+/**/
+/*     list-style: none; */
+/*     padding: 0; */
+/*     margin: 0; */
+/*     margin-top: 5px; */
+/**/
+/*   } */
+/**/
+/*   .nested-dropdown-list li { */
+/*     padding: 5px 0; */
+/*     display: block; */
+/*   } */

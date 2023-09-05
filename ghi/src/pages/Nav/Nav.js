@@ -1,65 +1,85 @@
-import React from 'react'
-import {NavLink} from 'react-router-dom'
-import testLogo from '../images/test-logo.png'
-import './nav.css'
+import { useState, useContext } from "react";
+import { NavLink, useNavigate, useLocation } from "react-router-dom";
+import transparentLogo from "../../transparentlogo.png";
+import styles from "./styles/Nav.module.css";
+import { SidebarContext, UserContext } from "../../App";
+import Avatar from "./Avatar";
+import useToken from "../../jwt.tsx";
 
+function Nav() {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const { token } = useToken();
+  const { openSidebar, sidebarOpened } = useContext(SidebarContext);
+  const { user } = useContext(UserContext);
+  const [query, setQuery] = useState("");
 
-function Nav({ authenticatedUser }){
-    return(
-        <>
-        <header>
-            <div className="nexus-header">
-                <div className="header-flex">
-                <div className="nexus-logo">
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    navigate(`/books/search?q=${query}`);
+  };
 
-                    <NavLink to="/home" ><img src={testLogo} className="logo-img"/></NavLink>
-                </div>
-
-
-             <nav id="nav">
-                 <ul className="nav-ul">
-                     <li className="nav-list">
-                         <NavLink to="/home">Home</NavLink>
-                     </li>
-
-                     <li  className="nav-list">
-                        <NavLink to="/books">Books</NavLink>
-                        </li>
-                        <li  className="nav-list">
-                        <NavLink to="#">eBooks</NavLink>
-                        </li>
-                        <li  className="nav-list">
-                        <NavLink to="#">Audio</NavLink>
-                 </li>
-                 {authenticatedUser && (
-                     <>
-                     <li className="nav-list">
-                         <h2 className="username-greet">Welcome, {authenticatedUser.username}</h2>
-                     </li>
-                     <li className="nav-list">
-                         {/* <NavLink to={`/accounts/profile/${authenticatedUser.username}`}>Profile Page</NavLink> */}
-                         <NavLink to={`/profile/view/${authenticatedUser.username}`}>Profile Page</NavLink>
-
-                     </li>
-                     </>
-                 ) }
-                 </ul>
-             </nav>
+  return (
+    <>
+      <header className={styles.header}>
+        {!sidebarOpened && (
+          <>
+            <div>
+              <button
+                type="button"
+                onClick={() => openSidebar()}
+                className={styles.burger}
+              >
+                <i className="ri-menu-line" />
+              </button>
             </div>
+            <div>
+              <NavLink to="/home" className={styles.logo}>
+                <img
+                  src={transparentLogo}
+                  height="50px"
+                  width="50px"
+                  alt="Novel Nexus Logo"
+                  className="logo-img"
+                />
+                <h1>
+                  novel<strong>nexus</strong>
+                </h1>
+              </NavLink>
             </div>
-        </header>
-
-
-
-
-
-
-
-
-
-        </>
-    )
+          </>
+        )}
+        <form onSubmit={handleSubmit} className={styles.searchBar}>
+          <input
+            type="text"
+            name="q"
+            placeholder="Search for books"
+            value={query}
+            onChange={(e) => {
+              setQuery(e.target.value);
+            }}
+            className={styles.searchInput}
+          />
+          <button className={styles.searchButton}>
+            <i className="ri-search-line" />
+          </button>
+        </form>
+        {token ? (
+          <div className={styles.sideLinks}>
+            <NavLink to="/accounts/logout">Log Out</NavLink>
+            <Avatar user={user} />
+          </div>
+        ) : (
+          <div className={styles.sideLinks}>
+            <NavLink to={`/accounts/login/?prev=${location.pathname}`}>
+              Log In
+            </NavLink>
+            <NavLink to="/accounts/signup">Sign Up</NavLink>
+          </div>
+        )}
+      </header>
+    </>
+  );
 }
-
 
 export default Nav;

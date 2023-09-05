@@ -35,6 +35,8 @@ export default function DeleteChapterModal({
   useEffect(() => {
     if (deleteConfirmation === chapterToDelete.title) {
       setCanDelete(true);
+    } else {
+      setCanDelete(false);
     }
   }, [deleteConfirmation, chapterToDelete.title]);
 
@@ -69,9 +71,9 @@ export default function DeleteChapterModal({
       {/* rome-ignore lint: The key handler is attached to the window.  */}
       <div
         style={{
-          background: "white",
-          width: "50%",
-          height: "25%",
+          background: "var(--background)",
+          width: "50ch",
+          height: "20rem",
           display: "grid",
           alignItems: "center",
           justifyItems: "center",
@@ -84,7 +86,15 @@ export default function DeleteChapterModal({
             Are you sure you want to delete? This cannot be undone. To delete,
             please type the name of the chapter exactly as typed:
           </p>
-          <p style={{ background: "#ccc" }}>{chapterToDelete.title}</p>
+          <p
+            style={{
+              background: "var(--background-darker)",
+              padding: "1rem",
+              border: "1px solid var(--accent)",
+            }}
+          >
+            {chapterToDelete.title}
+          </p>
           <p>
             <label htmlFor="deleteConfirm" hidden>
               Confirm Deletion:
@@ -94,6 +104,7 @@ export default function DeleteChapterModal({
               type="text"
               value={deleteConfirmation}
               onChange={(e) => setDeleteConfirmation(e.target.value)}
+              style={{ padding: "1rem" }}
             />
           </p>
           <button type="button" onClick={() => closeDeleteModal()}>

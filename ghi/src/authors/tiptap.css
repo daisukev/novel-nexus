@@ -2,7 +2,8 @@
 
 .tiptap {
   white-space: pre-wrap;
-  border: 1px solid #ccc;
+  border: 1px solid var(--background-darker);
+  background: var(--background-lighter);
   border-bottom-left-radius: 5px;
   border-bottom-right-radius: 5px;
   border-top-right-radius: 5px;
@@ -14,7 +15,7 @@
   max-width: inherit;
 }
 .tiptap * {
-  font-family: "Libre Baskerville", serif;
+  font-family: var(--serif-font);
   max-width: 45rem;
 }
 .tiptap p {
@@ -23,6 +24,21 @@
 }
 .tiptap ul {
   list-style: initial;
+}
+
+.tiptap pre {
+  border: 1px solid var(--background-darker);
+  font-size: 0.9rem;
+  line-height: 1.8rem;
+}
+.tiptap pre,
+code {
+  background: var(--background);
+  padding: 0.5rem;
+}
+
+.tiptap code {
+  font-family: var(--code-fonts);
 }
 
 .editor-container {

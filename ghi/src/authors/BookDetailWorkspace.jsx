@@ -4,6 +4,8 @@ import { Outlet, useParams, Link, useNavigate } from "react-router-dom";
 import BookDetailsEditor from "./BookDetailsEditor";
 import ChaptersList from "./ChaptersList";
 import DeleteChapterModal from "./DeleteChapterModal";
+import styles from "./styles/BookDetailWorkspace.module.css";
+import logo from "../transparentlogo.png";
 
 export const ChaptersContext = createContext();
 
@@ -79,7 +81,7 @@ function BookDetailWorkspace() {
       book_id: bookId,
       title: newTitle,
       content: "",
-      chapter_order: 0,
+      chapter_order: chapterTitles.length + 1,
     };
     const options = {
       body: JSON.stringify(formData),
@@ -90,30 +92,38 @@ function BookDetailWorkspace() {
   };
 
   return (
-    <div
-      style={{
-        display: "grid",
-        gridTemplateColumns: "max(300px) 9fr",
-        gap: "0.5rem",
-        height: "100vh",
-        overflowY: "hidden",
-      }}
-    >
-      <div
-        style={{
-          height: "max(100vh, 100%)",
-          background: "lightgray",
-          overflowY: "auto",
-          overflowX: "hidden",
-          scrollbarGutter: "stable",
-        }}
-      >
-        <h3>Novel Nexus</h3>
-        <Link to="/my/workspace">Back to Workspace</Link>
-        <Link to={`/my/workspace/books/${bookId}`}>Edit Book</Link>
-        <div>
+    <div className={styles.bookDetailWorkspace}>
+      <div className={styles.sidebar}>
+        <Link to="/my/workspace" className={styles.logoHeader}>
+          <img src={logo} alt="Novel Nexus Logo" />
+          <h3 className={styles.header}>Novel Nexus</h3>
+        </Link>
+        <div className={styles.navList}>
+          <Link to="/my/workspace">
+            <i className="ri-arrow-left-fill" />
+            <span className="linkText">Back to Workspace</span>
+          </Link>
+          <Link to={`/my/workspace/books/${bookId}`}>
+            <i className="ri-book-2-line" />
+            <span className="linkText">Edit Book Details</span>
+          </Link>
+          <Link to={`/books/${bookId}`}>
+            <i className="ri-book-open-line" />
+            <span className="linkText">View Book Page</span>
+          </Link>
+        </div>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "end",
+            paddingBlock: "0.5rem",
+          }}
+        >
           <form onSubmit={addChapter}>
-            <button type="submit">Add Chapter</button>
+            <button type="submit" className={styles.addChapterButton}>
+              Add Chapter
+              <i className="ri-add-line" />
+            </button>
           </form>
         </div>
         <ChaptersList
@@ -135,9 +145,8 @@ function BookDetailWorkspace() {
           flexDirection: "column",
         }}
       >
-        {/* TODO: book editor component: adjust when chapter is open vs. not */}
-        <h1>{book.title}</h1>
-        {!chapterId && <BookDetailsEditor book={book} />}
+        {/* <h1>{book.title}</h1> */}
+        {!chapterId && <BookDetailsEditor book={book} fetchBook={fetchBook} />}
         <ChaptersContext.Provider value={{ fetchChapters }}>
           <Outlet />
         </ChaptersContext.Provider>

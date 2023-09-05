@@ -1,0 +1,94 @@
+/* https://codesandbox.io/s/overlapping-card-design-l8787r?file=/src/styles.css&resolutionWidth=1619&resolutionHeight=1545 */
+.card-container h1 {
+  padding: 0.25rem;
+  margin: 0;
+  font-weight: 600;
+  font-size: 2.2rem;
+  line-height: 2.4rem;
+}
+
+.card {
+  display: grid;
+  grid-template-columns: repeat(20, 1fr);
+  grid-template-rows: repeat(7, 1fr);
+  grid-auto-rows: calc((100% - 20px) / 16);
+  grid-auto-columns: calc((100% - 20px) / 20);
+  aspect-ratio: 16/10;
+}
+
+.bookCover {
+  background-size: cover;
+  background-color: var(--background-lighter);
+  box-shadow: 4px 4px 9px 8px rgba(0, 0, 0, 0.1);
+  grid-area: 1/2/3/9;
+  z-index: 999;
+  aspect-ratio: 6/9;
+  border-radius: 5px;
+  border-right: 5px solid hsl(36, 18%, 93%);
+  border-bottom: 5px solid hsl(36, 13%, 73%);
+  display: grid;
+  place-items: center;
+  padding: 0.25rem;
+  text-align: center;
+}
+
+.titleLink:hover {
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-decoration-color: var(--accent);
+}
+
+.container {
+  background: #fdfdfc;
+  box-shadow: 4px 4px 9px 8px rgba(0, 0, 0, 0.1);
+  grid-area: 2/1/-1/-1;
+}
+
+.content {
+  grid-area: 2/9/-1/-1;
+  padding: 1rem;
+  display: grid;
+  grid-template-rows: auto auto 1fr auto;
+  max-height: 337px;
+}
+
+.descriptionContainer {
+  width: 100%;
+  max-height: 9rem;
+  overflow: hidden;
+}
+
+.description {
+  text-align: left;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.buttons a {
+  width: 8rem;
+  text-align: center;
+  background: #1a2e5d;
+  border: none;
+  padding: 0.5rem;
+  color: #fdfdfc;
+}
+
+.buttons a:hover {
+  cursor: pointer;
+  background: hsl(222, 36%, 43%);
+}
+
+.buttons a:active {
+  transform: translate(1px, 1px);
+}
+
+.buttons {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  gap: 0.25rem;
+}

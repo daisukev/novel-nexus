@@ -1,5 +1,5 @@
 # from psycopg_pool import ConnectionPool
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, HttpUrl
 from typing import Optional, List, Union
 from datetime import datetime
 from api_pool import pool
@@ -41,6 +41,22 @@ class BookUpdate(BaseModel):
 
 class Error(BaseModel):
     message: str
+
+
+class SearchOut(BaseModel):
+    id: int
+    title: Optional[str]
+    summary: Optional[str]
+    cover: Optional[HttpUrl]
+    author_id: int
+    username: str
+    first_name: Optional[str]
+    last_name: Optional[str]
+    genres: Optional[List[Union[str, None]]]
+
+
+class SearchListOut(BaseModel):
+    books: List[SearchOut]
 
 
 class BookRepository:
@@ -235,47 +251,68 @@ class BookRepository:
             updated_at=record[7],
         )
 
-    def search(self, key_word: str) -> Union[Error, List[BookOut]]:
+    def search(self, q: str) -> Union[Error, List[BookOut]]:
         try:
             # connect the database
             with pool.connection() as conn:
                 # get a cursor (something to run SQL with)
                 with conn.cursor() as db:
                     # Run our SELECT statement
+                    print("query is: ", q)
+
                     db.execute(
                         """
-                        SELECT id, title, author_id, summary,
-                        cover, is_published, created_at,
-                        updated_at
-                        FROM books
-                        WHERE title ILIKE %s
-                        OR CAST(author_id AS TEXT) ILIKE %s
-                        OR summary ILIKE %s
-                        OR CAST(cover AS TEXT) ILIKE %s
-                        OR CAST(is_published AS TEXT) ILIKE %s
-                        OR CAST(created_at AS TEXT) ILIKE %s
-                        OR CAST(updated_at AS TEXT) ILIKE %s
-                        ORDER BY id
-                        """,
-                        (
-                            '%' + key_word + '%',
-                            '%' + key_word + '%',
-                            '%' + key_word + '%',
-                            '%' + key_word + '%',
-                            '%' + key_word + '%',
-                            '%' + key_word + '%',
-                            '%' + key_word + '%',
-                        )
+                    SELECT DISTINCT
+                    ON (b.id, b.title)
+                    b.id,
+                    b.title,
+                    b.summary,
+                    b.cover,
+                    a.username,
+                    a.first_name,
+                    a.last_name,
+                    a.id as author_id,
+                    ARRAY_AGG(DISTINCT g.name) AS genres
+                    FROM
+                    books b
+                    LEFT JOIN authors a ON b.author_id = a.id
+                    LEFT JOIN genres_books gb ON b.id = gb.book_id
+                    LEFT JOIN genres g ON gb.genre_id = g.id
+                    WHERE
+                    (
+                        SELECT
+                        bool_or(b.title ILIKE '%%' || word || '%%')
+                        OR bool_or(b.summary ILIKE '%%' || word || '%%')
+                        OR bool_or(a.username ILIKE '%%' || word || '%%')
+                        OR bool_or(a.first_name ILIKE '%%' || word || '%%')
+                        OR bool_or(a.last_name ILIKE '%%' || word || '%%')
+                        OR bool_or(g.name ILIKE '%%' || word || '%%')
+                        FROM
+                        unnest(string_to_array(%s, ' ')) AS word
+                    )
+                    AND b.is_published = True
+                    GROUP BY
+                    b.id,
+                    b.title,
+                    b.summary,
+                    b.cover,
+                    a.id,
+                    a.username,
+                    a.first_name,
+                    a.last_name
+                    ORDER BY b.title;
+                    """,
+                        (f"%{q}%",),
                     )
                     results = []
                     for row in db.fetchall():
                         record = {}
                         for i, column in enumerate(db.description):
                             record[column.name] = row[i]
-                        results.append(BookOut(**record))
+                        results.append(SearchOut(**record))
                     if not results:
                         raise Exception()
-                    return results
+                    return SearchListOut(books=results)
         except Exception as e:
             print(e)
-            return []
+            return SearchListOut(books=[])

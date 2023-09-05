@@ -1,0 +1,13 @@
+.bookList {
+  padding-inline: 5rem;
+}
+
+.sectionHeader {
+  margin-block: 3rem;
+}
+
+.bookListContainer {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(400px, 100%), 1fr));
+  gap: 3rem;
+}

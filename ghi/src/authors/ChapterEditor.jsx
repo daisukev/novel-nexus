@@ -7,10 +7,12 @@ import StarterKit from "@tiptap/starter-kit";
 import Typography from "@tiptap/extension-typography";
 import { useOutletContext } from "react-router-dom";
 import { ChaptersContext } from "./BookDetailWorkspace";
+import { useMessageContext } from "../MessageContext";
 
 import "./tiptap.css";
 
 export default function ChapterEditor() {
+  const { MESSAGE_TYPES, createMessage } = useMessageContext();
   const containerRef = useRef(null);
   const [containerHeight, setContainerHeight] = useState("20rem");
   const [chapter, setChapter] = useState({});
@@ -20,11 +22,6 @@ export default function ChapterEditor() {
   const { fetchWithToken, token } = useToken();
   const editor = useEditor({
     extensions: [StarterKit, Typography],
-    editorProps: {
-      attributes: {
-        class: "prose",
-      },
-    },
     autofocus: true,
     injectCSS: false,
     content: content,
@@ -37,7 +34,7 @@ export default function ChapterEditor() {
   const windowResize = () => {
     if (containerRef.current) {
       // TODO: this is too magic numbery; change the 40 to an actual calculated height.
-      const offsetHeight = containerRef.current.offsetHeight - 85;
+      const offsetHeight = containerRef.current.offsetHeight - 40;
       setContainerHeight(`${offsetHeight}px`);
     }
   };
@@ -78,7 +75,7 @@ export default function ChapterEditor() {
     }
   };
 
-  const updateChapterContent = async () => {
+  const updateChapterContent = async (autosave = false) => {
     const url = `${process.env.REACT_APP_API_HOST}/api/books/${bookId}/chapters/${chapterId}`;
     const headers = {
       "Content-Type": "application/json",
@@ -89,7 +86,11 @@ export default function ChapterEditor() {
 
     try {
       const data = await fetchWithToken(url, "PUT", headers, options);
+
+      if (autosave) createMessage("Autosaved Chapter", MESSAGE_TYPES.SUCCESS);
+      else createMessage(`Saved "${data.title}"`, MESSAGE_TYPES.SUCCESS);
     } catch (e) {
+      createMessage("Could not save chapter.", MESSAGE_TYPES.ERROR);
       console.error(e);
     }
   };
@@ -104,16 +105,22 @@ export default function ChapterEditor() {
 
     try {
       const data = await fetchWithToken(url, "PUT", headers, options);
+      createMessage(
+        `Updated Publish Status: ${data.is_published ? "True" : "False"} `,
+        MESSAGE_TYPES.SUCCESS
+      );
       fetchChapter(chapterId);
     } catch (e) {
+      createMessage(
+        "Could not update chapter published status.",
+        MESSAGE_TYPES.ERROR
+      );
       console.error(e);
     }
   };
 
   //TODO: currently if a token expires before an author saves, it just... won't save.
   // Fix that
-  // TODO: navigate if logged out to login page -> return user to previous page.
-  // TODO: update the token expiration to something much longer
 
   if (content) {
     return (
@@ -267,6 +274,7 @@ function MenuBar({ editor, containerRef, updateChapterContent }) {
   );
 }
 function ChapterTitle({ chapter }) {
+  const { createMessage, MESSAGE_TYPES } = useMessageContext();
   const { fetchChapters } = useContext(ChaptersContext);
   const { bookId, chapterId } = useParams();
   const { token, fetchWithToken } = useToken();
@@ -279,7 +287,6 @@ function ChapterTitle({ chapter }) {
   }, [chapter.title]);
 
   const updateChapterTitle = async () => {
-    console.log("updating title to: ", chapterTitle);
     try {
       //
       const url = `${process.env.REACT_APP_API_HOST}/api/books/${bookId}/chapters/${chapterId}`;
@@ -291,17 +298,20 @@ function ChapterTitle({ chapter }) {
       };
       const res = await fetchWithToken(url, "PUT", headers, options);
       fetchChapters();
-      console.log(res);
+      createMessage(
+        `Changed chapter title to: ${chapterTitle}`,
+        MESSAGE_TYPES.SUCCESS
+      );
+      // console.log(res);
     } catch (e) {
       console.error(e);
       setChapterTitle(chapter.title);
+      createMessage("Could not change title name.", MESSAGE_TYPES.ERROR);
     }
   };
   const handleEditChapterTitleKeyPress = (e) => {
     if (e.key === "Enter") {
       e.preventDefault(); // don't input enter
-      console.log(e.target.textContent);
-      console.log(e.key);
       setIsEditing(false);
       updateChapterTitle();
     }

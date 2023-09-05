@@ -1,0 +1,53 @@
+.messageQueue {
+  position: absolute;
+  top: 0;
+  right: 0;
+  /* bottom: 0; */
+  /* left: 0; */
+}
+
+.message {
+  margin: 1rem;
+  background: var(--background-lighter);
+  border: 1px solid var(--text);
+  padding: 0.75rem;
+  width: 12rem;
+  height: auto;
+  max-height: 8rem;
+  position: relative;
+  font-weight: 500;
+  color: var(--text);
+}
+
+message p {
+  flex-grow: 1;
+}
+
+.error {
+  border: 1px solid var(--error-color);
+  color: var(--error-color);
+}
+.success {
+  border: 1px solid var(--success-color);
+  color: var(--success-color);
+}
+
+.removeButton {
+  position: absolute;
+  top: 0;
+  right: 0;
+  border: none;
+  background: none;
+  font-size: 1.5rem;
+  margin: 2px;
+  text-align: right;
+}
+.removeButton:hover {
+  cursor: pointer;
+}
+.error .removeButton {
+  color: var(--error-color);
+}
+.success .removeButton {
+  color: var(--success-color);
+}

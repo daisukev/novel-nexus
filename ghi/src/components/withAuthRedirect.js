@@ -10,7 +10,6 @@ const withAuthRedirect = (WrappedComponent) => {
 
     useEffect(() => {
       fetchToken();
-      console.log(token);
     }, [token]);
 
     useEffect(() => {

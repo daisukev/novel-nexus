@@ -3,6 +3,9 @@ import { flushSync } from "react-dom";
 import { Link } from "react-router-dom";
 import useToken from "../jwt.tsx";
 import DeleteButton from "./DeleteButton";
+
+import styles from "./styles/ChaptersList.module.css";
+
 //TODO: split the unpublished chapters into its own list.
 export default function ChaptersList({
   chapters,
@@ -82,19 +85,16 @@ export default function ChaptersList({
   };
 
   return (
-    <>
+    <div className={styles.chaptersList}>
       {mutableChapters?.map((chapter, index) => {
         return (
           <div
-            key={chapter.id + chapter.title}
-            className="chapter-list-draggable"
+            key={`${chapter.id}_${chapter.title}`}
+            className={`${styles.chapterListDraggable}  ${
+              index === draggedIndex ? styles.darken : ""
+            }`}
             style={{
-              width: "100%",
-              padding: "0.5rem",
-              background: index === draggedIndex ? "gray" : "lightgray",
-              cursor: isDragging ? "grabbing" : "grab",
-              display: "grid",
-              gridTemplateColumns: "1fr 7fr 1fr 1fr",
+              background: index === draggedIndex && "",
               alignItems: "center",
               justifyItems: "center",
               minHeight: "2rem",
@@ -104,9 +104,8 @@ export default function ChaptersList({
             onDragEnd={handleDragEnd}
             onDragOver={handleDragOver(index)}
           >
-            <div>{index + 1}</div>
-            <Link to={`chapters/${chapter.id}`} style={{ justifySelf: "left" }}>
-              {chapter.title}
+            <Link to={`chapters/${chapter.id}`} className={styles.chapterTitle}>
+              <strong>{index + 1}.</strong> {chapter.title}
             </Link>
             <div>
               <DeleteButton
@@ -114,7 +113,7 @@ export default function ChaptersList({
                 openDeleteModal={openDeleteModal}
               />
             </div>
-            <div>
+            <div className={styles.draggableIcon}>
               <i className="ri-draggable" />
             </div>
           </div>
@@ -131,6 +130,6 @@ export default function ChaptersList({
           </>
         )}
       </form>
-    </>
+    </div>
   );
 }

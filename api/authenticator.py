@@ -3,6 +3,7 @@ from fastapi import Depends
 from jwtdown_fastapi.authentication import Authenticator
 from models.authors import AuthorPasswordOut, AuthorOut
 from queries.authors import AuthorQueries
+from datetime import timedelta
 
 
 class AuthorAuthenticator(Authenticator):
@@ -33,4 +34,5 @@ class AuthorAuthenticator(Authenticator):
         return account.username, AuthorOut(**account.dict())
 
 
-authenticator = AuthorAuthenticator(os.environ["SIGNING_KEY"])
+time_delta = timedelta(weeks=1)
+authenticator = AuthorAuthenticator(os.environ["SIGNING_KEY"], exp=time_delta)

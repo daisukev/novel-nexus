@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import useToken from "../jwt.tsx";
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from "react-router-dom";
+import styles from "./styles/SignupForm.module.css";
+import Nav from "../pages/Nav/Nav";
 export default function SignupForm() {
   const navigate = useNavigate();
   const { register } = useToken();
@@ -34,7 +36,7 @@ export default function SignupForm() {
     register(userData, url);
 
     // navigate to home page
-    navigate("/home")
+    navigate("/home");
   };
 
   useEffect(() => {
@@ -49,46 +51,51 @@ export default function SignupForm() {
     }
   }, [formData]);
 
-  const passwordMismatch = <span style={{ color: "red" }}>{errorMessage}</span>;
+  const passwordMismatch = <span className={styles.error}>{errorMessage}</span>;
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
   return (
     <>
-      <h1>Sign Up</h1>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="username">username:</label>
-          <input
-            type="text"
-            name="username"
-            onChange={handleChange}
-            value={formData.username}
-          />
-        </div>
+      <Nav />
+      <div className={styles.container}>
+        <div className={styles.signupForm}>
+          <h1>Sign Up</h1>
+          <form onSubmit={handleSubmit}>
+            <div>
+              <label htmlFor="username">username:</label>
+              <input
+                type="text"
+                name="username"
+                onChange={handleChange}
+                value={formData.username}
+              />
+            </div>
 
-        <div>
-          <label htmlFor="password">password:</label>
-          <input
-            type="password"
-            name="password"
-            onChange={handleChange}
-            value={formData.password}
-          />
+            <div>
+              <label htmlFor="password">password:</label>
+              <input
+                type="password"
+                name="password"
+                onChange={handleChange}
+                value={formData.password}
+              />
+            </div>
+            <div>
+              <label htmlFor="confirmPassword">confirm password:</label>
+              <input
+                type="password"
+                name="confirmPassword"
+                onChange={handleChange}
+                value={formData.confirmPassword}
+              />
+              {showError && passwordMismatch}
+            </div>
+            <button type="submit">Submit</button>
+          </form>
         </div>
-        <div>
-          <label htmlFor="confirmPassword">confirm password:</label>
-          <input
-            type="password"
-            name="confirmPassword"
-            onChange={handleChange}
-            value={formData.confirmPassword}
-          />
-          {showError && passwordMismatch}
-        </div>
-        <button type="submit">Submit</button>
-      </form>
+      </div>
     </>
   );
 }

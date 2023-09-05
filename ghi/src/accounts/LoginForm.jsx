@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
 import useToken from "../jwt.tsx";
+import styles from "./styles/LoginForm.module.css";
 
 import { useNavigate, useSearchParams } from "react-router-dom";
+import Nav from "../pages/Nav/Nav";
 
 export default function LoginForm() {
   const navigate = useNavigate();
@@ -20,7 +22,7 @@ export default function LoginForm() {
         console.log("navigating to ", prev);
         navigate(prev);
       } else {
-        navigate("/books");
+        navigate("/home");
       }
     }
   }, [token]);
@@ -42,30 +44,38 @@ export default function LoginForm() {
   };
   return (
     <>
-      <h1>Login</h1>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="username">username:</label>
-          <input
-            type="text"
-            name="username"
-            onChange={handleChange}
-            value={formData.username}
-          />
-        </div>
+      <Nav />
+      <div className={styles.container}>
+        <div className={styles.loginForm}>
+          <h1>Login</h1>
+          <form onSubmit={handleSubmit}>
+            <div>
+              <label htmlFor="username">username:</label>
+              <input
+                tabIndex={1}
+                type="text"
+                name="username"
+                onChange={handleChange}
+                value={formData.username}
+                authofocus
+              />
+            </div>
 
-        <div>
-          <label htmlFor="password">password:</label>
-          <input
-            type="password"
-            name="password"
-            onChange={handleChange}
-            value={formData.password}
-          />
-          <span style={{ color: "red" }}>{message}</span>
+            <div>
+              <label htmlFor="password">password:</label>
+              <input
+                tabIndex={2}
+                type="password"
+                name="password"
+                onChange={handleChange}
+                value={formData.password}
+              />
+              <span className={styles.error}>{message}</span>
+            </div>
+            <button type="submit">Log In</button>
+          </form>
         </div>
-        <button type="submit">Log In.</button>
-      </form>
+      </div>
     </>
   );
 }

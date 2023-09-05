@@ -1,0 +1,46 @@
+.chaptersList {
+  font-family: var(--sans-serif-font);
+  font-weight: 400;
+}
+.chaptersList > a:hover {
+  background: red;
+}
+
+.chapterListDraggable {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  padding: 0.5rem;
+  grid-template-columns: 1fr auto auto;
+  gap: 0.75rem;
+  height: 2rem;
+  max-height: 2rem;
+}
+
+.chapterTitle {
+  width: min(20ch, 100%);
+  justify-self: start;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  position: relative;
+}
+
+.chapterListDraggable:hover {
+  cursor: grab;
+  background: var(--background-darker);
+}
+.chapterListDraggable:active {
+  cursor: grabbing;
+  transform: translate(1px, 1px);
+}
+.chapterListDraggable:active .draggableIcon {
+  cursor: grabbing;
+  font-weight: bold;
+  color: black;
+}
+
+.darken {
+  background: var(--background-darker);
+  filter: brightness(80%);
+}

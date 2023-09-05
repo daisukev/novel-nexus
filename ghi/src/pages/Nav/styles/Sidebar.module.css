@@ -1,0 +1,73 @@
+.container {
+  display: grid;
+  grid-template-columns: auto 1fr;
+}
+
+.nav {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+.nav ul {
+  padding-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.sidebar {
+  width: 0px;
+  background: var(--background-darker);
+  overflow-x: hidden;
+  overflow-y: auto;
+  border-right: 1px solid var(--secondary);
+  transition: width 80ms cubic-bezier(0.1, -0.6, 0.2, 0);
+}
+
+.sidebarHeader {
+  display: flex;
+  justify-content: space-around;
+}
+
+.closeButton {
+  align-self: flex-start;
+}
+.sidebar h1 {
+  font-weight: 300;
+  display: inline;
+}
+
+.sidebarOpen {
+  padding-inline: 1rem;
+  padding-top: 0.5rem;
+  width: 100%;
+  z-index: 9999;
+  height: 100vh;
+  overflow-y: auto;
+}
+
+.closeButton {
+  font-size: 30px;
+  background: transparent;
+  border: none;
+}
+.closeButton:hover {
+  cursor: pointer;
+}
+
+.sidebar a {
+  font-size: 1.2rem;
+  display: block;
+  color: var(--text);
+}
+.sidebar a:hover {
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-decoration-color: var(--accent);
+}
+
+@media (min-width: 600px) {
+  .sidebarOpen {
+    width: 325px;
+  }
+}

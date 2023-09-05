@@ -1,0 +1,27 @@
+.avatar {
+  width: 50px;
+  height: 50px;
+  max-width: 50px;
+  max-height: 50px;
+  border-radius: 50%;
+  overflow: hidden;
+  position: relative;
+  background: var(--secondary);
+}
+.avatar img {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+}
+
+.side {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.side a:hover {
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-decoration-color: var(--accent);
+}

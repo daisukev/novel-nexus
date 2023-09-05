@@ -1,0 +1,61 @@
+@import url("https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Poppins:wght@100;300;400;500;700;900&display=swap");
+:root {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  --text: hsl(0, 0%, 18%);
+  --background-lighter: hsl(36, 28%, 99%);
+  --background: hsl(36, 63%, 97%);
+
+  /* --background-darker: hsl(36, 23%, 77%); */
+  --background-slightly-darker: #dbd5cc;
+  --background-darker: hsl(36, 28%, 93%);
+  --primary: hsl(222, 57%, 23%);
+  --primary-lighter: hsl(222, 37%, 33%);
+  --secondary: hsl(36, 17%, 53%);
+  --secondary-darker: hsl(36, 17%, 23%);
+  --accent: hsl(18, 70%, 52%);
+  --error-color: hsl(359, 47%, 47%);
+  --success-color: hsl(142, 27%, 51%);
+  --sans-serif-font: "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI",
+    Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
+    "Segoe UI Symbol";
+  --serif-font: "Libre Baskerville", "Georgia", "Times", "Times New Roman",
+    serif;
+  --code-fonts: "SFMono-Regular", "Menlo", "Monaco", "Consolas",
+    "Liberation Mono", "Courier New", monospace;
+
+  ::-webkit-scrollbar {
+    scrollbar-gutter: stable;
+  }
+  ::-webkit-scrollbar-track {
+    background: var(--background);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: hsl(36, 17%, 53%);
+  }
+  @supports (scrollbar-color: teal green) {
+    scrollbar-color: hsl(36, 17%, 53%) var(--background);
+  }
+
+  caret-color: hsl(36, 17%, 33%);
+}
+
+.root {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  background: var(--background);
+  color: var(--text);
+  font-family: var(--sans-serif-font);
+  display: grid;
+  grid-template-columns: auto 1fr;
+  min-height: 100vh;
+  height: 100%;
+}
+
+.main {
+  overflow-y: auto;
+  height: 100vh;
+  scroll-behavior: smooth;
+}

@@ -1,0 +1,66 @@
+.bookCoverUpload {
+  --book-width: 100%;
+  --book-pages: 3%;
+  --click-transform: 3px;
+  position: relative;
+  display: grid;
+  place-content: center;
+  width: var(--book-width);
+  aspect-ratio: 6/9;
+  background: var(--secondary);
+  border-radius: 8px;
+  box-sizing: border-box;
+  border-right: 5px solid hsl(36, 13%, 94%);
+  border-bottom: 5px solid hsl(36, 13%, 85%);
+  margin: 1rem;
+  transition: transform 0.1s ease-out;
+  box-shadow: 4px 4px 5px 0px rgb(0 0 0 / 0.33);
+  justify-self: end;
+}
+
+.bookCoverUpload:hover {
+  transform: rotate(-1deg);
+  cursor: pointer;
+}
+
+.bookCoverUpload:active {
+  transform: translate(var(--click-transform), var(--click-transform))
+    rotate(0deg);
+}
+
+.bookCoverUpload img {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: filter 100ms ease-out;
+}
+
+.bookCoverUpload img:hover {
+  filter: brightness(67%);
+}
+
+@media (min-width: 768px) {
+  .bookCoverUpload {
+    filter: drop-shadow(10px 10x 20px hsl(36, 23%, 77%));
+  }
+}
+@media (min-width: 1200px) {
+  .bookCoverUpload {
+    filter: drop-shadow(10px 10x 20px hsl(36, 23%, 77%));
+  }
+}
+
+/* .hoverIndicator { */
+/*   position: absolute; */
+/*   top: 0; */
+/*   left: 0; */
+/*   width: 100%; */
+/*   height: 100%; */
+/*   z-index: 1000; */
+/*   transition: background 100ms ease-in; */
+/* } */
+/**/
+/* .hoverIndicator:hover { */
+/*   background: rgb(0 0 0 / 0.2); */
+/* } */

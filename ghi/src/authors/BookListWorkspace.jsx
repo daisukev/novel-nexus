@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import useToken from "../jwt.tsx";
 import { Link } from "react-router-dom";
 import withAuthRedirect from "../components/withAuthRedirect";
+import Nav from "../pages/Nav/Nav";
+import styles from "./styles/BookListWorkspace.module.css";
 
 function BookListWorkspace() {
   const { token, fetchWithToken, tokenFetchError } = useToken();
@@ -68,21 +70,24 @@ function BookListWorkspace() {
     }
   };
   return (
-    <div>
-      <h1>Workspace</h1>
-      <h2>My Books</h2>
-      <form onSubmit={addBook}>
-        <label htmlFor="title">Book Title:</label>
-        <input
-          name="title"
-          placeholder="Enter Title"
-          type="text"
-          value={bookTitle}
-          onChange={(e) => setBookTitle(e.target.value)}
-        />
-        <button type="submit">Add Book</button>
-      </form>
-      <BookList books={books} fetchBooks={fetchBooks} />
+    <div className={styles.container}>
+      <Nav />
+      <div className={styles.bookListWorkspace}>
+        <h1>Workspace</h1>
+        <h2>My Books</h2>
+        <form onSubmit={addBook}>
+          <label htmlFor="title">Book Title:</label>
+          <input
+            name="title"
+            placeholder="Enter Title"
+            type="text"
+            value={bookTitle}
+            onChange={(e) => setBookTitle(e.target.value)}
+          />
+          <button type="submit">Add Book</button>
+        </form>
+        <BookList books={books} fetchBooks={fetchBooks} />
+      </div>
     </div>
   );
 }
@@ -202,6 +207,8 @@ function DeleteBookModal({ closeDeleteModal, bookToDelete, fetchBooks }) {
   useEffect(() => {
     if (deleteConfirmation === bookToDelete.title) {
       setCanDelete(true);
+    } else {
+      setCanDelete(false);
     }
   }, [deleteConfirmation, bookToDelete.title]);
 
@@ -256,9 +263,9 @@ function DeleteBookModal({ closeDeleteModal, bookToDelete, fetchBooks }) {
       {/* rome-ignore lint: The key handler is attached to the window.  */}
       <div
         style={{
-          background: "white",
-          width: "50%",
-          height: "25%",
+          background: "var(--background)",
+          width: "60ch",
+          height: "20rem",
           display: "grid",
           alignItems: "center",
           justifyItems: "center",
@@ -271,7 +278,15 @@ function DeleteBookModal({ closeDeleteModal, bookToDelete, fetchBooks }) {
             Are you sure you want to delete? This cannot be undone. To delete,
             please type the name of the book exactly as typed:
           </p>
-          <p style={{ background: "#ccc" }}>{bookToDelete.title}</p>
+          <p
+            style={{
+              background: "var(--background-darker)",
+              border: "var(--accent)",
+              padding: "1rem",
+            }}
+          >
+            {bookToDelete.title}
+          </p>
           <p>
             <label htmlFor="deleteConfirm" hidden>
               Confirm Deletion:
@@ -281,12 +296,29 @@ function DeleteBookModal({ closeDeleteModal, bookToDelete, fetchBooks }) {
               type="text"
               value={deleteConfirmation}
               onChange={(e) => setDeleteConfirmation(e.target.value)}
+              style={{ padding: "1rem" }}
             />
           </p>
-          <button type="button" onClick={() => closeDeleteModal()}>
+          <button
+            type="button"
+            onClick={() => closeDeleteModal()}
+            style={{
+              paddingBlock: "0.25rem",
+              paddingInline: "0.75rem",
+            }}
+          >
             Cancel
           </button>
-          <button type="submit" disabled={!canDelete}>
+          <button
+            type="submit"
+            disabled={!canDelete}
+            style={{
+              background: "var(--error-color)",
+              color: "var(--background-lighter)",
+              paddingBlock: "0.25rem",
+              paddingInline: "0.75rem",
+            }}
+          >
             Delete
           </button>
         </form>

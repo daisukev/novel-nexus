@@ -1,0 +1,109 @@
+.chapterView {
+  display: grid;
+  background: var(--background);
+  font-family: var(--serif-font);
+  color: var(--text);
+  grid-template-columns: 1fr;
+  min-height: 100vh;
+  height: auto;
+}
+.chapterTitle {
+  text-align: center;
+  margin-block: 7rem;
+}
+.chapterContainer {
+  grid-column: 1;
+  padding: 1rem;
+  max-width: 65ch;
+}
+.sidebar {
+  grid-column: 1;
+}
+.sidebar > div {
+  position: sticky;
+  top: 20px;
+  font-size: 1.5rem;
+  /* border: 1px solid var(--background-darker); */
+  margin: 1rem;
+  padding: 1rem;
+}
+
+.chapterContent {
+  writing-mode: horizontal-tb;
+  width: 100%;
+  max-width: 65ch;
+  line-height: 1.9;
+  margin-bottom: 7rem;
+}
+
+.chapterContent > * {
+  font-family: var(--serif-font);
+}
+
+.chapterContent p {
+  margin-block: 0.65rem;
+}
+
+.chapterContent pre {
+  width: auto;
+  height: auto;
+  white-space: pre-wrap;
+  overflow: auto;
+  scroll-behavior: smooth;
+  margin-block: 2rem;
+  width: 100%;
+  border: 1px solid var(--background-darker);
+  padding-inline: 1rem;
+  padding-block: 2rem;
+}
+.chapterContent code {
+  font: var(--code-fonts);
+  background: unset;
+  color: var(--text);
+  font-size: 1rem;
+}
+
+/* maybe move it over to the right, maybe just get rid of it */
+.bookCover {
+  height: 50px;
+  aspect-ratio: 6/9;
+  box-shadow: 4px 4px 5px 0px rgb(0 0 0 / 0.33);
+}
+
+.navContainer {
+  display: flex;
+  flex-direction: row-reverse;
+  gap: 20px;
+  align-items: center;
+  place-content: start center;
+}
+
+.bookTitle:hover {
+  text-decoration: underline;
+  text-decoration-color: var(--accent);
+  text-decoration-thickness: 4px;
+}
+
+@media (min-width: 768px) {
+  .navContainer {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+    justify-content: center;
+  }
+  .bookCover {
+    width: min(150px, 100%);
+    height: auto;
+    border-right: 5px solid hsl(36, 13%, 94%);
+    border-bottom: 5px solid hsl(36, 13%, 85%);
+  }
+  .chapterView {
+    grid-template-columns: 1fr minmax(75ch, auto) 1fr;
+  }
+  .chapterContainer {
+    grid-column: 2;
+  }
+  .chapterView h1 {
+    margin-block: 10rem;
+  }
+}

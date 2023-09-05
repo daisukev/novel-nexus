@@ -1,0 +1,36 @@
+.genreList {
+  display: flex;
+  gap: 0.5rem;
+}
+.genreCard {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--secondary);
+  color: var(--background-lighter);
+  border-radius: 5px;
+}
+.genreName {
+  padding-inline: 0.5rem;
+}
+
+.deleteButton {
+  padding: 0.25rem;
+  font-size: 1rem;
+  border: none;
+  border-left: 1px solid var(--background-lighter);
+  background: var(--secondary);
+  color: var(--background-lighter);
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+
+.deleteButton:hover {
+  font-weight: bold;
+  cursor: pointer;
+  background: var(--secondary-darker);
+}
+
+.deleteButton:active {
+  transform: translate(1px, 1px);
+}

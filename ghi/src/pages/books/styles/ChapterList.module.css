@@ -1,0 +1,51 @@
+.chapterList {
+  padding-block: 3rem;
+}
+
+.chapterListRow {
+  font-size: 1.25rem;
+  display: grid;
+  grid-template-columns: auto auto 1fr auto 8rem;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  border-bottom: 1px dotted var(--background-slightly-darker);
+  gap: 1rem;
+}
+
+.chapterListRow a {
+}
+
+.chapterListRow:hover {
+  background: var(--background);
+}
+
+.bookImage {
+  aspect-ratio: 6/9;
+}
+
+.chapterTitle {
+  display: block;
+  display: grid;
+  align-items: center;
+  height: 100%;
+  flex-grow: 1;
+  overflow: hidden;
+  white-space: wrap;
+  text-overflow: ellipsis;
+}
+
+.readNowButton {
+  text-align: center;
+  background: var(--primary);
+  color: var(--background-lighter);
+  font-size: 1rem;
+  padding-inline: 1rem;
+  padding-block: 0.25rem;
+}
+
+.readNowButton:hover {
+  cursor: pointer;
+  background: hsl(222, 36%, 43%);
+}
