@@ -1,0 +1,9 @@
+.genre {
+  border: 2px solid var(--secondary);
+  padding-inline: 0.25rem;
+  border-radius: 5px;
+  text-align: center;
+  font-weight: 500;
+  background: var(--secondary);
+  color: var(--background-lighter);
+}

@@ -55,11 +55,6 @@ const ChapterView = () => {
     <div className={styles.chapterView} id="chapter-top">
       <div className={styles.sidebar}>
         <div className={styles.navContainer}>
-          {/* <img */}
-          {/*   src={book.cover} */}
-          {/*   className={styles.bookCover} */}
-          {/*   alt={`book cover of ${book.title}`} */}
-          {/* /> */}
           <Link to={`/books/${book.id}`} className={styles.bookTitle}>
             <i className="ri-arrow-left-line" />
             {book.title}

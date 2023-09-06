@@ -1,0 +1,21 @@
+.bookCardOnListBook {
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
+  justify-content: space-between;
+}
+
+.bookCoverOnListBook {
+  aspect-ratio: 6/9;
+  width: 200px;
+}
+
+.genres {
+  width: 100%;
+  padding-inline: 5rem;
+  gap: 1rem;
+  height: 100%;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 200px);
+  justify-content: space-around;
+}

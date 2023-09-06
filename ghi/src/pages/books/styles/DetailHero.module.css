@@ -14,7 +14,7 @@
 }
 
 .bookInfo address {
-  margin-block: 2rem;
+  margin-block: 1rem;
 }
 
 .title {
@@ -49,6 +49,13 @@
 .lower {
   grid-area: 3 / 1 / 5 / 6;
   background: var(--background-lighter);
+}
+
+.bookDetailGenres {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding-block: 0.5rem;
 }
 
 /* For presentation only, no need to copy the code below */

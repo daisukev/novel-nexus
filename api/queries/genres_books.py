@@ -88,7 +88,7 @@ class GenresBooksQueries:
                         FROM books b
                         JOIN genres_books bg ON b.id = bg.book_id
                         JOIN genres g ON bg.genre_id = g.id
-                        WHERE g.name = %s;
+                        WHERE g.name = %s AND b.is_published = true;
                         """,
                         (genre,),
                     )

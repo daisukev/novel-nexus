@@ -1,6 +1,22 @@
 import styles from "../styles/DetailHero.module.css";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
+import GenresTag from "../GenresTag";
+import { useEffect, useState } from "react";
 const DetailHero = ({ book, author, children }) => {
+  const { bookId } = useParams();
+  const [genres, setGenres] = useState([]);
+
+  useEffect(() => {
+    if (bookId) fetchGenres();
+  }, [bookId]);
+
+  const fetchGenres = async () => {
+    const url = `http://localhost:8000/api/books/${bookId}/genres`;
+
+    const res = await fetch(url);
+    const { genres } = await res.json();
+    setGenres(genres);
+  };
   return (
     <div className={styles.container}>
       <div className={styles.upper} />
@@ -23,6 +39,14 @@ const DetailHero = ({ book, author, children }) => {
               : author.username}
           </Link>
         </address>
+
+        <div className={styles.bookDetailGenres}>
+          {genres.map((genre) => {
+            return (
+              <GenresTag key={genre.name + genre.id + bookId} genre={genre} />
+            );
+          })}
+        </div>
         <p>{book.summary}</p>
         {children}
       </section>
