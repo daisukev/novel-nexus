@@ -1,0 +1,10 @@
+.autoUpdated {
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+  width: 100%;
+  color: var(--secondary);
+  font-size: 0.9rem;
+  font-style: oblique;
+  text-align: right;
+}

@@ -8,15 +8,18 @@ import Typography from "@tiptap/extension-typography";
 import { useOutletContext } from "react-router-dom";
 import { ChaptersContext } from "./BookDetailWorkspace";
 import { useMessageContext } from "../MessageContext";
+import styles from "./styles/ChapterEditor.module.css";
 
 import "./tiptap.css";
 
 export default function ChapterEditor() {
   const { MESSAGE_TYPES, createMessage } = useMessageContext();
+  const [autoSaveMessage, setAutoSaveMessage] = useState("");
   const containerRef = useRef(null);
   const [containerHeight, setContainerHeight] = useState("20rem");
   const [chapter, setChapter] = useState({});
   const [content, setContent] = useState("");
+  const [autoSaveTimer, setAutoSaveTimer] = useState(null);
   const { chapterId } = useParams();
   const { bookId } = useParams();
   const { fetchWithToken, token } = useToken();
@@ -27,9 +30,18 @@ export default function ChapterEditor() {
     content: content,
     onUpdate: ({ editor }) => {
       const html = editor.getHTML();
+      startAutoSaveTimer();
       setContent(html);
     },
   });
+
+  const startAutoSaveTimer = () => {
+    clearTimeout(autoSaveTimer);
+    const timer = setTimeout(() => {
+      updateChapterContent(true);
+    }, 5000);
+    setAutoSaveTimer(timer);
+  };
 
   const windowResize = () => {
     if (containerRef.current) {
@@ -43,6 +55,7 @@ export default function ChapterEditor() {
     window.addEventListener("resize", windowResize);
     return () => {
       window.removeEventListener("resize", windowResize);
+      clearTimeout(autoSaveTimer);
     };
   }, []);
 
@@ -57,6 +70,7 @@ export default function ChapterEditor() {
         chapterContent = "<p>Edit Me!</p>";
       }
       setContent(chapterContent);
+      setAutoSaveMessage("");
       editor.commands.setContent(chapterContent);
     }
   }, [chapter]);
@@ -76,19 +90,33 @@ export default function ChapterEditor() {
   };
 
   const updateChapterContent = async (autosave = false) => {
+    const updatedContent = editor.getHTML();
+    setContent(updatedContent);
     const url = `${process.env.REACT_APP_API_HOST}/api/books/${bookId}/chapters/${chapterId}`;
     const headers = {
       "Content-Type": "application/json",
     };
     const options = {
-      body: JSON.stringify({ content: content }),
+      body: JSON.stringify({ content: updatedContent }),
     };
 
     try {
       const data = await fetchWithToken(url, "PUT", headers, options);
 
-      if (autosave) createMessage("Autosaved Chapter", MESSAGE_TYPES.SUCCESS);
-      else createMessage(`Saved "${data.title}"`, MESSAGE_TYPES.SUCCESS);
+      if (autosave) {
+        const options = {
+          year: "numeric",
+          month: "short",
+          day: "numeric",
+          hour: "numeric",
+          minute: "numeric",
+          hour12: true,
+        };
+        const dateTimeFormatter = new Intl.DateTimeFormat("en-US", options);
+        const formattedDate = dateTimeFormatter.format(Date.now());
+        setAutoSaveMessage(`Autosaved on: ${formattedDate}`);
+        createMessage("Autosaved Chapter", MESSAGE_TYPES.SUCCESS);
+      } else createMessage(`Saved "${data.title}"`, MESSAGE_TYPES.SUCCESS);
     } catch (e) {
       createMessage("Could not save chapter.", MESSAGE_TYPES.ERROR);
       console.error(e);
@@ -161,6 +189,7 @@ export default function ChapterEditor() {
           <MenuBar
             editor={editor}
             updateChapterContent={updateChapterContent}
+            autoSaveMessage={autoSaveMessage}
           />
           <EditorContent
             editor={editor && editor}
@@ -174,7 +203,7 @@ export default function ChapterEditor() {
   }
 }
 
-function MenuBar({ editor, containerRef, updateChapterContent }) {
+function MenuBar({ editor, updateChapterContent, autoSaveMessage }) {
   //remixicon.com/
   return (
     <div className="editor-menu-bar">
@@ -270,6 +299,7 @@ function MenuBar({ editor, containerRef, updateChapterContent }) {
       <button type="button" onClick={() => updateChapterContent()}>
         <i className="ri-save-3-line" />
       </button>
+      <div className={styles.autoUpdated}>{autoSaveMessage}</div>
     </div>
   );
 }
