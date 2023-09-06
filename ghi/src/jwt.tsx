@@ -218,7 +218,7 @@ const useToken = () => {
     });
 
     if (!response.ok) {
-      throw new Error("Request Failed");
+      throw new Error(response.statusText);
     }
     return await response.json();
   };

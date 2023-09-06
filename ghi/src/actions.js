@@ -47,4 +47,5 @@ const fetchChapters = async (bookId) => {
     console.error(e, "error while fetching chapters");
   }
 };
+
 export { fetchBook, fetchAuthor, fetchChapters, fetchAllBooks };

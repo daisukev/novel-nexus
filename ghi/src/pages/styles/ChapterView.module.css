@@ -84,6 +84,18 @@
   text-decoration-thickness: 4px;
 }
 
+.chapterNavigation {
+  margin-block: 2rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: space-between;
+}
+.chapterView a:hover {
+  text-decoration: underline;
+  text-decoration-color: var(--accent);
+}
+
 @media (min-width: 768px) {
   .navContainer {
     display: grid;

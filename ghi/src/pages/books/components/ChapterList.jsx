@@ -1,8 +1,36 @@
+import { useEffect, useState, useMemo } from "react";
 import styles from "../styles/ChapterList.module.css";
 import { Link } from "react-router-dom";
+import useToken from "../../../jwt.tsx";
 const ChapterList = ({ chapterList, book }) => {
+  const { token, fetchWithToken } = useToken();
+  const [readHistory, setReadHistory] = useState([]);
+  const fetchReadHistory = async () => {
+    const url = `${process.env.REACT_APP_API_HOST}/api/my/history`;
+    try {
+      const { read_history } = await fetchWithToken(url);
+      setReadHistory(read_history);
+      // console.log(read_history);
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  const chapterIdsRead = useMemo(() => {
+    if (!readHistory || !chapterList) return new Set();
+
+    return new Set(
+      readHistory.map((item) => {
+        return item.chapter_id;
+      })
+    );
+  }, [readHistory, chapterList]);
+
+  useEffect(() => {
+    if (token) fetchReadHistory();
+  }, [token]);
   //TODO: add sorting by attributes
-  const sorted = (chapterList) => {};
+  //TODO: just refactor this to be a table.
   return (
     <div className={styles.chapterList}>
       <h1>Chapter List</h1>
@@ -14,7 +42,6 @@ const ChapterList = ({ chapterList, book }) => {
           >
             <img
               src={book.cover}
-              height="50px"
               alt={`cover of ${book.title}`}
               className={styles.bookImage}
             />
@@ -32,6 +59,11 @@ const ChapterList = ({ chapterList, book }) => {
             >
               Read Now
             </Link>
+            <span>
+              {chapterIdsRead.has(chapter.id) && (
+                <i className="ri-check-line" />
+              )}
+            </span>
           </div>
         );
       })}
