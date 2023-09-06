@@ -13,6 +13,7 @@ function BookList() {
     (async () => {
       try {
         const books = await fetchAllBooks();
+        console.log("BOOOKS", books);
         setBookList(books);
       } catch (e) {
         console.error(e);
@@ -20,44 +21,6 @@ function BookList() {
     })();
   }, []);
 
-  // async function handleBookList() {
-  //   const url = "http://localhost:8000/api/books";
-  //
-  //   try {
-  //     let response = await fetch(url);
-  //     if (response.ok) {
-  //       const data = await response.json();
-  //       const genresPromises = data.map(async (book) => {
-  //         const genreResponse = await fetch(
-  //           `http://localhost:8000/api/books/${book.id}/genres`
-  //         );
-  //         if (genreResponse.ok) {
-  //           const genreData = await genreResponse.json();
-  //           if (genreData.genres && genreData.genres[0]) {
-  //             book.genre = genreData.genres[0].name;
-  //           } else {
-  //             book.genre = "All Books";
-  //           }
-  //           return book;
-  //         } else {
-  //           console.error("Book not associated with genre:", book.id);
-  //         }
-  //       });
-  //
-  //       const booksWithGenres = await Promise.all(genresPromises);
-  //       const categorizedData = categorizeByGenre(booksWithGenres);
-  //       setBookList(categorizedData);
-  //     } else {
-  //     }
-  //   } catch (e) {
-  //     console.error("catching error while fetching book list", e);
-  //   }
-  // }
-  //
-  // useEffect(() => {
-  //   handleBookList();
-  // }, []);
-  //
   function categorizeByGenre(booksWithGenres) {
     let genres = {};
 

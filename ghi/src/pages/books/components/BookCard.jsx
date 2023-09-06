@@ -3,20 +3,21 @@ import { Link } from "react-router-dom";
 import { fetchAuthor } from "../../../actions";
 import styles from "../styles/BookCard.module.css";
 const BookCard = ({ book }) => {
-  const [author, setAuthor] = useState({});
-
-  useEffect(() => {
-    if (book.author_id) {
-      (async () => {
-        try {
-          const author = await fetchAuthor(book.author_id);
-          setAuthor(author);
-        } catch (e) {
-          console.error(e);
-        }
-      })();
-    }
-  }, [book]);
+  console.log(book);
+  // const [author, setAuthor] = useState({});
+  //
+  // useEffect(() => {
+  //   if (book.author_id) {
+  //     (async () => {
+  //       try {
+  //         const author = await fetchAuthor(book.author_id);
+  //         setAuthor(author);
+  //       } catch (e) {
+  //         console.error(e);
+  //       }
+  //     })();
+  //   }
+  // }, [book]);
 
   return (
     <div className={styles.card}>
@@ -36,10 +37,10 @@ const BookCard = ({ book }) => {
         </h2>
         <address className={styles.author}>
           By{" "}
-          <a href={`/profile/view/${author.username}`}>
-            {author.first_name || author.last_name
-              ? `${author.first_name} ${author.last_name}`
-              : author.username}
+          <a href={`/profile/view/${book.author_username}`}>
+            {book.author_first_name || book.author_last_name
+              ? `${book.author_first_name} ${book.author_last_name}`
+              : book.author_username}
           </a>
         </address>
         <div className={styles.descriptionContainer}>

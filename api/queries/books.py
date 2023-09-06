@@ -32,6 +32,20 @@ class BookOut(BaseModel):
     updated_at: Optional[datetime]
 
 
+class BooksAuthorsOut(BaseModel):
+    id: int
+    title: Optional[str]
+    author_id: Optional[int]
+    summary: Optional[str]
+    cover: Optional[str] = Field(None, max_length=255)
+    is_published: bool = Field(default=False)
+    created_at: datetime = Field(default_factory=datetime)
+    updated_at: Optional[datetime]
+    author_first_name: Optional[str]
+    author_last_name: Optional[str]
+    author_username: str
+
+
 class BookUpdate(BaseModel):
     title: Optional[str]
     summary: Optional[str]
@@ -132,7 +146,7 @@ class BookRepository:
         except Exception:
             return {"message": "Error at update book"}
 
-    def get_all(self) -> Union[Error, List[BookOut]]:
+    def get_all(self) -> Union[Error, List[BooksAuthorsOut]]:
         try:
             # connect the database
             with pool.connection() as conn:
@@ -141,19 +155,35 @@ class BookRepository:
                     # Run our SELECT statement
                     cur.execute(
                         """
-                        SELECT id, title, author_id, summary,
-                        cover, is_published, created_at,
-                        updated_at
-                        FROM books
-                        ORDER BY id
+                        SELECT
+                        b.id,
+                        b.title,
+                        b.summary,
+                        b.cover,
+                        b.is_published,
+                        b.created_at,
+                        b.updated_at,
+                        a.id AS author_id,
+                        a.first_name AS author_first_name,
+                        a.last_name AS author_last_name,
+                        a.username AS author_username
+                        FROM
+                        books b
+                        JOIN authors a ON b.author_id = a.id
+                        WHERE
+                        b.is_published = TRUE
+                        ORDER BY
+                        b.title;
                         """
                     )
                     results = []
-                    for row in cur.fetchall():
+                    all = cur.fetchall()
+                    for row in all:
                         record = {}
                         for i, column in enumerate(cur.description):
                             record[column.name] = row[i]
-                        results.append(BookOut(**record))
+                        results.append(BooksAuthorsOut(**record))
+                        print(results[0])
 
                     return results
 

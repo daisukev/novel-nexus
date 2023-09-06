@@ -4,6 +4,7 @@ from queries.books import (
     BookRepository,
     BookOut,
     BookUpdate,
+    BooksAuthorsOut,
     Error,
     SearchListOut,
 )
@@ -33,7 +34,9 @@ def create_book(
 
 
 @router.get(
-    "/api/books", tags=["Books"], response_model=Union[List[BookOut], Error]
+    "/api/books",
+    tags=["Books"],
+    response_model=Union[List[BooksAuthorsOut], Error],
 )
 def get_all(repo: BookRepository = Depends()):
     return repo.get_all()
