@@ -1,4 +1,4 @@
-from typing import Dict
+from typing import Dict, List, Union
 from fastapi import APIRouter, Depends, HTTPException
 from models.authors import AuthorOut
 from models.genres import Genre
@@ -10,7 +10,6 @@ from queries.books import (
     BookOut,
     Error,
 )
-
 router = APIRouter()
 
 
