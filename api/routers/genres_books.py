@@ -1,4 +1,4 @@
-from typing import Dict, List, Union
+from typing import Dict
 from fastapi import APIRouter, Depends, HTTPException
 from models.authors import AuthorOut
 from models.genres import Genre

@@ -3,9 +3,7 @@ from api_pool import pool
 from models.genres import Genre
 from models.genres_books import GenreBook
 from fastapi import HTTPException
-from queries.books import (
-    BookOut
-)
+from queries.books import BookOut
 
 
 class GenresBooksQueries:
