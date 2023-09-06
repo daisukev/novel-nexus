@@ -19,6 +19,7 @@ import BookDetail from "./pages/books/BookDetail.js";
 import ChapterEditor from "./authors/ChapterEditor.jsx";
 import SearchBar from "./pages/books/SearchBar/index.js";
 import withAuthRedirect from "./components/withAuthRedirect";
+import Genres from "./pages/books/Genres"
 import styles from "./App.module.css";
 import Sidebar from "./pages/Nav/Sidebar";
 import MessageProvider from "./MessageContext";
@@ -96,6 +97,7 @@ function App() {
                 </Route>
                 <Route path="/books" element={<BookList />} />
                 <Route path="/books/search" element={<SearchBar />} />
+                <Route path="/books/genres/:genre" element={<Genres />} />
                 <Route path="/books/:bookId" element={<BookDetail />} />
                 <Route
                   path="/books/:bookId/chapters/:chapterId"

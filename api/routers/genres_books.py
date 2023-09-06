@@ -6,6 +6,11 @@ from models.genres_books import GenreBook, GenreBookIn
 from queries.genres_books import GenresBooksQueries
 from authenticator import authenticator
 from utils import get_book_author
+from queries.books import (
+    BookOut,
+    Error,
+)
+from typing import Union, List
 
 router = APIRouter()
 
@@ -41,6 +46,17 @@ def get_book_genres(
     book_id: int, queries: GenresBooksQueries = Depends()
 ) -> Dict[str, List[Genre]]:
     return {"genres": queries.get_book_genres(book_id)}
+
+
+@router.get(
+    "/api/books/genres/{genre}",
+    tags=["Genres"],
+    response_model=Union[List[BookOut], Error],
+)
+def get_books_by_genres(
+    genre: str, repo: GenresBooksQueries = Depends()
+) -> Union[BookOut, Error]:
+    return repo.get_books(genre)
 
 
 @router.delete(

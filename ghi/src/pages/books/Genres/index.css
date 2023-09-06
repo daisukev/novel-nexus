@@ -1,0 +1,5 @@
+.book-card-on-listBook {
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
+}

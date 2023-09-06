@@ -3,6 +3,9 @@ from api_pool import pool
 from models.genres import Genre
 from models.genres_books import GenreBook
 from fastapi import HTTPException
+from queries.books import (
+    BookOut
+)
 
 
 class GenresBooksQueries:
@@ -72,3 +75,45 @@ class GenresBooksQueries:
                     """,
                     (book_id, genre_id),
                 )
+
+    def get_books(self, genre: str) -> List[BookOut]:
+        try:
+            # Connect to the database
+            with pool.connection() as conn:
+                # Get a cursor (something to run SQL with)
+                with conn.cursor() as db:
+                    # Run our SELECT statement
+                    db.execute(
+                        """
+                        SELECT b.id, b.title, b.author_id, b.summary,
+                        b.cover, b.is_published
+                        FROM books b
+                        JOIN genres_books bg ON b.id = bg.book_id
+                        JOIN genres g ON bg.genre_id = g.id
+                        WHERE g.name = %s;
+                        """,
+                        (genre,),
+                    )
+
+                    # Fetch all rows
+                    books = db.fetchall()
+
+                    # Create a list of dictionaries with column names as keys
+                    book_list = []
+                    for book in books:
+                        book_dict = {
+                            "id": book[0],
+                            "title": book[1],
+                            "author_id": book[2],
+                            "summary": book[3],
+                            "cover": book[4],
+                            "is_published": book[5],
+                        }
+                        book_list.append(book_dict)
+                    if not book_list:
+                        raise Exception()
+                    return book_list
+
+        except Exception as e:
+            print("An error occurred:", e)
+            return []

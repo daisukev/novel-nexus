@@ -281,3 +281,9 @@ body {
   background-position: center;
   background-repeat: no-repeat;
 }
+
+.book-detail-genres {
+  display: flex;
+  justify-content: flex-start;
+  margin-left: 20px;
+}

@@ -1,0 +1,11 @@
+.genre {
+    border: 2px solid black;
+    border-radius: 5px;
+    width: 100px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.with-margin {
+    margin-left: 10px;
+}

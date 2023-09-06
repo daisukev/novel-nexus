@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 // import "./books.css";
 import { Link, useParams } from "react-router-dom";
+import GenresTag from './GenresTag'
 import Nav from "../Nav/Nav";
 import styles from "./styles/BookDetail.module.css";
 import DetailHero from "./components/DetailHero";
@@ -13,6 +14,30 @@ function BookDetail() {
   const [author, setAuthor] = useState({});
   const [chapterList, setChapterList] = useState([]);
   const { bookId } = useParams();
+
+  const [genre, setGenre] = useState([])
+
+  const url = `http://localhost:8000/api/books/${bookId}/genres`;
+
+  fetch(url)
+      .then(response => {
+          if (!response.ok) {
+              throw new Error('Error at fetching data')
+          }
+          return response.json();
+      })
+      .then(data => {
+        if (data)
+        {
+          setGenre(data)
+        }
+        else {
+          console.log("No Genre")
+        }
+      })
+      .catch(error => {
+          console.error('There was a problem with the fetch operation:', error);
+      })
 
   useEffect(() => {
     if (book) {
@@ -38,12 +63,35 @@ function BookDetail() {
     return <div>Loading...</div>;
   }
 
+  //example for now
+  //later when we added genres in the backend we can delete this and use bookInfo.genre
+  const genres = [];
+
+  if (genre.genres)
+  {
+    for (let i = 0; i < genre.genres.length; ++i)
+    {
+      genres.push(genre.genres[i].name)
+    }
+  }
+
   return (
     <>
       <div className={styles.bookDetail}>
         <Nav />
         <DetailHero book={book} author={author}>
           <ChapterList chapterList={chapterList} book={book} />
+          <div className="book-detail-genres">
+                  {
+                    // later repalce it with
+                    // bookInfo.genre.map(...)
+                    genres.map((eachGenre, index) => {
+                      return (
+                        <GenresTag key={index} genre={eachGenre} index={index}/>
+                      )
+                    })
+                  }
+                </div>
         </DetailHero>
       </div>
       {/* <div className="book-detail-page"> */}
