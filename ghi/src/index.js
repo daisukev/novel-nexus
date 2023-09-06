@@ -8,9 +8,11 @@ import { AuthProvider } from "./jwt.tsx";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 const baseUrl = process.env.REACT_APP_API_HOST;
+const domain = /https:\/\/[^/]+/;
+const basename = process.env.PUBLIC_URL.replace(domain, "");
 root.render(
   <React.StrictMode>
-    <BrowserRouter>
+    <BrowserRouter basename={basename}>
       <AuthProvider baseUrl={baseUrl}>
         <App />
       </AuthProvider>
