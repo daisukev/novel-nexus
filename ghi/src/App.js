@@ -11,6 +11,7 @@ import BookListWorkspace from "./authors/BookListWorkspace";
 import BookDetailWorkspace from "./authors/BookDetailWorkspace.jsx";
 import Home from "./pages/main/Home.js";
 import ProfilePage from "./pages/profiles/ProfilePage.js";
+import Settings from "./pages/profiles/settings/Settings.js";
 import Nav from "./pages/Nav/Nav";
 
 import ChapterView from "./pages/chapters/ChapterView.js";
@@ -109,6 +110,10 @@ function App() {
                     path="view/:author_id"
                     element={<ProfilePage authenticatedUser={user} />}
                   />
+                    <Route path="settings/:author_id"
+                     element={ < Settings token={token} authenticatedUser={user} />}
+                      />
+
                 </Route>
               </Routes>
             </div>

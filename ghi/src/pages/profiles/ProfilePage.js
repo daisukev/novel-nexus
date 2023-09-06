@@ -68,7 +68,6 @@ function Profile({ authenticatedUser }) {
   return (
     <div>
       <Nav />
-      {/* <HamburgerMenu /> */}
 
       <div className="profile-container">
         <div className="profile-header-container">

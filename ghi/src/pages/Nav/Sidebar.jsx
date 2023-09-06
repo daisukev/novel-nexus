@@ -48,6 +48,9 @@ const Sidebar = ({ authenticatedUser, sidebarOpened, closeSidebar }) => {
                 {/* <NavLink to={`/accounts/profile/${authenticatedUser.username}`}>Profile Page</NavLink> */}
                 <NavLink to={`/my/workspace/`}>My Workspace</NavLink>
               </li>
+              <li className="menu-list">
+                      <NavLink to={`/profile/settings/${authenticatedUser.id}`} className="menu-link">Settings</NavLink>
+               </li>
             </>
           )}
         </ul>

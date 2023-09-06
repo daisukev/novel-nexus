@@ -4,8 +4,8 @@ import './css/hamburgerMenu.css'
 
 
 
-function HamburgerMenu(){
-    const [isMenuOpen, setMenuOpen] = useState()
+function HamburgerMenu( { authenticatedUser }){
+    const [isMenuOpen, setMenuOpen] = useState();
 
     return (
         <>
@@ -22,10 +22,10 @@ function HamburgerMenu(){
                         <Link to="/my/workspace" className="menu-link">My Workspace</Link>
                     </li>
                     <li className="menu-list">
-                        <Link to="/profile/view" className="menu-link">Profile</Link>
+                        <Link to={`/profile/view/${authenticatedUser.username}`} className="menu-link">Profile</Link>
                     </li>
                     <li className="menu-list">
-                        <Link to="/profile/setting" className="menu-link">Setting</Link>
+                        <Link to={`/profile/settings/${authenticatedUser.id}`} className="menu-link">Settings</Link>
                     </li>
                     <li className="menu-list">
                         <Link to="/accounts/logout" className="menu-link">Log Out</Link>
@@ -35,7 +35,7 @@ function HamburgerMenu(){
             </div>
         )}
     </div>
-        </>
+    </>
     )
 }
 
