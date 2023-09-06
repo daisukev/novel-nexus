@@ -12,10 +12,6 @@ const ChapterView = () => {
   const [purifiedHTML, setPurifiedHTML] = useState("");
 
   useEffect(() => {
-    if (token) console.log(token);
-  }, [token]);
-
-  useEffect(() => {
     if (chapter) {
       const purified = dompurify.sanitize(chapter.content);
       setPurifiedHTML(purified);
@@ -27,7 +23,6 @@ const ChapterView = () => {
       (async () => {
         const book = await fetchBook(bookId);
         setBook(book);
-        console.log(book);
       })();
     }
   }, [bookId]);

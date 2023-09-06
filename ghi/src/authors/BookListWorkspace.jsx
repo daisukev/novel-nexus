@@ -222,7 +222,6 @@ function DeleteBookModal({ closeDeleteModal, bookToDelete, fetchBooks }) {
           "Content-Type": "application/json",
         };
         const res = await fetchWithToken(url, "DELETE", headers);
-        console.log(res);
         fetchBooks();
         closeDeleteModal();
       } catch (e) {

@@ -125,7 +125,7 @@ function Profile({ authenticatedUser }) {
                   recentChapters.chapters
 
                     .filter((chapter) => {
-                      const associatedBook = books.find(
+                      const associatedBook = books?.find(
                         (book) =>
                           book.id === chapter.book_id &&
                           book.author_id === authenticatedUser.id

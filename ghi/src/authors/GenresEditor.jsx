@@ -3,9 +3,11 @@ import { useState, useEffect } from "react";
 import { useMessageContext } from "../MessageContext";
 import styles from "./styles/GenresEditor.module.css";
 const GenresEditor = ({ book }) => {
+  const { MESSAGE_TYPES, createMessage } = useMessageContext();
   const { token, fetchWithToken } = useToken();
   const [genresList, setGenresList] = useState([]);
   const [currentGenres, setCurrentGenres] = useState([]);
+  const [options, setOptions] = useState([]);
   useEffect(() => {
     (async () => {
       const genres = await fetchGenresList();
@@ -14,10 +16,19 @@ const GenresEditor = ({ book }) => {
   }, []);
 
   useEffect(() => {
+    const optionsList = genresList.filter((genre) => {
+      return !currentGenres.some((currentGenre) => {
+        return genre.id === currentGenre.id;
+      });
+    });
+
+    setOptions(optionsList);
+  }, [currentGenres, genresList]);
+
+  useEffect(() => {
     (async () => {
       if (book.id) {
         const currentGenres = await fetchCurrentGenres();
-        console.log(currentGenres);
         setCurrentGenres(currentGenres);
       }
     })();
@@ -35,8 +46,41 @@ const GenresEditor = ({ book }) => {
       }
     }
   };
-  const addGenres = async () => {};
-  const deleteGenre = async () => {};
+  const addGenres = async (e) => {
+    const genreId = e.target.value;
+    try {
+      const headers = {
+        "Content-Type": "application/json",
+      };
+      const options = {
+        body: JSON.stringify({ genre_id: genreId }),
+      };
+      const url = `${process.env.REACT_APP_API_HOST}/api/books/${book.id}/genres`;
+      const res = await fetchWithToken(url, "POST", headers, options);
+      const currentGenres = await fetchCurrentGenres();
+      setCurrentGenres(currentGenres);
+      createMessage(`Added genre.`, MESSAGE_TYPES.INFO);
+    } catch (e) {
+      createMessage(`Could not add genre.`, MESSAGE_TYPES.ERROR);
+      console.error(e);
+    }
+  };
+  const deleteGenre = async (genre) => {
+    const url = `${process.env.REACT_APP_API_HOST}/api/books/${book.id}/genres`;
+    try {
+      const headers = {
+        "Content-Type": "application/json",
+      };
+      const options = {
+        body: JSON.stringify({ genre_id: genre.id }),
+      };
+      const res = await fetchWithToken(url, "DELETE", headers, options);
+      const currentGenres = await fetchCurrentGenres();
+      setCurrentGenres(currentGenres);
+    } catch (e) {
+      createMessage(`Could not delete: ${genre.name}`, MESSAGE_TYPES.ERROR);
+    }
+  };
 
   useEffect(() => {
     if (token) {
@@ -54,12 +98,36 @@ const GenresEditor = ({ book }) => {
   };
 
   return (
-    <div>
-      Genres:
+    <div className={styles.genreEditor}>
+      <div className={styles.selectArea}>
+        <label htmlFor="genre">Add Genres</label>
+        <select
+          name="genre"
+          id="genre-picker"
+          className={styles.genrePicker}
+          onChange={(e) => addGenres(e)}
+        >
+          <option value="">Add Genre</option>
+          {options.map((genre) => {
+            return (
+              <option
+                key={`genreList-${genre.id}-${genre.name}`}
+                value={genre.id}
+              >
+                {genre.name}
+              </option>
+            );
+          })}
+        </select>
+      </div>
       <div className={styles.genreList}>
         {currentGenres.map((genre) => {
           return (
-            <GenreCard key={genre.id + genre.name} deleteGenre={deleteGenre}>
+            <GenreCard
+              key={genre.id + genre.name}
+              deleteGenre={deleteGenre}
+              genre={genre}
+            >
               {genre.name}
             </GenreCard>
           );
@@ -71,11 +139,15 @@ const GenresEditor = ({ book }) => {
 
 export default GenresEditor;
 
-const GenreCard = (props) => {
+const GenreCard = ({ genre, deleteGenre, children }) => {
   return (
-    <span {...props} className={styles.genreCard}>
-      <span className={styles.genreName}>{props.children}</span>
-      <button className={styles.deleteButton} type="button">
+    <span className={styles.genreCard}>
+      <span className={styles.genreName}>{children}</span>
+      <button
+        className={styles.deleteButton}
+        type="button"
+        onClick={() => deleteGenre(genre)}
+      >
         <i className="ri-close-line" />
       </button>
     </span>

@@ -46,10 +46,8 @@ function BookList() {
   //
   //       const booksWithGenres = await Promise.all(genresPromises);
   //       const categorizedData = categorizeByGenre(booksWithGenres);
-  //       console.log("collection books by genre:", categorizedData);
   //       setBookList(categorizedData);
   //     } else {
-  //       console.log("Not fetching");
   //     }
   //   } catch (e) {
   //     console.error("catching error while fetching book list", e);

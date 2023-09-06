@@ -18,8 +18,6 @@ const MessageQueue = () => {
         }, message.timeout);
         timers[message.id] = removeTimer;
       }
-
-      // console.log(timers);
     });
   }, [state.messages, timers, removeMessage]);
   return (

@@ -302,7 +302,6 @@ function ChapterTitle({ chapter }) {
         `Changed chapter title to: ${chapterTitle}`,
         MESSAGE_TYPES.SUCCESS
       );
-      // console.log(res);
     } catch (e) {
       console.error(e);
       setChapterTitle(chapter.title);

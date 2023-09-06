@@ -23,7 +23,6 @@ const BookCoverUpload = ({ book }) => {
     setSelectedImage(newImage);
     const formData = new FormData();
     formData.append("image", newImage);
-    console.log(formData.get("image"));
     const url = `${process.env.REACT_APP_API_HOST}/api/books/${book.id}/cover`;
     const options = {
       body: formData,
@@ -36,10 +35,8 @@ const BookCoverUpload = ({ book }) => {
       const data = await fetchWithToken(url, "POST", headers, options);
       createMessage("Updated book cover.", MESSAGE_TYPES.SUCCESS);
       setPrevImage(data.href);
-      console.log(data);
     } catch (e) {
       console.error(e);
-      // console.log("setting back to initial cover");
       createMessage("Could not update book cover.", MESSAGE_TYPES.SUCCESS);
       setSelectedImage(null);
     }

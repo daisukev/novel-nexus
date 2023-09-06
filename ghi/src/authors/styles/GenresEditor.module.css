@@ -1,5 +1,6 @@
 .genreList {
   display: flex;
+  flex-wrap: wrap;
   gap: 0.5rem;
 }
 .genreCard {
@@ -33,4 +34,20 @@
 
 .deleteButton:active {
   transform: translate(1px, 1px);
+}
+
+.genreEditor {
+  padding-block: 1rem;
+}
+.selectArea {
+  display: grid;
+  margin-block: 1rem;
+}
+
+.genrePicker {
+  font-size: 1rem;
+  padding: 0.25rem;
+  background: var(--background-lighter);
+  border: 2px solid var(--secondary);
+  color: var(--secondary);
 }

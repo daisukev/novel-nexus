@@ -19,7 +19,6 @@ export default function LoginForm() {
     if (token) {
       const prev = searchParams.get("prev");
       if (prev) {
-        console.log("navigating to ", prev);
         navigate(prev);
       } else {
         navigate("/home");

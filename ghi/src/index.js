@@ -8,7 +8,6 @@ import { AuthProvider } from "./jwt.tsx";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 const baseUrl = process.env.REACT_APP_API_HOST;
-console.log(baseUrl);
 root.render(
   <React.StrictMode>
     <BrowserRouter>

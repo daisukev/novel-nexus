@@ -25,7 +25,6 @@ const fetchAuthor = async (identifier) => {
   try {
     const res = await fetch(url);
     const author = await res.json();
-    // console.log(author);
     return author;
   } catch (e) {
     console.error(e);
