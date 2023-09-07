@@ -61,9 +61,7 @@ function BookListWorkspace() {
   };
 
   const fetchBooks = async () => {
-    // const url = `${process.env.REACT_APP_API_HOST}/api/my/books`;
-    const url =
-      "https://may-12-pt-novel-nexus-api.mod3projects.com/api/my/books";
+    const url = `${process.env.REACT_APP_API_HOST}/api/my/books`;
     try {
       const data = await fetchWithToken(url);
       setBooks(data);

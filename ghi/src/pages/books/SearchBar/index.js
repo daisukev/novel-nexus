@@ -12,7 +12,7 @@ function SearchBar() {
   const handleSearch = async (query) => {
     try {
       const res = await fetch(
-        `${process.env.REACT_APP_API_HOST}api/books/search?q=${query}`
+        `${process.env.REACT_APP_API_HOST}/api/books/search?q=${query}`
       );
       if (res.ok) {
         const { books } = await res.json();
