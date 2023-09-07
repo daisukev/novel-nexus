@@ -1,4 +1,4 @@
-FROM python:3.10-bullseye
+FROM python:15.3-bullseye
 RUN python -m pip install --upgrade pip
 WORKDIR /app
 
@@ -6,6 +6,11 @@ WORKDIR /app
 # Modify these instructions to do that
 COPY requirements.txt requirements.txt
 COPY main.py main.py
+COPY api_pool.py api_pool.py
+COPY authenticator.py authenticator.py
+COPY Dockerfile Dockerfile
+COPY utils.py utils.py
+
 
 # Copy all of the subdirectories in your service's directory
 # Modify these instructions to do that

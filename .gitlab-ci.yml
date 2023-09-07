@@ -1,5 +1,6 @@
 services:
   - docker:dind
+  - postgres:15.3-bullseye
 
 stages:
   - test
@@ -10,6 +11,8 @@ stages:
 lint-test-job:
   image: python:3-bullseye
   stage: test
+  variables:
+    CI: "false"
   script:
     - pip install flake8
     - flake8 api
@@ -41,39 +44,39 @@ build-api-image:
     - main
 
 
-# # Build the React/JavaScript front-end
-# build-front-end-job:
-#   stage: build
-#   image: node:lts-bullseye
-#   needs:
-#     - lint-test-job
-#   variables:
-#     # If either of these variables is defined in the GitLab
-#     # CI/CD variables, that value will override the value here.
-#     # You need to substitute in your real values for
-#     # GROUP_NAME, PROJECT_NAME, & WEBSERVICE_NAME below.
-#     PUBLIC_URL: https://GROUP_NAME.gitlab.io/PROJECT_NAME/
-#     REACT_APP_API_HOST: https://DEPLOYED_API_SERVICE.mod3projects.com
-#   script:
-#     - cd ghi
-#     - npm install
-#     - npm run build
-#     - cp build/index.html build/404.html
-#   artifacts:
-#     paths:
-#       - ghi/build/
+# Build the React/JavaScript front-end
+build-front-end-job:
+  stage: build
+  image: node:lts-bullseye
+  needs:
+    - lint-test-job
+  variables:
+    # If either of these variables is defined in the GitLab
+    # CI/CD variables, that value will override the value here.
+    # You need to substitute in your real values for
+    # GROUP_NAME, PROJECT_NAME, & WEBSERVICE_NAME below.
+    PUBLIC_URL: https://novel-nexus.gitlab.io/novel-nexus/
+    REACT_APP_API_HOST: http://may-12-pt-novel-nexus-api.mod3projects.com
+  script:
+    - cd ghi
+    - npm install
+    - npm run build
+    - cp build/index.html build/404.html
+  artifacts:
+    paths:
+      - ghi/build/
 
-# # Deploy the React/JavaScript front-end to GitLab pages
-# pages:
-#   stage: deploy
-#   rules:
-#     - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
-#   dependencies:
-#     - build-front-end-job
-#   needs:
-#     - build-front-end-job
-#   script:
-#     - mv ghi/build/ public
-#   artifacts:
-#     paths:
-#       - public
+# Deploy the React/JavaScript front-end to GitLab pages
+pages:
+  stage: deploy
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+  dependencies:
+    - build-front-end-job
+  needs:
+    - build-front-end-job
+  script:
+    - mv ghi/build/ public
+  artifacts:
+    paths:
+      - public
