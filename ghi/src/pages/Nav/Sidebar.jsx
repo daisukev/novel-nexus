@@ -31,6 +31,11 @@ const Sidebar = ({ authenticatedUser, sidebarOpened, closeSidebar }) => {
           <li className="nav-list">
             <NavLink to="/books">Books</NavLink>
           </li>
+
+          <li className="nav-list">
+            <NavLink to="/books/genres">Genres</NavLink>
+          </li>
+
           {authenticatedUser && (
             <>
               <li className="nav-list">

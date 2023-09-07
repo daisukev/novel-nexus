@@ -1,0 +1,11 @@
+.genre-box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid black;
+    border-radius: 10px;
+    width: 135px;
+    height: 135px;
+    text-align: center;
+    color: white;
+}
