@@ -7,7 +7,7 @@ pool = ConnectionPool(conninfo=os.environ["DATABASE_URL"])
 
 
 class FollowQueries:
-    def follow(self, follower_id: int, author_id: int) -> str:
+    def follow(self, follower_id: int, author_id: int) -> bool:
         try:
             with pool.connection() as conn:
                 with conn.cursor() as db:
@@ -20,9 +20,10 @@ class FollowQueries:
                         (follower_id, author_id),
                     )
                     conn.commit()
-            return f"You successfully started following author {author_id}"
+            return True
         except Exception as e:
-            return str(e)
+            print(f"Error while following: {e}")
+            return False
 
     def following_list(
         self, follower_id: int
@@ -44,7 +45,12 @@ class FollowQueries:
                     return None
 
                 for record in records:
-                    followed_authors.append(FollowRequest(author_id=record[0]))
+                    is_following = True
+                    followed_authors.append(
+                        FollowRequest(
+                            author_id=record[0], is_following=is_following
+                        )
+                    )
 
         return followed_authors
 
@@ -64,4 +70,4 @@ class FollowQueries:
                 return True
         except Exception as e:
             print(f"Error while unfollowing {e}")
-            raise False
+            return False

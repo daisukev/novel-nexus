@@ -10,6 +10,7 @@ from queries.books import (
     BookOut,
     Error,
 )
+
 router = APIRouter()
 
 

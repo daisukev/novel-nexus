@@ -117,7 +117,7 @@ function App() {
                 <Route path="/profile">
                   <Route
                     path="view/:author_id"
-                    element={<ProfilePage authenticatedUser={user} />}
+                    element={<ProfilePage authenticatedUser={user} token={token}/>}
                   />
                   <Route
                     path="settings/:author_id"

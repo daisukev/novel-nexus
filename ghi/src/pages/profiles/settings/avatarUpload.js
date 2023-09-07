@@ -1,8 +1,6 @@
 import React, { useState, useEffect, useRef, useContext } from "react";
 import useToken from "../../../jwt.tsx";
 import "../css/settings.css";
-import { fetchAuthor } from "../../../actions";
-import { useParams } from "react-router-dom";
 import { UserContext } from "../../../App";
 import { useMessageContext } from "../../../MessageContext";
 
@@ -36,7 +34,6 @@ function AvatarUpload() {
     try {
       const data = await fetchWithToken(url, "POST", headers, options);
       createMessage("Updated profile avatar.", MESSAGE_TYPES.SUCCESS);
-      console.log(data);
       fetchLoggedInUser();
       // setPrevImage(data.href);
     } catch (e) {

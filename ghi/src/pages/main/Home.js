@@ -2,15 +2,31 @@ import React from "react";
 import { Link } from "react-router-dom";
 import "./main.css";
 import main2 from "../images/main2.png";
-import top1 from "../images/top1.png";
 import three from "../images/three.png";
 import four from "../images/four.png";
 import five from "../images/five.png";
-import author1Image from "../images/author1.png";
+import robertk from "../images/robert-k.jpg";
+import briana from "../images/Briana.jpg";
+import jamesClear from "../images/JamesClear.jpg";
 import megazine1 from "../images/megazine1.png";
 import videoSrc from "../images/videoSrc.mp4";
+import recent1 from '../images/recent-1.png'
+import recent2 from '../images/recent-2.png'
+import recent3 from '../images/recent-3.png'
+import recent4 from '../images/recent-4.png'
+import recent5 from '../images/recent-5.png'
+import recent6 from '../images/recent-6.png'
+import recent7 from '../images/recent-7.png'
+import recent8 from '../images/recent-8.png'
+import recent9 from '../images/recent-9.png'
+import recent10 from '../images/recent-10.png'
+
 import Nav from "../Nav/Nav";
 import Footer from "../Nav/Footer";
+
+
+
+
 
 function Home({ token, user }) {
   return (
@@ -38,48 +54,49 @@ function Home({ token, user }) {
         </div>
       </div>
 
-      <div className="main-top-books">
-        <h1 className="main-top-books-header">Top Books Selection</h1>
-        <div className="main-top-books-container">
-          <div className="top-card">
-            <img className="top-book-img" src={top1} />
+      <div className="main-recent-books">
+        <h1 className="main-recent-books-header">Recent Books</h1>
+        <div className="main-recent-books-container">
+
+
+          <div className="recent-card">
+            <img className="recent-book-img" src={recent1} />
             <div className="title-top">
-              <h3>Title 1</h3>
+              <h3 className="recent-book-title">The Severed Thread</h3>
             </div>
           </div>
 
-          <div className="top-card">
-            <img className="top-book-img" src={top1} />
+          <div className="recent-card">
+            <img className="recent-book-img" src={recent7} />
             <div className="title-top">
-              <h3>Title 1</h3>
+              <h3 className="recent-book-title">Mur Laferty Station</h3>
             </div>
           </div>
 
-          <div className="top-card">
-            <img className="top-book-img" src={top1} />
+          <div className="recent-card">
+            <img className="recent-book-img" src={recent3} />
             <div className="title-top">
-              <h3>Title 1</h3>
+              <h3 className="recent-book-title">The merciless Ones</h3>
             </div>
           </div>
 
-          <div className="top-card">
-            <img className="top-book-img" src={top1} />
+          <div className="recent-card">
+            <img className="recent-book-img" src={recent6} />
             <div className="title-top">
-              <h3>Title 1</h3>
+              <h3 className="recent-book-title">Kingdom Exiles</h3>
             </div>
           </div>
 
-          <div className="top-card">
-            <img className="top-book-img" src={top1} />
+          <div className="recent-card">
+            <img className="recent-book-img" src={recent5} />
             <div className="title-top">
-              <h3>Title 1</h3>
+              <h3 className="recent-book-title">The Usborne of Big Stars</h3>
             </div>
           </div>
-
-          <div className="top-card">
-            <img className="top-book-img" src={top1} />
+          <div className="recent-card">
+            <img className="recent-book-img" src={recent8} />
             <div className="title-top">
-              <h3>Title 1</h3>
+              <h3 className="recent-book-title">The Mystery Stories</h3>
             </div>
           </div>
         </div>
@@ -88,28 +105,30 @@ function Home({ token, user }) {
       <div className="featured-authors">
         <h2 className="featured-authors-header">Our Top Featured Authors</h2>
         <div className="featured-authors-container">
+
+
           <div className="featured-author-card">
             <Link to={`/accounts/profile/17`}>
-              <img className="author-img" src={author1Image} alt="Author 1" />
+              <img className="author-img" src={robertk} alt="Author 1" />
             </Link>
-            <h4>Author 1</h4>
-            <p>"The universe is flourishing planet"</p>
+            <h4>Robert Kiyosaki</h4>
+            <p>"Boor Dad, Rich Dad"</p>
           </div>
 
-          <div className="author-card">
-            <Link to={`/accounts/profile/16`}>
-              <img className="author-img" src={author1Image} alt="Author 2" />
+          <div className="featured-author-card">
+            <Link to={`/accounts/profile/17`}>
+              <img className="author-img" src={jamesClear} alt="Author 1" />
             </Link>
-            <h4>Author 2</h4>
-            <p>"Knowledge is the most powerful weapon".</p>
+            <h4>James Clear</h4>
+            <p>"Atomic Habit"</p>
           </div>
 
-          <div className="author-card">
-            <Link to={`/accounts/profile/15`}>
-              <img className="author-img" src={author1Image} alt="Author 3" />
+          <div className="featured-author-card">
+            <Link to={`/accounts/profile/17`}>
+              <img className="author-img" src={briana} alt="Author 1" />
             </Link>
-            <h4>Author 3</h4>
-            <p>"Mental strength comes with consistency"</p>
+            <h4>Briana Wiest</h4>
+            <p>"The Mountain Is You"</p>
           </div>
         </div>
       </div>
@@ -130,7 +149,7 @@ function Home({ token, user }) {
       </div>
 
       <div className="latest-releases">
-        <h2 className="latest-releases-header">Latest Releases</h2>
+        <h2 className="latest-releases-header">Top Books</h2>
         <div className="latest-releases-container">
           <div className="release-card">
             <img className="release-img" src={five} alt="placeholder" />
@@ -159,12 +178,12 @@ function Home({ token, user }) {
         <div className="rising-authors">
           <div className="rising-author-flex-box">
             <img
-              src={author1Image}
+              src={robertk}
               alt="Author 1"
               className="rising-author-avatar"
             />
             <div className="rising-author-info">
-              <p className="author-followers">Ola Bio</p>
+              <p className="author-followers">Robert kiyosaki</p>
 
               <span className="realtime-author-followers margin">
                 Followers: 12,345
@@ -177,49 +196,49 @@ function Home({ token, user }) {
         </div>
 
         <ul className="rising-star-content-list">
-          <li>Chapter 10 - The Kingdom of Rome</li>
-          <li>Chapter 9 - The king Role</li>
-          <li>Chapter 8 - The Forbidden knot</li>
+          <li>Chapter 10 - Building Investment </li>
+          <li>Chapter 9 - The tic tac toe</li>
+          <li>Chapter 8 - Stock Learning Process</li>
         </ul>
         <button className="realtime-button">Visit Profile</button>
       </div>
 
       <div class="top-sellers-section">
-        <h2 className="best-seller-header">Top Sellers</h2>
+        <h2 className="best-seller-header">E-books</h2>
         <div className="top-seller-container">
           <div class="best-seller-card">
-            <img src={top1} alt="Book 1 Cover" class="best-seller-img" />
+            <img src={recent2} alt="Book 1 Cover" class="best-seller-img" />
             <div class="best-seller-details">
-              <h3 class="best-seller-title">The Story Of Helen Keler</h3>
-              <small>By Daniel Samsom</small>
+              <h3 class="best-seller-title">Calculus Math Made Easy</h3>
+              <small>By Loren Josh</small>
               <div class="book-stars">4.9⭐</div>
               <button className="best-seller-btn">Buy</button>
             </div>
           </div>
 
           <div class="best-seller-card">
-            <img src={top1} alt="Book 1 Cover" class="best-seller-img" />
+            <img src={recent9} alt="Book 1 Cover" class="best-seller-img" />
             <div class="best-seller-details">
-              <h3 class="best-seller-title">Book Title 1</h3>
-              <small>By Daniel Samsom</small>
+              <h3 class="best-seller-title">Death Beside the Seaside</h3>
+              <small>By T.E Kinsey</small>
               <div class="book-stars">4.8⭐</div>
               <button className="best-seller-btn">Buy</button>
             </div>
           </div>
           <div class="best-seller-card">
-            <img src={top1} alt="Book 1 Cover" class="best-seller-img" />
+            <img src={recent4} alt="Book 1 Cover" class="best-seller-img" />
             <div class="best-seller-details">
-              <h3 class="best-seller-title">Book Title 1</h3>
-              <small>By Daniel Samsom</small>
+              <h3 class="best-seller-title">Software Agile</h3>
+              <small>By Json Edison</small>
               <div class="book-stars">4.7⭐</div>
               <button className="best-seller-btn">Buy</button>
             </div>
           </div>
           <div class="best-seller-card">
-            <img src={top1} alt="Book 1 Cover" class="best-seller-img" />
+            <img src={recent10} alt="Book 1 Cover" class="best-seller-img" />
             <div class="best-seller-details">
-              <h3 class="best-seller-title">Book Title 1</h3>
-              <small>By Daniel Samsom</small>
+              <h3 class="best-seller-title">Poster Girl</h3>
+              <small>By Voronica Roth</small>
               <div class="book-stars"> 4.8 ⭐</div>
               <button className="best-seller-btn">Buy</button>
             </div>

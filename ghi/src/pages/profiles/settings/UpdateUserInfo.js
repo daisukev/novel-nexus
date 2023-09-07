@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import "../css/settings.css";
 import styles from "../css/settings.module.css";
-
 import TextArea from "../../../components/TextArea";
 import { useMessageContext } from "../../../MessageContext";
 
@@ -47,12 +46,10 @@ function UpdateUserInfo({ token }) {
       const responseData = await response.json();
 
       if (response.ok) {
-        // console.log("Author data updated successfully");
         createMessage("Updated author profile", MESSAGE_TYPES.SUCCESS);
         setUpdateSuccess(true);
       } else {
         createMessage("Could not update author profile", MESSAGE_TYPES.ERROR);
-        // console.log("Error updating author data:", responseData);
       }
     } catch (error) {
       createMessage("Could not update author profile", MESSAGE_TYPES.ERROR);

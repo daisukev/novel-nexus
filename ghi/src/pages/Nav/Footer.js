@@ -1,6 +1,6 @@
 import React from 'react'
-import './nav.css'
-
+import './styles/footer.css'
+import logo from '../../transparentlogo.png'
 
 function Footer(){
 
@@ -9,16 +9,20 @@ return (
     <>
         <footer className="footer-container">
             <div className="footer-logo">
-                <img src="" alt="Nexus Logo" />
+                <img src={logo} alt="Nexus Logo" />
             </div>
+            <div className="divider"></div>
 
             <div className="footer-section">
                <h3>Browse</h3>
                   <ul>
                     <li>Home</li>
-                    <li>About</li>
+                    <li>books</li>
+                    <li>recent</li>
+                    <li>genre</li>
                 </ul>
             </div>
+            <div className="divider"></div>
 
             <div className="footer-section">
                 <h3>Authors</h3>
@@ -28,6 +32,7 @@ return (
                       <li>Author Dashboard</li>
                 </ul>
             </div>
+            <div className="divider"></div>
 
             <div className="footer-section">
                 <h3>Resources</h3>
@@ -37,6 +42,7 @@ return (
                     <li>Writing Prompts</li>
                 </ul>
             </div>
+            <div className="divider"></div>
             <div className="footer-section">
                 <h3>Legal</h3>
                 <ul>
@@ -47,10 +53,16 @@ return (
                 </ul>
             </div>
 
+
+
+            <div className="divider"></div>
             <div className="footer-section">
                 <h3>Stay Connected</h3>
                 <ul>
-                    <li><a href="https://facebook.com/yourwebsite">Facebook</a></li>
+                    <li><a href="https://facebook.com/yourwebsite"><i className="fab fa-facebook"></i></a></li>
+                    <li><a href="https://facebook.com/yourwebsite"><i className="fab fa-instagram"></i></a></li>
+                    <li><a href="https://facebook.com/yourwebsite"><i className="fab fa-facebook"></i></a></li>
+
                 </ul>
             </div>
 

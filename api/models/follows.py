@@ -6,13 +6,14 @@ class FollowRequest(BaseModel):
 
 
 class FollowResponse(BaseModel):
-    message: str
+    is_following: bool
 
 
 class FollowedList(BaseModel):
     follower_id: int
     following: list[FollowRequest]
+    is_following: bool
 
 
 class UnfollowResponse(BaseModel):
-    message: str
+    is_not_following: bool

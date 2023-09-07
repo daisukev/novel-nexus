@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from "react";
 import "./css/profile.css";
-import HamburgerMenu from "./HamburgerMenu";
 import { Link } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import Nav from "../Nav/Nav";
-
-function Profile({ authenticatedUser }) {
+import Follow from "./follows/Follow";
+import DynamicSidebar from "./DynamicSidebar";
+function Profile({ token, authenticatedUser }) {
   const [author, setAuthor] = useState(null);
   const [activeContent, setActiveContent] = useState("recent");
   const [recentChapters, setRecentChapters] = useState(null);
   const [books, setBooks] = useState([]);
+
   const { author_id } = useParams();
 
   useEffect(() => {
@@ -20,6 +21,9 @@ function Profile({ authenticatedUser }) {
         );
         const data = await response.json();
         setAuthor(data);
+        console.log(data.avatar)
+        console.log(data, "author")
+
       } catch (error) {
         console.error("Error fetching author:", error);
       }
@@ -65,6 +69,9 @@ function Profile({ authenticatedUser }) {
     renderBookList();
   }, []);
 
+
+
+
   return (
     <div>
       <Nav />
@@ -90,7 +97,13 @@ function Profile({ authenticatedUser }) {
                   className="profile-avatar"
                 />
               )}
-              <button className="author-follow-btn">Follow +</button>
+
+             {authenticatedUser && (
+                <Follow
+                  token={token}
+                  authenticatedUser={authenticatedUser}
+                />
+              )}
             </div>
           </div>
         </div>
@@ -189,111 +202,14 @@ function Profile({ authenticatedUser }) {
           </div>
 
           <div className="dynamic-content flex-margin">
-            <h3>Quick Stats</h3>
-            <ul>
-              <li>Books Written: 12</li>
-            </ul>
+            {authenticatedUser && (
+              <div>
+                < DynamicSidebar />
+             </div>
+            )}
 
-            <h3>Professional Affiliations</h3>
-            <ul className="professional-affiliation">
-              <li>
-                <img
-                  src="https://www.un.org/youthenvoy/wp-content/uploads/2014/09/unicef_twitter1.png"
-                  alt="XYZ Writers' Guild Logo"
-                />
-                UNICEF
-              </li>
-              <li>
-                <img
-                  src="https://www.filepicker.io/api/file/wAKB3DXWRyWSckw1lXCg"
-                  alt="ABC Literary Society Logo"
-                />
-                Writing Club
-              </li>
-            </ul>
           </div>
-          <div className="profile-sidebar flex-margin">
-            <div className="navigation-links">
-              <h4>Navigate</h4>
-              <ul>
-                <li>
-                  <a href="#works">My Works</a>
-                </li>
-                <li>
-                  <a href="#reviews">Reviews</a>
-                </li>
-                <li>
-                  <a href="#interviews">Interviews</a>
-                </li>
-              </ul>
-            </div>
 
-            <div className="featured-work">
-              <ul className="featured-group-list">
-                <li>
-                  <a href="#">
-                    <i className="featured-list"></i>
-                  </a>
-                  blah
-                </li>
-                <li>
-                  <a href="#">
-                    <i className="featured-list"></i>
-                  </a>
-                  blah
-                </li>
-                <li>
-                  <a href="#">
-                    <i className="featured-list"></i>
-                  </a>
-                  blah
-                </li>
-                <li>
-                  <a href="#">
-                    <i className="featured-list"></i>
-                  </a>
-                  blah
-                </li>
-              </ul>
-            </div>
-
-            <div className="related-authors">
-              <h4>You Might Also Like</h4>
-              <ul>
-                <li>
-                  <Link to="/accounts/profile/17">Author 17</Link>
-                </li>
-                <li>
-                  <Link to="/accounts/profile/19">Author 19</Link>
-                </li>
-              </ul>
-            </div>
-
-            <div className="testimonials">
-              <h4>What Readers Say</h4>
-              <blockquote>"Amazing author! I love every book!"</blockquote>
-            </div>
-
-            <div className="social-links">
-              <ul className="social-icons">
-                <li>
-                  <a href="#">
-                    <i className="fab fa-twitter"></i>
-                  </a>
-                </li>
-                <li>
-                  <a href="#">
-                    <i className="fab fa-linkedin"></i>
-                  </a>
-                </li>
-                <li>
-                  <a href="#">
-                    <i className="fab fa-instagram"></i>
-                  </a>
-                </li>
-              </ul>
-            </div>
-          </div>
         </div>
       </div>
     </div>

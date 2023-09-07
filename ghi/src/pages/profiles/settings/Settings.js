@@ -1,14 +1,11 @@
 import React, { useState } from "react";
 import "../css/settings.css";
-import styles from "../css/settings.module.css";
-import HamburgerMenu from "../HamburgerMenu";
+import  "../css/settings.module.css";
 import AvatarUpload from "./avatarUpload";
 import UpdateUserInfo from "./UpdateUserInfo";
 import Nav from "../../Nav/Nav";
 
 function Settings({ token, user }) {
-  const [activeContent, setActiveContent] = useState("profileInfo");
-
   return (
     <>
       <Nav />

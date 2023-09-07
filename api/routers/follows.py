@@ -1,5 +1,5 @@
 from models.follows import FollowedList
-from models.follows import FollowResponse, FollowRequest, UnfollowResponse
+from models.follows import FollowResponse, UnfollowResponse
 from fastapi import APIRouter, Depends, HTTPException
 from queries.follows import FollowQueries
 from authenticator import authenticator
@@ -8,28 +8,27 @@ router = APIRouter()
 
 
 @router.post(
-    "/api/author/{author_id}/follow",
-    tags=["Follow", "Follow"],
+    "/api/author/{follower_id}/follow/{author_id}",
+    tags=["Follow"],
     response_model=FollowResponse,
 )
 def create_follow(
     follower_id: int,
-    request: FollowRequest,
+    author_id: int,
     queries: FollowQueries = Depends(),
     account_data: dict = Depends(authenticator.get_current_account_data),
 ):
     if account_data["id"] != follower_id:
         raise HTTPException(status_code=403, detail="Permission Denied")
 
-    author_id = request.author_id
-    result = queries.follow(follower_id, author_id)
-    if not result:
+    success = queries.follow(follower_id, author_id)
+    if not success:
         raise HTTPException(status_code=500, detail="Following Request Failed")
-    return {"message": result}
+    return {"is_following": success}
 
 
 @router.get(
-    "/api/author/{author_id}/follows",
+    "/api/author/{follower_id}/followings",
     tags=["Follow", "Follow"],
     response_model=FollowedList,
 )
@@ -46,12 +45,19 @@ def get_list(
         raise HTTPException(
             status_code=404, detail="You are not following anyone yet"
         )
-    return FollowedList(follower_id=follower_id, following=followed_authors)
+
+    is_following = True
+
+    return FollowedList(
+        follower_id=follower_id,
+        following=followed_authors,
+        is_following=is_following,
+    )
 
 
 @router.delete(
     "/api/author/{follower_id}/unfollow/{author_id}",
-    tags=["Follow", "Follow"],
+    tags=["Follow"],
     response_model=UnfollowResponse,
 )
 def unfollow_author(
@@ -63,9 +69,6 @@ def unfollow_author(
     if account_data["id"] != follower_id:
         raise HTTPException(status_code=403, detail="Permission Denied")
 
-    result = queries.unfollow_author(follower_id, author_id)
-    if not result:
-        raise HTTPException(
-            status_code=500, detail="Failed to unfollow {author_id}"
-        )
-    return {"message": f"You successfully unfollowed author {author_id}"}
+    success = queries.unfollow_author(follower_id, author_id)
+
+    return {"is_not_following": success}
