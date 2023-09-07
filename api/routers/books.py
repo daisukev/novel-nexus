@@ -43,7 +43,7 @@ def get_all(repo: BookRepository = Depends()):
 
 
 @router.get(
-    "/api/my/books/", tags=["Books", "Authors"], response_model=List[BookOut]
+    "/api/my/books", tags=["Books", "Authors"], response_model=List[BookOut]
 )
 def get_books_by_author(
     repo: BookRepository = Depends(),
