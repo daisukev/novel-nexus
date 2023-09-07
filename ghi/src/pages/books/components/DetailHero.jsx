@@ -11,7 +11,7 @@ const DetailHero = ({ book, author, children }) => {
   }, [bookId]);
 
   const fetchGenres = async () => {
-    const url = `http://localhost:8000/api/books/${bookId}/genres`;
+    const url = `${process.env.REACT_APP_API_HOST}/api/books/${bookId}/genres`;
 
     const res = await fetch(url);
     const { genres } = await res.json();

@@ -33,7 +33,7 @@ function UpdateUserInfo({ token }) {
 
     try {
       const response = await fetch(
-        `http://localhost:8000/api/authors/${author_id}`,
+        `${process.env.REACT_APP_API_HOST}/api/authors/${author_id}`,
         {
           method: "PUT",
           body: JSON.stringify(formData),
@@ -64,7 +64,7 @@ function UpdateUserInfo({ token }) {
     const fetchAuthorData = async () => {
       try {
         const response = await fetch(
-          `http://localhost:8000/api/authors/${author_id}`,
+          `${process.env.REACT_APP_API_HOST}/api/authors/${author_id}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,

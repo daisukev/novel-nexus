@@ -10,7 +10,7 @@ function Genres() {
   const [genreData, setGenreData] = useState([]);
 
   useEffect(() => {
-    const url = `http://localhost:8000/api/books/genres/${genre}`;
+    const url = `${process.env.REACT_APP_API_HOST}/books/genres/${genre}`;
 
     fetch(url)
       .then((response) => {

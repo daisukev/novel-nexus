@@ -16,7 +16,7 @@ function Profile({ authenticatedUser }) {
     async function fetchAuthor() {
       try {
         const response = await fetch(
-          `http://localhost:8000/api/authors/${author_id}`
+          `${process.env.REACT_APP_API_HOST}/api/authors/${author_id}`
         );
         const data = await response.json();
         setAuthor(data);
@@ -29,7 +29,7 @@ function Profile({ authenticatedUser }) {
   }, [author_id]);
 
   async function renderRecentChapters() {
-    const url = `http://localhost:8000/api/chapters?author_id=${author_id}`;
+    const url = `${process.env.REACT_APP_API_HOST}/api/chapters?author_id=${author_id}`;
 
     try {
       const response = await fetch(url);
@@ -46,7 +46,7 @@ function Profile({ authenticatedUser }) {
   }
 
   async function renderBookList() {
-    const url = `http://localhost:8000/api/books?author_id=${authenticatedUser.id}`;
+    const url = `${process.env.REACT_APP_API_HOST}/api/books?author_id=${authenticatedUser.id}`;
     try {
       const response = await fetch(url);
 
