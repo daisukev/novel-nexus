@@ -1,4 +1,4 @@
-FROM python:15.3-bullseye
+FROM python:3.11
 RUN python -m pip install --upgrade pip
 WORKDIR /app
 
