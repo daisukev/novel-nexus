@@ -31,15 +31,13 @@ const ChapterView = () => {
 
   useEffect(() => {
     if (token && book.id && chapter.id && !triedReadHistory) {
-      (async () => {
-        const readTimer = setTimeout(() => {
-          addReadHistory();
-          setTriedReadHistory(true);
-        }, 60000);
-        return () => clearTimeout(readTimer);
-      })();
+      const readTimer = setTimeout(() => {
+        addReadHistory();
+        setTriedReadHistory(true);
+      }, 60000);
+      return () => clearTimeout(readTimer);
     }
-  }, [token, book.id, chapter.id]);
+  }, [token, book.id, chapter.id, triedReadHistory]);
 
   useEffect(() => {
     setPrevChapter(null);
@@ -133,7 +131,10 @@ const ChapterView = () => {
             </Link>
           )}
           {nextChapter && (
-            <Link to={`/books/${bookId}/chapters/${nextChapter}`}>
+            <Link
+              to={`/books/${bookId}/chapters/${nextChapter}`}
+              onClick={addReadHistory}
+            >
               Next Chapter
               <i className="ri-arrow-right-line" />
             </Link>

@@ -9,7 +9,6 @@ const BookCoverUpload = ({ book }) => {
   const { token, fetchWithToken } = useToken();
   const [prevImage, setPrevImage] = useState(null);
   const [selectedImage, setSelectedImage] = useState(null);
-  const [imgError, setImgError] = useState(false);
   const imgRef = useRef(null);
 
   useEffect(() => {
@@ -37,7 +36,7 @@ const BookCoverUpload = ({ book }) => {
       setPrevImage(data.href);
     } catch (e) {
       console.error(e);
-      createMessage("Could not update book cover.", MESSAGE_TYPES.SUCCESS);
+      createMessage("Could not update book cover.", MESSAGE_TYPES.ERROR);
       setSelectedImage(null);
     }
   };

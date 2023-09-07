@@ -20,17 +20,19 @@ import BookDetail from "./pages/books/BookDetail.js";
 import ChapterEditor from "./authors/ChapterEditor.jsx";
 import SearchBar from "./pages/books/SearchBar/index.js";
 import withAuthRedirect from "./components/withAuthRedirect";
-import Genres from "./pages/books/Genres"
+import Genres from "./pages/books/Genres";
 import styles from "./App.module.css";
 import Sidebar from "./pages/Nav/Sidebar";
 import MessageProvider from "./MessageContext";
 import MessageQueue from "./components/MessageQueue";
+import { fetchAuthor } from "./actions";
+import ReadHistory from "./pages/chapters/ReadHistory";
 
 export const SidebarContext = createContext();
 export const UserContext = createContext();
 
 function App() {
-  const { token } = useToken();
+  const { token, fetchWithCookie } = useToken();
   const [user, setUser] = useState({});
   const [sidebarOpened, setSidebarOpened] = useState(false);
 
@@ -41,14 +43,21 @@ function App() {
     setSidebarOpened(false);
   };
 
+  const fetchLoggedInUser = async () => {
+    if (token) {
+      const newToken = await fetchWithCookie(
+        `${process.env.REACT_APP_API_HOST}/token`
+      );
+
+      const account = newToken.account;
+      setUser(account);
+    }
+  };
+
   useEffect(() => {}, []);
 
   useEffect(() => {
-    if (token) {
-      setUser(JSON.parse(atob(token.split(".")[1])).account);
-    } else {
-      setUser(null);
-    }
+    fetchLoggedInUser();
   }, [token]);
 
   const AuthChapterEditor = withAuthRedirect(ChapterEditor);
@@ -56,7 +65,7 @@ function App() {
 
   return (
     <div className={styles.root}>
-      <UserContext.Provider value={{ user }}>
+      <UserContext.Provider value={{ user, fetchLoggedInUser, setUser }}>
         <MessageProvider>
           <SidebarContext.Provider
             value={{ openSidebar, closeSidebar, sidebarOpened }}
@@ -75,7 +84,7 @@ function App() {
                   element={<Home token={token} user={user} />}
                 />
                 <Route path="my">
-                  <Route path="*" element={<NoMatch />} />
+                  <Route path="read-history" element={<ReadHistory />} />
                   <Route path="workspace">
                     <Route path="*" element={<NoMatch />} />
                     <Route index element={<BookListWorkspace />} />
@@ -110,10 +119,12 @@ function App() {
                     path="view/:author_id"
                     element={<ProfilePage authenticatedUser={user} />}
                   />
-                    <Route path="settings/:author_id"
-                     element={ < Settings token={token} authenticatedUser={user} />}
-                      />
-
+                  <Route
+                    path="settings/:author_id"
+                    element={
+                      <Settings token={token} authenticatedUser={user} />
+                    }
+                  />
                 </Route>
               </Routes>
             </div>

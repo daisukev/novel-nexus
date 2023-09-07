@@ -65,6 +65,7 @@ class ReadHistoryQueries:
                     """,
                     (author_id, chapter_id),
                 )
+                return True
 
     def get_author_read_history(self, author_id: int):
         with pool.connection() as conn:

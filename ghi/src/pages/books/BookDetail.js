@@ -45,7 +45,7 @@ function BookDetail() {
       const book = await fetchBook(bookId);
       setBook(book);
     })();
-  }, []);
+  }, [bookId]);
 
   if (!book || !author) {
     return <div>Loading...</div>;

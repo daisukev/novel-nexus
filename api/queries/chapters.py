@@ -63,15 +63,6 @@ class ChapterQueries:
             with conn.cursor() as cur:
                 cur.execute(
                     """
-<<<<<<< HEAD
-                    INSERT INTO
-                        chapters (book_id, chapter_order, title,
-                        content, views, is_published)
-                    VALUES
-                        (%s, %s, %s, %s, %s, %s)
-                    RETURNING id, book_id, chapter_order, title,
-                        content, views, is_published, created_at, updated_at;
-=======
                     SELECT
                         c.id,
                         c.book_id,
@@ -88,7 +79,6 @@ class ChapterQueries:
                         c.is_published = true
                     ORDER BY
                         c.chapter_order;
->>>>>>> 11071e087e0182782a916b39ad9fca6cc67df600
                     """,
                     (book_id,),
                 )

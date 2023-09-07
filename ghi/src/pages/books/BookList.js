@@ -13,7 +13,6 @@ function BookList() {
     (async () => {
       try {
         const books = await fetchAllBooks();
-        console.log("BOOOKS", books);
         setBookList(books);
       } catch (e) {
         console.error(e);

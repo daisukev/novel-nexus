@@ -39,7 +39,7 @@
 }
 
 .container {
-  background: #fdfdfc;
+  background: var(--background-lighter);
   box-shadow: 4px 4px 9px 8px rgba(0, 0, 0, 0.1);
   grid-area: 2/1/-1/-1;
 }
@@ -70,7 +70,7 @@
 .buttons a {
   width: 8rem;
   text-align: center;
-  background: #1a2e5d;
+  background: var(--primary);
   border: none;
   padding: 0.5rem;
   color: #fdfdfc;

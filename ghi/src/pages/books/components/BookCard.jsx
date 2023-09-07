@@ -3,22 +3,6 @@ import { Link } from "react-router-dom";
 import { fetchAuthor } from "../../../actions";
 import styles from "../styles/BookCard.module.css";
 const BookCard = ({ book }) => {
-  console.log(book);
-  // const [author, setAuthor] = useState({});
-  //
-  // useEffect(() => {
-  //   if (book.author_id) {
-  //     (async () => {
-  //       try {
-  //         const author = await fetchAuthor(book.author_id);
-  //         setAuthor(author);
-  //       } catch (e) {
-  //         console.error(e);
-  //       }
-  //     })();
-  //   }
-  // }, [book]);
-
   return (
     <div className={styles.card}>
       <Link

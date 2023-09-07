@@ -43,7 +43,7 @@ def add_read_history(
 @router.delete(
     "/api/chapters/{chapter_id}/history",
     tags=["Read History"],
-    response_model=ReadHistory,
+    response_model=bool,
 )
 def delete_read_history(
     chapter_id: int,
@@ -51,8 +51,7 @@ def delete_read_history(
     account_data: dict = Depends(authenticator.get_current_account_data),
 ) -> bool:
     author_id = account_data["id"]
-    queries.delete_read_history(author_id, chapter_id)
-    return True
+    return queries.delete_read_history(author_id, chapter_id)
 
 
 @router.get(

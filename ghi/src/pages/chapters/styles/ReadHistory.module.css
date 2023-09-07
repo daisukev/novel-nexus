@@ -1,0 +1,63 @@
+.readHistory {
+  padding-block: 3rem;
+  padding-inline: 5rem;
+}
+
+.readHistoryTable {
+  width: 100%;
+  margin-block: 2rem;
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+.readHistoryTable th {
+  text-align: left;
+  padding: 0.25rem;
+}
+.readHistoryTable > * {
+  font-family: var(--sans-serif-font);
+  font-weight: 400;
+  color: var(--text);
+}
+
+.readHistoryTable td {
+  padding-inline: 0.25rem;
+}
+
+tr:nth-child(even) {
+  background: var(--background-slightly-darker);
+}
+
+.readHistoryTable button {
+  border: none;
+  padding: 0.5rem;
+  min-width: 5rem;
+  font-weight: bold;
+  height: 2rem;
+  font-family: var(--sans-serif-font);
+  font-weight: 400;
+}
+.readHistoryTable button:active {
+  transform: translate(1px, 1px);
+}
+
+.readButton {
+  font-family: var(--sans-serif-font);
+  font-weight: 400;
+  overflow: hidden;
+  color: var(--background-lighter);
+  background: var(--primary);
+}
+.readButton:hover {
+  cursor: pointer;
+  background: var(--primary-lighter);
+}
+
+.deleteButton {
+  cursor: pointer;
+  color: var(--background-lighter);
+  background: var(--error-color);
+}
+
+.deleteButton:hover {
+  filter: brightness(80%);
+}

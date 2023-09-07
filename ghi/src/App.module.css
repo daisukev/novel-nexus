@@ -11,6 +11,7 @@
   --background-slightly-darker: #dbd5cc;
   --background-darker: hsl(36, 28%, 93%);
   --primary: hsl(222, 57%, 23%);
+  /* --primary: #2c3e50; */
   --primary-lighter: hsl(222, 37%, 33%);
   --secondary: hsl(36, 17%, 53%);
   --secondary-darker: hsl(36, 17%, 23%);
