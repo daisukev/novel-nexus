@@ -69,9 +69,7 @@ function Profile({ token, authenticatedUser }) {
     renderBookList();
   }, []);
 
-
-
-
+  
   return (
     <div>
       <Nav />

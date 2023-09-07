@@ -10,17 +10,12 @@ import briana from "../images/Briana.jpg";
 import jamesClear from "../images/JamesClear.jpg";
 import megazine1 from "../images/megazine1.png";
 import videoSrc from "../images/videoSrc.mp4";
-import recent1 from '../images/recent-1.png'
 import recent2 from '../images/recent-2.png'
-import recent3 from '../images/recent-3.png'
 import recent4 from '../images/recent-4.png'
-import recent5 from '../images/recent-5.png'
-import recent6 from '../images/recent-6.png'
-import recent7 from '../images/recent-7.png'
-import recent8 from '../images/recent-8.png'
 import recent9 from '../images/recent-9.png'
 import recent10 from '../images/recent-10.png'
 
+import RecentBooks from "../books/RecentBooks";
 import Nav from "../Nav/Nav";
 import Footer from "../Nav/Footer";
 
@@ -28,7 +23,9 @@ import Footer from "../Nav/Footer";
 
 
 
-function Home({ token, user }) {
+function Home({ token, user, setRecentBooks}) {
+
+
   return (
     <>
       <Nav token={token} authenticatedUser={user} />
@@ -54,59 +51,14 @@ function Home({ token, user }) {
         </div>
       </div>
 
-      <div className="main-recent-books">
-        <h1 className="main-recent-books-header">Recent Books</h1>
-        <div className="main-recent-books-container">
-
-
-          <div className="recent-card">
-            <img className="recent-book-img" src={recent1} />
-            <div className="title-top">
-              <h3 className="recent-book-title">The Severed Thread</h3>
-            </div>
-          </div>
-
-          <div className="recent-card">
-            <img className="recent-book-img" src={recent7} />
-            <div className="title-top">
-              <h3 className="recent-book-title">Mur Laferty Station</h3>
-            </div>
-          </div>
-
-          <div className="recent-card">
-            <img className="recent-book-img" src={recent3} />
-            <div className="title-top">
-              <h3 className="recent-book-title">The merciless Ones</h3>
-            </div>
-          </div>
-
-          <div className="recent-card">
-            <img className="recent-book-img" src={recent6} />
-            <div className="title-top">
-              <h3 className="recent-book-title">Kingdom Exiles</h3>
-            </div>
-          </div>
-
-          <div className="recent-card">
-            <img className="recent-book-img" src={recent5} />
-            <div className="title-top">
-              <h3 className="recent-book-title">The Usborne of Big Stars</h3>
-            </div>
-          </div>
-          <div className="recent-card">
-            <img className="recent-book-img" src={recent8} />
-            <div className="title-top">
-              <h3 className="recent-book-title">The Mystery Stories</h3>
-            </div>
-          </div>
-        </div>
+      <div className="render-recent-book">
+             <RecentBooks setRecentBooks={setRecentBooks} />
       </div>
+
 
       <div className="featured-authors">
         <h2 className="featured-authors-header">Our Top Featured Authors</h2>
         <div className="featured-authors-container">
-
-
           <div className="featured-author-card">
             <Link to={`/accounts/profile/17`}>
               <img className="author-img" src={robertk} alt="Author 1" />

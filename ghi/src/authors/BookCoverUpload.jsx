@@ -32,6 +32,7 @@ const BookCoverUpload = ({ book }) => {
 
     try {
       const data = await fetchWithToken(url, "POST", headers, options);
+      console.log(data);
       createMessage("Updated book cover.", MESSAGE_TYPES.SUCCESS);
       setPrevImage(data.href);
     } catch (e) {
