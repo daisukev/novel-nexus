@@ -43,7 +43,6 @@ build-api-image:
   only:
     - main
 
-
 # Build the React/JavaScript front-end
 build-front-end-job:
   stage: build
@@ -56,7 +55,7 @@ build-front-end-job:
     # You need to substitute in your real values for
     # GROUP_NAME, PROJECT_NAME, & WEBSERVICE_NAME below.
     PUBLIC_URL: https://novel-nexus.gitlab.io/novel-nexus/
-    REACT_APP_API_HOST: http://may-12-pt-novel-nexus-api.mod3projects.com
+    REACT_APP_API_HOST: https://may-12-pt-novel-nexus-api.mod3projects.com
   script:
     - cd ghi
     - npm install
