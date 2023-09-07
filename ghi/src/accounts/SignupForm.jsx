@@ -5,7 +5,7 @@ import styles from "./styles/SignupForm.module.css";
 import Nav from "../pages/Nav/Nav";
 export default function SignupForm() {
   const navigate = useNavigate();
-  const { register } = useToken();
+  const { register, token } = useToken();
   const [formData, setFormData] = useState({
     username: "",
     password: "",
@@ -13,6 +13,12 @@ export default function SignupForm() {
   });
   const [showError, setShowError] = useState(false);
   const [errorMessage, setErrorMesage] = useState("");
+
+  useEffect(() => {
+    if (token) {
+      navigate("/home");
+    }
+  }, [token]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -36,7 +42,6 @@ export default function SignupForm() {
     register(userData, url);
 
     // navigate to home page
-    navigate("/home");
   };
 
   useEffect(() => {
