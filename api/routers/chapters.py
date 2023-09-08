@@ -177,3 +177,16 @@ def update_chapter_order(
         raise HTTPException(
             status_code=500, detail="Could not update chapter."
         )
+
+
+@router.get(
+    "/api/authors/{author_id}/chapters",
+    tags=["Chapters"],
+)
+def get_recent_chapters_by_author(
+    author_id: int,
+    limit: int = 10,
+    offset: int = 0,
+    queries: ChapterQueries = Depends(),
+):
+    return queries.get_recent_chapters_by_author(author_id, limit, offset)

@@ -45,7 +45,7 @@ const Sidebar = ({ authenticatedUser, sidebarOpened, closeSidebar }) => {
               </li>
               <li className="nav-list">
                 {/* <NavLink to={`/accounts/profile/${authenticatedUser.username}`}>Profile Page</NavLink> */}
-                <NavLink to={`/profile/view/${authenticatedUser.username}`}>
+                <NavLink to={`/authors/${authenticatedUser.username}`}>
                   Profile Page
                 </NavLink>
               </li>
@@ -55,7 +55,7 @@ const Sidebar = ({ authenticatedUser, sidebarOpened, closeSidebar }) => {
               </li>
               <li className="menu-list">
                 <NavLink
-                  to={`/profile/settings/${authenticatedUser.id}`}
+                  to={`/my/settings/${authenticatedUser.id}`}
                   className="menu-link"
                 >
                   Settings

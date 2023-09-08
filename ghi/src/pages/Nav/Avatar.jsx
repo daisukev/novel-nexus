@@ -13,7 +13,7 @@ const Avatar = () => {
   if (user)
     return (
       <div className={styles.side}>
-        <Link to={`/profile/view/${user.username}`}>{user.username}</Link>
+        <Link to={`/authors/${user.username}`}>{user.username}</Link>
         <div
           className={styles.avatar}
           styles={{ backgroundImage: `url${backup}${user.username}` }}

@@ -20,14 +20,16 @@ import BookDetail from "./pages/books/BookDetail.js";
 import ChapterEditor from "./authors/ChapterEditor.jsx";
 import SearchBar from "./pages/books/SearchBar/index.js";
 import withAuthRedirect from "./components/withAuthRedirect";
-import Genres from "./pages/books/Genres"
-import GenresPage from "./pages/books/GenresPage"
+import Genres from "./pages/books/Genres";
+import GenresPage from "./pages/books/GenresPage";
 import styles from "./App.module.css";
 import Sidebar from "./pages/Nav/Sidebar";
 import MessageProvider from "./MessageContext";
 import MessageQueue from "./components/MessageQueue";
 import { fetchAuthor } from "./actions";
 import ReadHistory from "./pages/chapters/ReadHistory";
+import Recent from "./pages/profiles/Recent";
+import AllBooks from "./pages/profiles/AllBooks";
 
 export const SidebarContext = createContext();
 export const UserContext = createContext();
@@ -85,6 +87,12 @@ function App() {
                   element={<Home token={token} user={user} />}
                 />
                 <Route path="my">
+                  <Route
+                    path="settings/:author_id"
+                    element={
+                      <Settings token={token} authenticatedUser={user} />
+                    }
+                  />
                   <Route path="read-history" element={<ReadHistory />} />
                   <Route path="workspace">
                     <Route path="*" element={<NoMatch />} />
@@ -116,17 +124,16 @@ function App() {
                   element={<ChapterView />}
                 />
 
-                <Route path="/profile">
+                <Route path="/authors">
                   <Route
-                    path="view/:author_id"
-                    element={<ProfilePage authenticatedUser={user} token={token}/>}
-                  />
-                  <Route
-                    path="settings/:author_id"
+                    path=":author_id"
                     element={
-                      <Settings token={token} authenticatedUser={user} />
+                      <ProfilePage authenticatedUser={user} token={token} />
                     }
-                  />
+                  >
+                    <Route index element={<Recent />} />
+                    <Route path="all" element={<AllBooks />} />
+                  </Route>
                 </Route>
               </Routes>
             </div>

@@ -385,3 +385,37 @@ class BookRepository:
                     return results
         except Exception as e:
             print(e)
+
+    def get_published_books_by_author(
+        self, author_id: int
+    ) -> Union[Error, List[BookOut]]:
+        with pool.connection() as conn:
+            with conn.cursor() as cur:
+                try:
+                    cur.execute(
+                        """
+                        SELECT id,
+                        author_id,
+                        title,
+                        summary,
+                        cover,
+                        is_published,
+                        created_at,
+                        updated_at
+                        FROM books
+                        WHERE author_id = %s
+                        AND is_published= true
+                        """,
+                        [author_id],
+                    )
+
+                    results = []
+                    for row in cur.fetchall():
+                        record = {}
+                        for i, column in enumerate(cur.description):
+                            record[column.name] = row[i]
+                        results.append(BookOut(**record))
+
+                    return results
+                except Exception as e:
+                    print(e)

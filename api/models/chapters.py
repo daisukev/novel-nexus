@@ -1,4 +1,4 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, HttpUrl
 from datetime import datetime
 from typing import List, Optional
 
@@ -60,3 +60,16 @@ class ChapterUpdate(BaseModel):
     title: Optional[str]
     content: Optional[str]
     is_published: Optional[bool]
+
+
+class AuthorChapterOut(BaseModel):
+    chapter_id: int
+    cover: Optional[HttpUrl]
+    book_id: int
+    chapter_title: Optional[str]
+    book_title: Optional[str]
+    updated_at: Optional[datetime]
+
+
+class AuthorChaptersList(BaseModel):
+    chapters: List

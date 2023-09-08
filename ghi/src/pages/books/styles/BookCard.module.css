@@ -32,6 +32,10 @@
   text-align: center;
 }
 
+.titleLink {
+  font-size: 1rem;
+}
+
 .titleLink:hover {
   text-decoration: underline;
   text-decoration-thickness: 2px;
@@ -59,10 +63,11 @@
 }
 
 .description {
+  font-size: 0.9rem;
   text-align: left;
   display: -webkit-box;
   -webkit-box-orient: vertical;
-  -webkit-line-clamp: 3;
+  -webkit-line-clamp: 6;
   text-overflow: ellipsis;
   overflow: hidden;
 }
@@ -91,4 +96,14 @@
   flex-direction: row;
   justify-content: flex-end;
   gap: 0.25rem;
+}
+
+@media (min-width: 1024px) {
+  .titleLink {
+    font-size: 1.3rem;
+  }
+
+  .description {
+    -webkit-line-clamp: 3;
+  }
 }

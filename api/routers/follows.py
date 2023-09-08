@@ -1,4 +1,4 @@
-from models.follows import FollowedList
+from models.follows import FollowRequest, FollowedList
 from models.follows import FollowResponse, UnfollowResponse
 from fastapi import APIRouter, Depends, HTTPException
 from queries.follows import FollowQueries
@@ -8,16 +8,17 @@ router = APIRouter()
 
 
 @router.post(
-    "/api/author/{follower_id}/follow/{author_id}",
+    "/api/follows",
     tags=["Follow"],
     response_model=FollowResponse,
 )
 def create_follow(
-    follower_id: int,
-    author_id: int,
+    followee: FollowRequest,
     queries: FollowQueries = Depends(),
     account_data: dict = Depends(authenticator.get_current_account_data),
 ):
+    follower_id = account_data["id"]
+    author_id = followee.author_id
     if account_data["id"] != follower_id:
         raise HTTPException(status_code=403, detail="Permission Denied")
 
@@ -25,6 +26,19 @@ def create_follow(
     if not success:
         raise HTTPException(status_code=500, detail="Following Request Failed")
     return {"is_following": success}
+
+
+@router.get(
+    "/api/authors/{author_id}/is-following",
+    tags=["Follow", "Follow"],
+    response_model=bool,
+)
+def is_following(
+    author_id: int,
+    queries: FollowQueries = Depends(),
+    account_data: dict = Depends(authenticator.get_current_account_data),
+):
+    return queries.is_following(account_data["id"], author_id)
 
 
 @router.get(
@@ -56,16 +70,19 @@ def get_list(
 
 
 @router.delete(
-    "/api/author/{follower_id}/unfollow/{author_id}",
+    "/api/follows",
     tags=["Follow"],
     response_model=UnfollowResponse,
 )
 def unfollow_author(
-    follower_id: int,
-    author_id: int,
+    follow: FollowRequest,
     account_data: dict = Depends(authenticator.get_current_account_data),
     queries: FollowQueries = Depends(),
 ):
+    follower_id = account_data["id"]
+
+    author_id = follow.author_id
+
     if account_data["id"] != follower_id:
         raise HTTPException(status_code=403, detail="Permission Denied")
 

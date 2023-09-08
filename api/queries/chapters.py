@@ -6,6 +6,7 @@ from typing import List
 from models.authors import Message
 from models.chapters import (
     AllChaptersOut,
+    AuthorChapterOut,
     ChapterIn,
     ChapterOrderUpdateList,
     ChapterOut,
@@ -292,3 +293,34 @@ class ChapterQueries:
 
                 row = cur.fetchone()
                 return self.chapter_record_to_dict(row, cur.description)
+
+    def get_recent_chapters_by_author(
+        self, author_id: int, limit: int = 10, offset: int = 0
+    ):
+        with pool.connection() as conn:
+            with conn.cursor() as cur:
+                cur.execute(
+                    """
+                    SELECT c.id as chapter_id,
+                    b.cover,
+                    b.id as book_id,
+                    c.title as chapter_title,
+                    b.title as book_title,
+                    c.updated_at
+                    FROM chapters c
+                    INNER JOIN books b ON c.book_id = b.id
+                    INNER JOIN authors a ON b.author_id = a.id
+                    WHERE a.id = %s and c.is_published = true
+                    AND c.updated_at IS NOT NULL
+                    ORDER BY c.updated_at DESC
+                    LIMIT %s OFFSET %s;
+                    """,
+                    [author_id, limit, offset],
+                )
+                results = []
+                for row in cur.fetchall():
+                    record = {}
+                    for i, column in enumerate(cur.description):
+                        record[column.name] = row[i]
+                    results.append(AuthorChapterOut(**record))
+        return results

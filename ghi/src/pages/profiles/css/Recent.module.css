@@ -1,0 +1,54 @@
+.recentChapters {
+  padding-block: 2rem;
+}
+
+.recentChaptersCard {
+  display: grid;
+  grid-template-columns: 3rem 1fr auto;
+  align-items: center;
+  width: 100%;
+  height: 4rem;
+  gap: 1rem;
+  font-size: 1.2rem;
+  border-bottom: 1px solid var(--background-slightly-darker);
+  margin-bottom: 1rem;
+  padding-right: 1rem;
+}
+
+.recentChaptersCard:first-of-type {
+  align-items: flex-end;
+}
+.recentChaptersCard a:hover {
+  text-decoration: underline;
+  text-decoration-color: var(--accent);
+  text-decoration-thickness: 2px;
+}
+
+.imgContainer {
+  aspect-ratio: 6/9;
+  overflow: hidden;
+  height: 4rem;
+}
+.imgContainer img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.loadMore {
+  padding-block: 0.25rem;
+  height: 2rem;
+  min-width: 5.5rem;
+  border: none;
+  background: var(--secondary);
+  color: var(--background);
+  font-weight: bold;
+}
+
+.loadMore:hover {
+  cursor: pointer;
+}
+
+.loadMore:active {
+  transform: translate(1px, 1px);
+}

@@ -154,3 +154,15 @@ def get_recent_books(repo: BookRepository = Depends()):
     except Exception as e:
         error_message = str(e)
         return Error(message=error_message)
+
+
+@router.get(
+    "/api/authors/{author_id}/books",
+    tags=["Books", "Authors"],
+    response_model=List[BookOut],
+)
+def get_published_books_by_author(
+    author_id: int,
+    repo: BookRepository = Depends(),
+):
+    return repo.get_published_books_by_author(author_id)

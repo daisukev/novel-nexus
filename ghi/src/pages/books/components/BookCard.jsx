@@ -21,11 +21,11 @@ const BookCard = ({ book }) => {
         </h2>
         <address className={styles.author}>
           By{" "}
-          <a href={`/profile/view/${book.author_username}`}>
+          <Link href={`/profile/view/${book.author_username}`}>
             {book.author_first_name || book.author_last_name
               ? `${book.author_first_name} ${book.author_last_name}`
               : book.author_username}
-          </a>
+          </Link>
         </address>
         <div className={styles.descriptionContainer}>
           <p className={styles.description}>{book.summary}</p>
