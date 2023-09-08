@@ -63,7 +63,7 @@ async def create_author(
     return AccountToken(account=new_author, **token.dict())
 
 
-@router.get("/api/authors/", tags=["Authors"], response_model=AuthorListOut)
+@router.get("/api/authors", tags=["Authors"], response_model=AuthorListOut)
 def get_authors(queries: AuthorQueries = Depends()):
     return {"authors": queries.get_all_authors()}
 

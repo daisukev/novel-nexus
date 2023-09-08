@@ -1,0 +1,58 @@
+.real-time-updates {
+    position: relative;
+    background-color: #343a40;
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 500px;
+    margin: 0 auto;
+    height: 450px;
+  }
+
+  .updates-header {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+
+  .rising-authors {
+    margin-bottom: 20px;
+  }
+
+  .rising-author-flex-box {
+    align-items: center;
+    margin-bottom: 10px;
+  }
+
+  .rising-author-info .margin {
+    margin: 10px;
+  }
+
+  .rising-author-avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 10px;
+  }
+
+  .rising-star-content-list {
+    list-style-type: none;
+    padding: 0;
+    margin-left: 20px;
+  }
+
+  .rising-star-content-list li {
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  }
+  .realtime-button {
+    position: absolute;
+    width: 120px;
+    padding: 10px;
+    left: 180px;
+    background-color: #d8bfd8;
+    border: none;
+    margin: 25px;
+  }

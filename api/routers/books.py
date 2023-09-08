@@ -7,6 +7,9 @@ from queries.books import (
     BooksAuthorsOut,
     Error,
     SearchListOut,
+    RecentBooksOut,
+    TopBooksOut,
+    BooksViewOut,
 )
 
 from typing import Union, List, Optional
@@ -140,7 +143,7 @@ async def upload_cover_image(
 @router.get(
     "/api/recent/books",
     tags=["Books"],
-    response_model=Union[List[BooksAuthorsOut], Error],
+    response_model=Union[List[RecentBooksOut], Error],
 )
 def get_recent_books(repo: BookRepository = Depends()):
     try:
@@ -150,6 +153,37 @@ def get_recent_books(repo: BookRepository = Depends()):
         else:
             raise HTTPException(
                 status_code=404, detail="No recent books found"
+            )
+    except Exception as e:
+        error_message = str(e)
+        return Error(message=error_message)
+
+
+@router.get(
+    "/api/track/books/visit", tags=["Books"], response_model=List[BooksViewOut]
+)
+def track_books_view(repo: BookRepository = Depends()):
+    updated_book = repo.book_views_counter()
+    if updated_book:
+        return updated_book
+    else:
+        raise HTTPException(status_code=404, detail="Book not found")
+
+
+@router.get(
+    "/api/top/books",
+    tags=["Books"],
+    response_model=Union[List[TopBooksOut], Error],
+)
+def get_top_books(limit: int = 3, repo: BookRepository = Depends()):
+    try:
+        top_visited_books = repo.get_top_books(limit=limit)
+
+        if top_visited_books:
+            return top_visited_books
+        else:
+            raise HTTPException(
+                status_code=404, detail="No top visited books found"
             )
     except Exception as e:
         error_message = str(e)

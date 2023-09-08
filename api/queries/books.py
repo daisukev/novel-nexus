@@ -73,6 +73,34 @@ class SearchListOut(BaseModel):
     books: List[SearchOut]
 
 
+class RecentBooksOut(BaseModel):
+    id: int
+    title: Optional[str]
+    cover: Optional[str]
+    created_at: Optional[datetime]
+    is_published: Optional[bool]
+
+
+class TopBooksOut(BaseModel):
+    id: int
+    author_id: Optional[int]
+    book_id: Optional[int]
+    title: Optional[str]
+    cover: Optional[str]
+    created_at: datetime = Field(default_factory=datetime)
+    updated_at: Optional[datetime]
+    is_published: Optional[bool]
+    author_first_name: Optional[str]
+    author_last_name: Optional[str]
+    visits: Optional[int]
+
+
+class BooksViewOut(BaseModel):
+    id: int
+    title: Optional[str]
+    visits: Optional[int]
+
+
 class BookRepository:
     def delete(self, book_id: int) -> bool:
         try:
@@ -347,41 +375,99 @@ class BookRepository:
             print(e)
             return SearchListOut(books=[])
 
-    def get_recent_books(self):
+    def get_recent_books(self) -> Union[Error, List[RecentBooksOut]]:
         try:
             with pool.connection() as conn:
                 with conn.cursor() as cur:
                     cur.execute(
                         """
                         SELECT
-                            b.id,
-                            b.title,
-                            b.summary,
-                            b.cover,
-                            b.is_published,
-                            b.created_at,
-                            b.updated_at,
-                            a.id AS author_id,
-                            a.first_name AS author_first_name,
-                            a.last_name AS author_last_name,
-                            a.username AS author_username
+                            id,
+                            title,
+                            cover,
+                            created_at,
+                            is_published
                         FROM
-                            books b
-                        JOIN
-                            authors a ON b.author_id = a.id
+                            books
                         WHERE
-                            b.is_published = TRUE
+                            is_published = TRUE
                         ORDER BY
-                            b.created_at DESC;
+                            created_at DESC;
                         """
                     )
                     results = []
-                    all = cur.fetchall()
-                    for row in all:
-                        record = {}
+                    record = cur.fetchall()
+                    for row in record:
+                        data = {}
                         for i, column in enumerate(cur.description):
-                            record[column.name] = row[i]
-                        results.append(BooksAuthorsOut(**record))
+                            data[column.name] = row[i]
+                        results.append(RecentBooksOut(**data))
+                    return results
+        except Exception as e:
+            print(e)
+
+    def book_views_counter(self) -> Union[Error, List[BooksViewOut]]:
+        try:
+            updated_books = []
+            with pool.connection() as conn:
+                with conn.cursor() as cur:
+                    cur.execute(
+                        """
+                        UPDATE popular_books
+                        SET visits = visits + 1
+                        RETURNING id, title, visits;
+                        """
+                    )
+                    updated_books_data = cur.fetchall()
+                    for book_data in updated_books_data:
+                        updated_books.append(
+                            {
+                                "id": book_data[0],
+                                "title": book_data[1],
+                                "visits": book_data[2],
+                            }
+                        )
+            conn.commit()
+            return updated_books
+        except Exception as e:
+            print(e)
+
+    def get_top_books(self, limit: int) -> Union[Error, List[TopBooksOut]]:
+        try:
+            with pool.connection() as conn:
+                with conn.cursor() as cur:
+                    cur.execute(
+                        """
+                        SELECT
+                            p.id,
+                            p.title,
+                            p.cover,
+                            p.is_published,
+                            p.created_at,
+                            p.updated_at,
+                            p.visits,
+                            p.book_id,
+                            a.id AS author_id,
+                            a.first_name AS author_first_name,
+                            a.last_name AS author_last_name
+                        FROM
+                        popular_books p
+                        JOIN authors a ON p.author_id = a.id
+                        WHERE
+                            is_published = TRUE
+                        ORDER BY
+                            visits DESC
+                        LIMIT %s;
+                        """,
+                        (limit,),
+                    )
+                    results = []
+                    record = cur.fetchall()
+                    for row in record:
+                        data = {}
+                        for i, column in enumerate(cur.description):
+                            data[column.name] = row[i]
+                        results.append(TopBooksOut(**data))
                     return results
         except Exception as e:
             print(e)

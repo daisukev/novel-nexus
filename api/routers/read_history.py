@@ -56,7 +56,7 @@ def delete_read_history(
 
 @router.get(
     "/api/books/{book_id}/views",
-    tags=["Books", "Read History"],
+    tags=["Read History"],
     response_model=BookViewCount,
 )
 def get_book_view_count(
