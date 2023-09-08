@@ -54,8 +54,8 @@ function RecentBooks() {
                       />
                     </Link>
 
-                    <div className="title-top">
-                      <h3 className="recent-book-title">{book.title}</h3>
+                    <div className="recent-book-title">
+                      <h3 >{book.title}</h3>
                  </div>
 
             </div>
