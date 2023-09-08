@@ -101,53 +101,8 @@ body, html {
   margin-right: 10px;
 }
 
-/* ----------------------------------------- RECENT BOOKS ------------------------------------ */
-
-@media (min-width: 768px) {
-  .main-recent-books-container {
-    justify-content: space-between;
-  }
-}
-
-@media (min-width: 1024px) {
-  .main-recent-books-container {
-    justify-content: space-between;
-    flex-wrap: wrap;
-  }
-}
-
-.main-recent-books-header  {
-    text-align:center;
-    margin: 30px;
-}
-
-.main-recent-books-container{
-    display:flex;
-}
-
-.recent-book-img{
-    width:300px;
-    height:400px;
-}
 
 
-.recent-card{
-    display:flex;
-    margin:30px;
-    flex-direction:column;
-
-}
-
-.recent-book-title, h3 {
-    text-align: center;
-    font-size: 1.3rem;
-    margin-top: 10px;
-    font-weight: bold;
-    color: #333;
-    font-family: 'Your Selected Font', sans-serif;
-    text-transform: uppercase;
-
-  }
 /* --------------------------------------- Authors -------------------------- */
 .featured-authors {
   background-color: #f5f5f5;

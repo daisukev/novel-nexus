@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import '../main/main.css'
+import './styles/RecentBooks.css'
 
 function RecentBooks() {
   const [bookList, setBookList] = useState([]);
@@ -45,7 +45,7 @@ function RecentBooks() {
         <h1 className="main-recent-books-header">Recent Books</h1>
         <div className="main-recent-books-container">
             {recentBooksLimit.map((book) => (
-              <div key={book.id}>
+              <div key={book.id} className="recent-img-card">
                   <Link to={`/books/${book.id}`}>
                       <img
                         src={book.cover}
@@ -53,9 +53,10 @@ function RecentBooks() {
                         className="recent-book-img"
                       />
                     </Link>
+
                     <div className="title-top">
                       <h3 className="recent-book-title">{book.title}</h3>
-                    </div>
+                 </div>
 
             </div>
             ))}
