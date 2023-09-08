@@ -346,3 +346,42 @@ class BookRepository:
         except Exception as e:
             print(e)
             return SearchListOut(books=[])
+
+    def get_recent_books(self):
+        try:
+            with pool.connection() as conn:
+                with conn.cursor() as cur:
+                    cur.execute(
+                        """
+                        SELECT
+                            b.id,
+                            b.title,
+                            b.summary,
+                            b.cover,
+                            b.is_published,
+                            b.created_at,
+                            b.updated_at,
+                            a.id AS author_id,
+                            a.first_name AS author_first_name,
+                            a.last_name AS author_last_name,
+                            a.username AS author_username
+                        FROM
+                            books b
+                        JOIN
+                            authors a ON b.author_id = a.id
+                        WHERE
+                            b.is_published = TRUE
+                        ORDER BY
+                            b.created_at DESC;
+                        """
+                    )
+                    results = []
+                    all = cur.fetchall()
+                    for row in all:
+                        record = {}
+                        for i, column in enumerate(cur.description):
+                            record[column.name] = row[i]
+                        results.append(BooksAuthorsOut(**record))
+                    return results
+        except Exception as e:
+            print(e)

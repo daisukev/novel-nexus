@@ -135,3 +135,22 @@ async def upload_cover_image(
     repo.update(book_id, update_book)
 
     return image_href
+
+
+@router.get(
+    "/api/recent/books",
+    tags=["Books"],
+    response_model=Union[List[BooksAuthorsOut], Error],
+)
+def get_recent_books(repo: BookRepository = Depends()):
+    try:
+        recent_books = repo.get_recent_books()
+        if recent_books:
+            return recent_books
+        else:
+            raise HTTPException(
+                status_code=404, detail="No recent books found"
+            )
+    except Exception as e:
+        error_message = str(e)
+        return Error(message=error_message)

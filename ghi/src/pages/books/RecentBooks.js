@@ -7,7 +7,7 @@ function RecentBooks() {
 
   async function fetchRecentBooks() {
     try {
-      const url = `${process.env.REACT_APP_API_HOST}/api/books`;
+      const url = `${process.env.REACT_APP_API_HOST}/api/recent/books`;
       const response = await fetch(url);
 
       if (response.ok) {
