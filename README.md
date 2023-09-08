@@ -1,141 +1,64 @@
-# Module3 Project Gamma
+# Novel Nexus
 
-## Getting started
+- [Team](#team)
+- [About Novel Nexus](#about-novel-nexus)
+- [Design](#design)
+- [Intended Market](#intended-market)
+- [Functionality](#functionality)
+- [Project Initialization](#project-initialization)
 
-You have a project repository, now what? The next section
-lists all of the deliverables that are due at the end of the
-week. Below is some guidance for getting started on the
-tasks for this week.
+## Team
 
-## Install Extensions
+- Josh Vasquez
+- An Tran
+- Munti Kehase
+- Brandon Downs
 
-- Prettier: <https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode>
-- Black Formatter: <https://marketplace.visualstudio.com/items?itemName=ms-python.black-formatter>
+## About Novel Nexus
 
-## Deliverables
+Novel Nexus - Your Gateway to Infinite Stories
 
-- [ ] Wire-frame diagrams
-- [ ] API documentation
-- [ ] Project is deployed to Caprover (BE, DB) & GitLab-pages (FE)
-- [ ] GitLab issue board is setup and in use (or project management tool of choice)
-- [ ] Journals
+Novel Nexus - Explore. Read. Create.
 
-## Project layout
+Novel Nexus - Where Stories Come to Life.
 
-The layout of the project is just like all of the projects
-you did with `docker-compose` in module #2. You will create
-a directory in the root of the repository for each service
-that you add to your project just like those previous
-projects were setup.
+## Design
 
-### Directories
+- [API Documentation](docs/API.md)
+- [Data Model](docs/data-model.md)
+- [GHI](docs/ghi.md)
+- [Integrations](docs/integrations.md)
 
-Several directories have been added to your project. The
-directories `docs` and `journals` are places for you and
-your team-mates to, respectively, put any documentation
-about your project that you create and to put your
-project-journal entries. See the _README.md_ file in each
-directory for more info.
+## Intended Market
 
-The other directories, `ghi` and `api`, are services, that
-you can start building off of.
+We are targeting avid readers and authors in the online literature and storytelling community. Novel Nexus provides a platform for writers to share their stories and for readers to discover a wide array of literary adventures tailored to their tastes.
 
-Inside of `ghi` is a minimal React app that has an "under
-construction" page. It is setup similarly to all of the
-other React projects that you have worked on.
+## Functionality
 
-Inside of `api` is a minimal FastAPI application.
-"Where are all the files?" you might ask? Well, the
-`main.py` file is the whole thing, and go take look inside
-of it... There's not even much in there..., hmm? That is
-FastAPI, we'll learn more about it in the coming days. Can
-you figure out what this little web-application does even
-though you haven't learned about FastAPI yet?
+- Explore and discover an extensive library of novels, stories, and literary works.
+- Create and publish your own stories for the world to read.
+- Connect with fellow authors and readers through discussions and forums.
+- Personalized recommendations based on your reading preferences.
+- User profiles with reading history and favorite stories.
+- Easy-to-use story creation and editing tools for authors.
+- Search and filter novels by genre, author, and more.
+- Reader reviews and ratings for every story.
+- Comment and engage with authors and readers.
+- Bookmark and save your favorite stories for later.
+- Author profiles with a portfolio of their works.
+- Reader-friendly interface with customizable reading settings.
+- Community events and contests for writers and readers.
+- Comprehensive help and support resources.
 
-Also in `api` is a directory for your migrations.
-If you choose to use PostgreSQL, then you'll want to use
-migrations to control your database. Unlike Django, where
-migrations were automatically created for you, you'll write
-yours by hand using DDL. Don't worry about not knowing what
-DDL means; we have you covered. There's a sample migration
-in there that creates two tables so you can see what they
-look like.
+## Project Initialization
 
-The Dockerfile and Dockerfile.dev run your migrations
-for you automatically.
+To fully enjoy Novel Nexus on your local machine, please follow these steps:
 
-### Other files
+1. Clone the repository to your local machine.
+2. Navigate to the project directory.
+3. Run `docker volume create novel-nexus-data`.
+4. Build the Docker containers: `docker-compose build`.
+5. Start the application: `docker-compose up`.
+6. Access the application at [http://localhost:3000](http://localhost:3000).
 
-The following project files have been created as a minimal
-starting point. Please follow the guidance for each one for
-a most successful project.
-
-- `docker-compose.yaml`: there isn't much in here, just a
-  **really** simple UI and FastAPI service. Add services
-  (like a database) to this file as you did with previous
-  projects in module #2.
-- `.gitlab-ci.yml`: This is your "ci/cd" file where you will
-  configure automated unit tests, code quality checks, and
-  the building and deployment of your production system.
-  Currently, all it does is deploy an "under construction"
-  page to your production UI on GitLab and a sample backend
-  to CapRover. We will learn much more about this file.
-- `.gitignore`: This is a file that prevents unwanted files
-  from getting added to your repository, files like
-  `pyc` files, `__pycache__`, etc. We've set it up so that
-  it has a good default configuration for Python projects.
-- `.env.sample`: This file is a template to copy when
-  creating environment variables for your team. Create a
-  copy called `.env` and put your own passwords in here
-  without fear of it being committed to git (see `.env`
-  listed in `.gitignore`). You can also put team related
-  environment variables in here, things like api and signing
-  keys that shouldn't be committed; these should be
-  duplicated in your deployed environments.
-
-## How to complete the initial deploy
-
-There will be further guidance on completing the initial
-deployment, but it just consists of these steps:
-
-### Setup GitLab repo/project
-
-- make sure this project is in a group. If it isn't, stop
-  now and move it to a GitLab group
-- remove the fork relationship: In GitLab go to:
-
-  Settings -> General -> Advanced -> Remove fork relationship
-
-- add these GitLab CI/CD variables:
-  - PUBLIC_URL : this is your gitlab pages URL
-  - REACT_APP_API_HOST: enter "blank" for now
-
-#### Your GitLab pages URL
-
-You can't find this in GitLab until after you've done a deploy
-but you can figure it out yourself from your GitLab project URL.
-
-If this is your project URL
-
-https://gitlab.com/GROUP_NAME/PROJECT_NAME
-
-then your GitLab pages URL will be
-
-https://GROUP_NAME.gitlab.io/PROJECT_NAME
-
-### Initialize CapRover
-
-1. Attain IP address and domain from an instructor
-1. Follow the steps in the CD Cookbook in Learn.
-
-### Update GitLab CI/CD variables
-
-Copy the service URL for your CapRover service and then paste
-that into the value for the REACT_APP_API_HOST CI/CD variable
-in GitLab.
-
-### Deploy it
-
-Merge a change into main to kick off the initial deploy. Once the build pipeline
-finishes you should be able to see an "under construction" page on your GitLab
-pages site.
+Enjoy your literary journey with Novel Nexus!
