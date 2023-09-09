@@ -10,13 +10,12 @@ function FeaturedAuthor() {
     return null;
   }
 
-  const featuredUsernames = ['james-clear', 'neil-gaiman', 'colleen-hoover'];
+  const featuredUsernames = ['JamesClear', 'NeilGaiman', 'ColleenHoover'];
 
   const featuredAuthors = authorsList.filter((author) =>
     featuredUsernames.includes(author.username)
   );
 
-  
 
   return (
     <div className="featured-authors">
@@ -44,7 +43,6 @@ function FeaturedAuthor() {
                   </a>
                 </div>
               </div>
-
             </Link>
           </div>
         ))}
