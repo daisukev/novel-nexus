@@ -16,9 +16,7 @@ function FeaturedAuthor() {
     featuredUsernames.includes(author.username)
   );
 
-  if (!featuredAuthors || featuredAuthors.length === 0) {
-    return <div>Loading...</div>;
-  }
+  
 
   return (
     <div className="featured-authors">

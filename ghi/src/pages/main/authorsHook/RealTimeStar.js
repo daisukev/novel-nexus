@@ -16,25 +16,20 @@ function RealTimeStar() {
      risingAuthor.includes(author.username)
   );
 
-  if (!getRisingAuthors || getRisingAuthors.length === 0) {
-    return <div>Loading...</div>;
-  }
 
   return (
     <>
 <div className="real-time-updates">
         <h2 className="updates-header">Real-time Star</h2>
-        <div className="rising-authors">
         {getRisingAuthors.map((risingAuthor) => (
+        <div className="rising-authors">
           <div className="rising-author-flex-box">
-            <div >
-                <div>
+          <div className="author-container">
+               <div className="avatar-box">
                       <img className="rising-author-avatar" src={risingAuthor.avatar} alt={`Author ${risingAuthor.username}`} />
-                      <p className="author-name">{risingAuthor.first_name} {risingAuthor.last_name}</p>
-              </div>
-
+                  </div>
             <div className="rising-author-info">
-
+            <p className="author-name">{risingAuthor.first_name} {risingAuthor.last_name}</p>
               <span className="realtime-author-followers margin">
                 Followers: 12,345
               </span>
@@ -42,21 +37,22 @@ function RealTimeStar() {
                 Content Published: 56
               </span>
             </div>
+            </div>
              <div>
                     <ul className="rising-star-content-list">
                     <li>Chapter 10 - Building Investment </li>
                     <li>Chapter 9 - The tic tac toe</li>
                     <li>Chapter 8 - Stock Learning Process</li>
                     </ul>
-            </div>
+              </div>
                  <Link to={`/authors/${risingAuthor.username}`}>
                       <button className="realtime-button">Visit Profile</button>
                 </Link>
+
             </div>
             </div>
 
            )) }
-        </div>
       </div>
 </>
   );

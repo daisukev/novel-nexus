@@ -30,11 +30,12 @@
   }
 
   .rising-author-avatar {
-    width: 50px;
-    height: 50px;
+    width: 90px;
+    height: 90px;
     border-radius: 50%;
     object-fit: cover;
     margin-right: 10px;
+
   }
 
   .rising-star-content-list {
@@ -55,4 +56,17 @@
     background-color: #d8bfd8;
     border: none;
     margin: 25px;
+  }
+
+  .author-container {
+    display: flex!important;
+    align-items: center!important;
+  }
+
+  .avatar-box {
+    flex: 0 0 auto!important;
+  }
+
+  .rising-author-info {
+    flex: 1!important;
   }
