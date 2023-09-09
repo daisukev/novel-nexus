@@ -10,7 +10,7 @@ function RealTimeStar() {
     return null;
   }
 
-  const risingAuthor = ['robert-kiyosaki'];
+  const risingAuthor = ['JonathanEscoffery'];
 
   const getRisingAuthors = authorsList.filter((author) =>
      risingAuthor.includes(author.username)
