@@ -122,12 +122,18 @@ export default function ChaptersList({
 
       <form onSubmit={updateChapterOrder}>
         {isChanged && (
-          <>
-            <button type="submit">Update Chapter Order</button>
-            <button type="button" onClick={resetChapterOrder}>
-              Reset Chapter Order
+          <div className={styles.buttons}>
+            <button type="submit" className={styles.updateButton}>
+              <i className="ri-checkbox-circle-fill" />
             </button>
-          </>
+            <button
+              type="button"
+              onClick={resetChapterOrder}
+              className={styles.resetButton}
+            >
+              <i className="ri-close-circle-fill" />
+            </button>
+          </div>
         )}
       </form>
     </div>

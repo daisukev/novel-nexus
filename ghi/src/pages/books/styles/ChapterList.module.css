@@ -54,3 +54,9 @@
   cursor: pointer;
   background: hsl(222, 36%, 43%);
 }
+
+.updateButton {
+  border: none;
+  background: var(--success-color);
+  color: var(--background-lighter);
+}

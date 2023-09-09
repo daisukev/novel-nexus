@@ -147,9 +147,6 @@ export default function ChapterEditor() {
     }
   };
 
-  //TODO: currently if a token expires before an author saves, it just... won't save.
-  // Fix that
-
   if (content) {
     return (
       <div
@@ -160,29 +157,40 @@ export default function ChapterEditor() {
           flex: "1",
           overflow: "hidden",
           gridTemplateRows: "auto 1fr",
+          paddingTop: "2rem",
         }}
       >
         <div>
-          {chapter?.is_published ? (
-            <button
-              type="button"
-              onClick={() => {
-                updateChapterPublished(false);
-              }}
-            >
-              Unpublish
-            </button>
-          ) : (
-            <button
-              type="button"
-              onClick={() => {
-                updateChapterPublished(true);
-              }}
-            >
-              Publish
-            </button>
-          )}
-          <p>published? {chapter?.is_published ? "yes" : "no"}</p>
+          <p className={styles.publishedSection}>
+            {chapter?.is_published ? (
+              <span>
+                <i className="ri-checkbox-line" />
+              </span>
+            ) : (
+              <i className="ri-checkbox-blank-line" />
+            )}
+            {chapter?.is_published ? (
+              <button
+                type="button"
+                onClick={() => {
+                  updateChapterPublished(false);
+                }}
+                className={styles.publishButton}
+              >
+                Unpublish
+              </button>
+            ) : (
+              <button
+                type="button"
+                onClick={() => {
+                  updateChapterPublished(true);
+                }}
+                className={styles.publishButton}
+              >
+                Publish
+              </button>
+            )}
+          </p>
           <ChapterTitle chapter={chapter} />
         </div>
         <div className="editor-container" ref={containerRef}>
@@ -367,6 +375,8 @@ function ChapterTitle({ chapter }) {
             }}
             onKeyUp={handleEditChapterTitleKeyPress}
             value={chapterTitle}
+            className={styles.titleEditor}
+            autoFocus
           />
           <button
             type="button"
@@ -374,8 +384,9 @@ function ChapterTitle({ chapter }) {
               updateChapterTitle();
               setIsEditing(false);
             }}
+            className={styles.editButton}
           >
-            Save
+            <i className="ri-save-3-fill" />
           </button>
         </>
       ) : (
@@ -386,6 +397,7 @@ function ChapterTitle({ chapter }) {
               fontSize: fontSize,
               paddingInline: "0.25rem",
             }}
+            className={styles.title}
           >
             {chapterTitle}
           </h3>
@@ -394,8 +406,9 @@ function ChapterTitle({ chapter }) {
             onClick={() => {
               setIsEditing(true);
             }}
+            className={styles.editButton}
           >
-            Edit
+            <i className="ri-edit-box-line" />
           </button>
         </>
       )}

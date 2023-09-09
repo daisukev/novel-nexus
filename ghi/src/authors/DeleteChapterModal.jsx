@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import useToken from "../jwt.tsx";
 import { useParams, useNavigate } from "react-router-dom";
+import styles from "./styles/DeleteChapterModal.module.css";
+import "../App.module.css";
 export default function DeleteChapterModal({
   closeDeleteModal,
   chapterToDelete,
@@ -54,20 +56,7 @@ export default function DeleteChapterModal({
   };
   return (
     // rome-ignore lint: The key handler is attached to the window.
-    <div
-      style={{
-        position: "fixed",
-        top: "0",
-        left: "0",
-        height: "100vh",
-        width: "100vw",
-        background: "rgba(0,0,0,0.8)",
-        display: "grid",
-        alignItems: "center",
-        justifyItems: "center",
-      }}
-      onClick={closeDeleteModal}
-    >
+    <div onClick={closeDeleteModal} className={styles.modalBackground}>
       {/* rome-ignore lint: The key handler is attached to the window.  */}
       <div
         style={{
@@ -90,7 +79,6 @@ export default function DeleteChapterModal({
             style={{
               background: "var(--background-darker)",
               padding: "1rem",
-              border: "1px solid var(--accent)",
             }}
           >
             {chapterToDelete.title}
@@ -104,13 +92,17 @@ export default function DeleteChapterModal({
               type="text"
               value={deleteConfirmation}
               onChange={(e) => setDeleteConfirmation(e.target.value)}
-              style={{ padding: "1rem" }}
+              className={styles.deleteConfirmation}
             />
           </p>
           <button type="button" onClick={() => closeDeleteModal()}>
             Cancel
           </button>
-          <button type="submit" disabled={!canDelete}>
+          <button
+            type="submit"
+            disabled={!canDelete}
+            className={styles.deleteButton}
+          >
             Delete
           </button>
         </form>

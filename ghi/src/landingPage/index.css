@@ -1,77 +1,82 @@
 .landing-page {
-    background-color: white;
-    color: black;
-    position: relative;
+  background-color: var(--background-lighter);
+  display: grid;
+  color: black;
+  position: relative;
 }
 
 .landing-page-logo {
-    position: absolute;
-    width: 100px;
-    z-index: 9999;
+  position: absolute;
+  width: 100px;
+  z-index: 9999;
 }
 
 .landing-page-browse-book {
-    right: 1%;
-    top: 10px;
-    width: 100px !important;
+  right: 1%;
+  top: 10px;
+  width: 100px !important;
 }
 
 .landing-page-intro {
-    position: relative;
-    height: 800px;
-    background: url('./Images/LandingPageIntroBackground.png');
-    background-size: cover;
+  position: relative;
+  height: 800px;
+  background: url("./Images/LandingPageIntroBackground.png");
+  background-size: cover;
 }
 
 .landing-page-intro-title {
-    position: absolute;
-    top: 30%;
-    left: 10%;
+  position: absolute;
+  top: 30%;
+  left: 10%;
 }
 
 .landing-page-intro-btn {
-    height: 40px;
-    width: 80px;
-    border-radius: 5px;
-    cursor: pointer;
+  height: 40px;
+  width: 80px;
+  border-radius: 5px;
+  cursor: pointer;
+  border: none;
+  background: var(--primary);
+  color: var(--background-lighter);
 }
 
 .sign-in {
-    border: 0px;
-    background-color: transparent;
+  border: 0px;
+  background-color: transparent;
+  color: var(--text);
 }
 
 .landing-page-intro-description {
-    text-align: center;
-    width: 50%;
-    margin: 0 auto;
-    padding: 30px;
-    font-size: 30px;
-    margin-top: 50px;
-    margin-bottom: 50px;
+  text-align: center;
+  width: 50%;
+  margin: 0 auto;
+  padding: 30px;
+  font-size: 30px;
+  margin-top: 50px;
+  margin-bottom: 50px;
 }
 
 .landing-page-break-line {
-    border: 1px solid black;
+  border: 1px solid black;
 }
 
 .landing-page-feature {
-    background-color: #BFD1F8;
+  background-color: #bfd1f8;
 }
 
 .landing-page-feature-title {
-    text-align: center;
-    padding-top: 30px;
+  text-align: center;
+  padding-top: 30px;
 }
 
 .landing-page-feature-title h1 {
-    margin: 0;
+  margin: 0;
 }
 
 .landing-page-feature-detail {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    max-width: 1000px;
-    margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  max-width: 1000px;
+  margin: 0 auto;
 }

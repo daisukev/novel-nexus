@@ -80,9 +80,12 @@ const SearchCard = ({ book }) => {
         </h2>
         <address>
           by{" "}
-          {book.first_name || book.last_name
-            ? `${book.first_name} ${book.last_name}`
-            : book.username}
+          <Link to={`/authors/${book.username}`}>
+            {book.first_name || book.last_name
+              ? (book.author_first_name !== null ? book.first_name : "") +
+                (book.last_name !== null ? " " + book.last_name : "")
+              : book.username}
+          </Link>
         </address>
         <div className={styles.genresContainer}>
           {book.genres.map((genre) => {

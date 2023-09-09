@@ -8,3 +8,47 @@
   font-style: oblique;
   text-align: right;
 }
+
+.editButton {
+  background: transparent;
+  border: none;
+  font-size: 1.25rem;
+}
+
+.editButton:hover {
+  cursor: pointer;
+}
+
+.titleEditor {
+  margin-block: 1rem;
+  border: 2px solid var(--secondary);
+}
+
+.title {
+  margin-block: 1rem;
+}
+
+.publishedSection {
+  font-size: 1rem;
+  height: 2.1rem;
+  display: flex;
+  gap: 0.5rem;
+}
+.publishedSection i {
+  font-size: 1.9rem;
+}
+
+.publishButton {
+  min-width: 5rem;
+  height: 1.8rem;
+  background: none;
+  border: none;
+  background: var(--secondary);
+  color: var(--background-lighter);
+}
+.publishButton:hover {
+  cursor: pointer;
+}
+.publishButton:active {
+  transform: translate(1px, 1px);
+}

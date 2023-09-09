@@ -148,6 +148,7 @@ function BookDetailWorkspace() {
         {/* <h1>{book.title}</h1> */}
         {!chapterId && <BookDetailsEditor book={book} fetchBook={fetchBook} />}
         <ChaptersContext.Provider value={{ fetchChapters }}>
+          {chapterId && <h1 className={styles.bookTitle}>{book.title}</h1>}
           <Outlet />
         </ChaptersContext.Provider>
         {deleteModal && (

@@ -8,25 +8,11 @@ import ChapterList from "./components/ChapterList";
 import useToken from "../../jwt.tsx";
 
 function BookDetail() {
-  const { token, fetchWithToken } = useToken();
   const [book, setBook] = useState({});
   const [author, setAuthor] = useState({});
   const [chapterList, setChapterList] = useState([]);
   const { bookId } = useParams();
 
-  const fetchReadHistory = async () => {
-    const url = `${process.env.REACT_APP_API_HOST}/api/my/history`;
-    try {
-      const { read_history } = await fetchWithToken(url);
-      // console.log(read_history);
-    } catch (e) {
-      console.error(e);
-    }
-  };
-
-  useEffect(() => {
-    if (token) fetchReadHistory();
-  }, [token]);
   useEffect(() => {
     if (book) {
       (async () => {

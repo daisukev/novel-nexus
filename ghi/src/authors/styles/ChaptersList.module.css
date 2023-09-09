@@ -44,3 +44,31 @@
   background: var(--background-darker);
   filter: brightness(80%);
 }
+
+.buttons {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.buttons button:hover {
+  cursor: pointer;
+  filter: saturate(120%) brightness(110%);
+}
+.buttons button:active {
+  transform: translate(1px, 1px);
+  filter: saturate(80%) brightness(80%);
+}
+
+.updateButton {
+  border: none;
+  background: none;
+  color: var(--success-color);
+  font-size: 2rem;
+}
+
+.resetButton {
+  font-size: 2rem;
+  background: none;
+  border: none;
+  color: var(--error-color);
+}

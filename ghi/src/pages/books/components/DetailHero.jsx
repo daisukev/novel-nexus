@@ -33,7 +33,7 @@ const DetailHero = ({ book, author, children }) => {
       <section className={styles.bookInfo}>
         <address>
           by{" "}
-          <Link to={`/profile/view/${author.username}`}>
+          <Link to={`/authors/${author.username}`}>
             {author.first_name || author.lastname
               ? `${author.first_name} ${author.last_name}`
               : author.username}

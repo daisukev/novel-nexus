@@ -3,8 +3,11 @@ import useToken from "../jwt.tsx";
 import { useNavigate } from "react-router-dom";
 import styles from "./styles/SignupForm.module.css";
 import Nav from "../pages/Nav/Nav";
+import { useMessageContext } from "../MessageContext";
+
 export default function SignupForm() {
   const navigate = useNavigate();
+  const { createMessage, MESSAGE_TYPES } = useMessageContext();
   const { register, token } = useToken();
   const [formData, setFormData] = useState({
     username: "",
@@ -16,7 +19,14 @@ export default function SignupForm() {
 
   useEffect(() => {
     if (token) {
-      navigate("/home");
+      createMessage(
+        "Created user! Redirecting...",
+        MESSAGE_TYPES.SUCCESS,
+        2500
+      );
+      setTimeout(() => {
+        navigate("/home");
+      }, 1500);
     }
   }, [token]);
 

@@ -43,7 +43,6 @@ function AvatarUpload() {
     }
   };
   const handleImageUpload = async (event) => {
-    console.log("here");
     const file = event.target.files[0];
     const formData = new FormData();
     formData.append("image", file);
@@ -59,11 +58,9 @@ function AvatarUpload() {
           },
         }
       );
-      console.log(response);
 
       if (response.ok) {
         const imageResponse = await response.json();
-        console.log(imageResponse);
         fetchLoggedInUser();
       } else {
         console.error("Image upload failed");

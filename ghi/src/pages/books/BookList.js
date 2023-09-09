@@ -50,52 +50,6 @@ function BookList() {
               return <BookCard key={book.id + book.title} book={book} />;
             })}
           </div>
-          {/* <div className="banner"> */}
-          {/*   <div> */}
-          {/*     <Link className="book-list-search" to="/books/search"> */}
-          {/*       Search... */}
-          {/*     </Link> */}
-          {/*   </div> */}
-          {/*   <div className="banner-content"> */}
-          {/*     <h1 className="book-list-h1-header">Ultimate Books</h1> */}
-          {/*     <h2>Explore knowledge</h2> */}
-          {/*     <p className="book-list-banner-paragraph"> */}
-          {/*       Lorem ipsum dolor sit amet, consectetur adipiscing elitmpor */}
-          {/*     </p> */}
-          {/*     <p className="book-list-banner-paragraph"> */}
-          {/*       Consectetur adipiscing elitmpor, ipsum dolor sit amet. */}
-          {/*     </p> */}
-          {/*     <button className="browse-button">Browse</button> */}
-          {/*   </div> */}
-          {/*   <div className="book-3d-wrapper"> */}
-          {/*     <div className="book-3d"></div> */}
-          {/*   </div> */}
-          {/* </div> */}
-          {/*   {bookList && */}
-          {/*     bookList.map((genre) => ( */}
-          {/*       <div key={genre.id} className="genre-container"> */}
-          {/*         <div className="genre-header"> */}
-          {/*           <h2 className="book-list-h2-header">{genre.name}</h2> */}
-          {/*           <a href={`/genre/${genre.name}`} className="browse-link"> */}
-          {/*             Browse */}
-          {/*           </a> */}
-          {/*         </div> */}
-          {/*         <div className="books-preview"> */}
-          {/*           {genre.books.map((book) => ( */}
-          {/*             <div key={book.id} className="book-card-on-listBook"> */}
-          {/*               <Link to={`/books/${book.id}`}> */}
-          {/*                 <img */}
-          {/*                   src={book.cover} */}
-          {/*                   alt={book.title} */}
-          {/*                   className="bookCoverOnListBook" */}
-          {/*                 /> */}
-          {/*               </Link> */}
-          {/*               <h3 className="book-title">{book.title}</h3> */}
-          {/*             </div> */}
-          {/*           ))} */}
-          {/*         </div> */}
-          {/*       </div> */}
-          {/*     ))} */}
         </div>
       </div>
     </>

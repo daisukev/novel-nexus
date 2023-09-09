@@ -13,7 +13,7 @@ export default function Logout() {
     }
     setTimeout(() => {
       navigate("/");
-    }, 2000);
+    }, 1000);
   }, [token, logout]);
 
   return (

@@ -21,9 +21,14 @@ const BookCard = ({ book }) => {
         </h2>
         <address className={styles.author}>
           By{" "}
-          <Link href={`/profile/view/${book.author_username}`}>
+          <Link to={`/authors/${book.author_username}`}>
             {book.author_first_name || book.author_last_name
-              ? `${book.author_first_name} ${book.author_last_name}`
+              ? (book.author_first_name !== null
+                  ? book.author_first_name
+                  : "") +
+                (book.author_last_name !== null
+                  ? " " + book.author_last_name
+                  : "")
               : book.author_username}
           </Link>
         </address>

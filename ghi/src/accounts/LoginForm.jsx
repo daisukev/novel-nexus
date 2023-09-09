@@ -2,10 +2,12 @@ import { useEffect, useState } from "react";
 import useToken from "../jwt.tsx";
 import styles from "./styles/LoginForm.module.css";
 
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams, Link } from "react-router-dom";
 import Nav from "../pages/Nav/Nav";
+import { useMessageContext } from "../MessageContext";
 
 export default function LoginForm() {
+  const { createMessage, MESSAGE_TYPES } = useMessageContext();
   const navigate = useNavigate();
   const [message, setMessage] = useState("");
   const { login, token, logout } = useToken();
@@ -47,6 +49,11 @@ export default function LoginForm() {
       <div className={styles.container}>
         <div className={styles.loginForm}>
           <h1>Login</h1>
+
+          <p>
+            Not currently a user?{" "}
+            <Link to="/accounts/signup">Sign up here!</Link>{" "}
+          </p>
           <form onSubmit={handleSubmit}>
             <div>
               <label htmlFor="username">username:</label>
@@ -56,7 +63,7 @@ export default function LoginForm() {
                 name="username"
                 onChange={handleChange}
                 value={formData.username}
-                authofocus
+                autofocus
               />
             </div>
 

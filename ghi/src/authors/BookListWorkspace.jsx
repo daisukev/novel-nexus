@@ -75,16 +75,24 @@ function BookListWorkspace() {
       <div className={styles.bookListWorkspace}>
         <h1>Workspace</h1>
         <h2>My Books</h2>
-        <form onSubmit={addBook}>
-          <label htmlFor="title">Book Title:</label>
+        <form onSubmit={addBook} className={styles.bookForm}>
+          <label htmlFor="title" hidden>
+            Book Title:
+          </label>
           <input
             name="title"
             placeholder="Enter Title"
             type="text"
             value={bookTitle}
             onChange={(e) => setBookTitle(e.target.value)}
+            className={styles.titleInput}
           />
-          <button type="submit">Add Book</button>
+          <button
+            type="submit"
+            className={`${styles.button} ${styles.addButton}`}
+          >
+            Add Book
+          </button>
         </form>
         <BookList books={books} fetchBooks={fetchBooks} />
       </div>
@@ -106,13 +114,7 @@ function BookList({ books, fetchBooks }) {
   };
 
   return (
-    <div
-      style={{
-        display: "grid",
-        gridTemplateColumns: "  repeat( auto-fill, minmax(300px, 1fr) )",
-        gap: "1rem",
-      }}
-    >
+    <div className={styles.gridContainer}>
       {books?.map((book) => {
         return (
           <BookCard
@@ -136,64 +138,37 @@ function BookList({ books, fetchBooks }) {
 function BookCard({ book, openDeleteModal }) {
   const [imgError, setImgError] = useState(false);
   return (
-    <div
-      style={{
-        border: "1px solid black",
-        borderRadius: "5px",
-        margin: "0.5rem",
-        display: "grid",
-        gridTemplateColumns: "auto 1fr",
-        overflow: "hidden",
-      }}
-    >
-      <div
-        style={{
-          display: "flex",
-          width: "120px",
-          aspectRatio: "2/3",
-          overflow: "hidden",
-          position: "relative",
-          background: "lightgrey",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
-        <Link
-          to={`/my/workspace/books/${book.id}`}
-          style={{
-            textDecoration: "none",
-            textAlign: "center",
-            color: "#333",
-            fontWeight: "bold",
-            fontSize: "0.8rem",
-          }}
-        >
-          {book.cover && !imgError ? (
-            <img
-              src={book.cover}
-              onError={() => setImgError(true)}
-              alt={book.title}
-              style={{
-                position: "absolute",
-                top: 0,
-                left: 0,
-                width: "100%",
-                height: "100%",
-                objectFit: "cover",
-              }}
-            />
-          ) : (
-            <span>{book.title}</span>
-          )}
-        </Link>
-      </div>
-      <div style={{ paddingInline: "0.25rem", overflow: "hidden" }}>
-        <h3>{book.title}</h3>
-        <Link to={`/my/workspace/books/${book.id}`}>Edit {book.title}</Link>
-        <p>Published? {book.is_published ? "Yes" : "No"}</p>
-        <button type="button" onClick={() => openDeleteModal(book)}>
-          Delete
-        </button>
+    <div className={styles.bookCard}>
+      <Link to={`/my/workspace/books/${book.id}`} className={styles.bookImg}>
+        {book.cover && !imgError ? (
+          <img
+            src={book.cover}
+            onError={() => setImgError(true)}
+            alt={book.title}
+          />
+        ) : (
+          <span>{book.title}</span>
+        )}
+      </Link>
+      <div className={styles.cardContent}>
+        <div className={styles.titleContainer}>
+          <h3 className={styles.cardH3}> {book.title}</h3>
+        </div>
+        <p>Book Status: {book.is_published ? "Published" : "Unpublished"}</p>
+        <div className={styles.buttons}>
+          <button
+            type="button"
+            onClick={() => openDeleteModal(book)}
+            className={`${styles.deleteButton} ${styles.button}`}
+          >
+            Delete
+          </button>
+          <Link to={`/my/workspace/books/${book.id}`}>
+            <button className={`${styles.editButton} ${styles.button}`}>
+              Edit{" "}
+            </button>
+          </Link>
+        </div>
       </div>
     </div>
   );
@@ -270,6 +245,7 @@ function DeleteBookModal({ closeDeleteModal, bookToDelete, fetchBooks }) {
           justifyItems: "center",
           padding: "2rem",
         }}
+        className={styles.modal}
         onClick={(e) => e.stopPropagation()}
       >
         <form onSubmit={deleteBook}>
@@ -295,31 +271,25 @@ function DeleteBookModal({ closeDeleteModal, bookToDelete, fetchBooks }) {
               type="text"
               value={deleteConfirmation}
               onChange={(e) => setDeleteConfirmation(e.target.value)}
-              style={{ padding: "1rem" }}
+              className={styles.deleteConfirm}
             />
           </p>
-          <button
-            type="button"
-            onClick={() => closeDeleteModal()}
-            style={{
-              paddingBlock: "0.25rem",
-              paddingInline: "0.75rem",
-            }}
-          >
-            Cancel
-          </button>
-          <button
-            type="submit"
-            disabled={!canDelete}
-            style={{
-              background: "var(--error-color)",
-              color: "var(--background-lighter)",
-              paddingBlock: "0.25rem",
-              paddingInline: "0.75rem",
-            }}
-          >
-            Delete
-          </button>
+          <div className={styles.buttons}>
+            <button
+              type="button"
+              onClick={() => closeDeleteModal()}
+              className={styles.cancelButton}
+            >
+              Cancel
+            </button>
+            <button
+              type="submit"
+              disabled={!canDelete}
+              className={styles.deleteButton}
+            >
+              Delete
+            </button>
+          </div>
         </form>
       </div>
     </div>

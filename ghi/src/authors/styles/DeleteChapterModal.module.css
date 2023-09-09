@@ -1,0 +1,42 @@
+.modalBackground {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
+  background: rgba(0, 0, 0, 0.8);
+  display: grid;
+  align-items: center;
+  justify-items: center;
+}
+
+.deleteConfirmation {
+  margin-block: 1rem;
+  font-size: 1rem;
+  padding: 1rem;
+}
+
+.deleteConfirmation:focus {
+  border: 2px solid var(--secondary);
+}
+.deleteConfirmation > * > button {
+  padding-block: 0.25rem;
+  padding-inline: 0.75rem;
+  border: none;
+  font-size: 0.9rem;
+  height: 2rem;
+  min-width: 5rem;
+}
+
+.cancelButton {
+  background: var(--secondary);
+  color: var(--background);
+}
+
+.deleteButton {
+  background: var(--error-color);
+  color: var(--background-lighter);
+}
+.deleteButton:hover {
+  cursor: pointer;
+}

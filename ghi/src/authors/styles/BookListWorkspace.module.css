@@ -1,11 +1,168 @@
 .bookListWorkspace {
-  padding-top: 5rem;
+  padding: 5rem;
   background: var(--background);
-  padding-inline: 5rem;
 }
 
 .container {
   height: 100%;
   min-height: 100vh;
   background: var(--background);
+}
+
+.gridContainer {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1rem;
+}
+
+.bookCard {
+  width: 325px;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  border: 1px solid var(--background-slightly-darker);
+  overflow: hidden;
+}
+
+.titleContainer {
+  overflow: hidden;
+}
+.cardH3 {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.cardContent {
+  display: grid;
+  grid-template-rows: 3fr 1fr auto;
+  padding: 0.5rem;
+  height: 180px;
+}
+
+.bookForm {
+  padding-block: 1rem;
+  font-size: 1rem;
+  display: flex;
+  gap: 1rem;
+}
+.addButton {
+  background: var(--primary);
+  color: var(--background-lighter);
+}
+
+.titleInput {
+  height: 2rem;
+  width: 9rem;
+  font-size: 1rem;
+  padding: 0.5rem;
+  border: 2px solid var(--secondary);
+  transition: width 0.3s ease;
+}
+.titleInput:focus {
+  background: var(--background-lighter);
+  width: 12rem;
+}
+
+.bookImg {
+  width: 120px;
+  position: relative;
+  text-decoration: none;
+  background: var(--background-slightly-darker);
+  color: var(--text);
+  aspect-ratio: 6/9;
+  padding: 0.25rem;
+  overflow: hidden;
+}
+
+.cardContent h3 {
+  display: -webkit-box;
+}
+
+.bookImg span {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 7;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.bookImg img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.buttons {
+  display: flex;
+  gap: 1rem;
+}
+
+.buttons button {
+  padding-block: 0.25rem;
+  padding-inline: 0.75rem;
+  border: none;
+  font-size: 0.9rem;
+  height: 2rem;
+  min-width: 5rem;
+}
+
+.button {
+  padding-block: 0.25rem;
+  padding-inline: 0.75rem;
+  border: none;
+  font-size: 0.9rem;
+  height: 2rem;
+  min-width: 5rem;
+}
+
+.button:hover {
+  cursor: pointer;
+}
+
+.button:active {
+  transform: translate(1px, 1px);
+}
+
+.editButton {
+  background: var(--secondary);
+  color: var(--background-lighter);
+}
+
+.buttons button:active {
+  transform: translate(1px, 1px);
+}
+
+.cancelButton {
+  background: var(--secondary);
+  color: var(--background);
+}
+
+.deleteConfirm {
+  font-size: 1rem;
+  margin-block: 1rem;
+  border: 2px solid var(--background-slightly-darker);
+  padding: 1rem;
+}
+.deleteConfirm:focus {
+  background: var(--background-lighter);
+  border: 2px solid var(--accent);
+}
+
+.deleteButton {
+  background: var(--error-color);
+  color: var(--background-lighter);
+}
+.deleteButton:hover {
+  cursor: pointer;
+}
+
+.deleteButton:disabled,
+.deleteButton:disabled:hover {
+  filter: saturate(50%);
+  cursor: no-drop;
 }

@@ -13,7 +13,7 @@ function UpdateUserInfo({ token }) {
     username: "",
     password: "",
     biography: "",
-    avatar: null,
+    avatar: "",
     first_name: "",
     last_name: "",
     email: "",
@@ -73,7 +73,6 @@ function UpdateUserInfo({ token }) {
           const authorData = await response.json();
           setFormData(authorData);
         } else {
-          console.log("Error fetching author data");
         }
       } catch (error) {
         console.error("An error occurred:", error);
@@ -117,7 +116,7 @@ function UpdateUserInfo({ token }) {
             <TextArea
               className={styles.textArea}
               name="biography"
-              value={formData.biography}
+              value={formData.biography || ""}
               onChange={handleInputChange}
             />
           </div>
@@ -126,7 +125,7 @@ function UpdateUserInfo({ token }) {
             <input
               type="text"
               name="first_name"
-              value={formData.first_name}
+              value={formData.first_name || ""}
               onChange={handleInputChange}
               className="personal-info-input"
             />
@@ -136,7 +135,7 @@ function UpdateUserInfo({ token }) {
             <input
               type="text"
               name="last_name"
-              value={formData.last_name}
+              value={formData.last_name || ""}
               onChange={handleInputChange}
               className="personal-info-input"
             />
@@ -148,7 +147,7 @@ function UpdateUserInfo({ token }) {
             <input
               type="email"
               name="email"
-              value={formData.email}
+              value={formData.email || ""}
               onChange={handleInputChange}
               className="personal-info-input"
             />

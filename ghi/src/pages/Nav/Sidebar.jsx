@@ -1,8 +1,10 @@
 import { NavLink } from "react-router-dom";
 import transparentLogo from "../../transparentlogo.png";
 import styles from "./styles/Sidebar.module.css";
+import useToken from "../../jwt.tsx";
+
 const Sidebar = ({ authenticatedUser, sidebarOpened, closeSidebar }) => {
-  // TODO: small screen -> needs to close sidebar once a link has been clicked.
+  const { token } = useToken();
   return (
     <div className={`${styles.sidebar} ${sidebarOpened && styles.sidebarOpen}`}>
       <nav id="nav" className={styles.nav}>
@@ -36,7 +38,7 @@ const Sidebar = ({ authenticatedUser, sidebarOpened, closeSidebar }) => {
             <NavLink to="/books/genres">Genres</NavLink>
           </li>
 
-          {authenticatedUser && (
+          {token && (
             <>
               <li className="nav-list">
                 <h2 className="username-greet">

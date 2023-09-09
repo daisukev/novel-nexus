@@ -26,9 +26,9 @@
 .bookCover {
   grid-area: 2 / 2 / 4 / 3;
   background-size: cover;
+  background: var(--background-slightly-darker);
   aspect-ratio: 6/9;
   overflow: hidden;
-  /* box-shadow: 8px 8px 12px 12px rgba(50, 50, 50, 0.1); */
   box-shadow: 4px 4px 12px 4px rgb(0 0 0 /0.2);
 }
 .bookCover img {

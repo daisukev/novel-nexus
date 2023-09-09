@@ -54,6 +54,11 @@
   font-weight: 700;
 }
 
+.bookTitle {
+  padding: 1rem;
+  padding-bottom: 0;
+}
+
 @media (min-width: 768px) {
   .bookDetailWorkspace {
     grid-template-columns: 1fr 4fr;

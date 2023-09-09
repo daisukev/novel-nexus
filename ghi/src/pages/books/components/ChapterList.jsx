@@ -10,7 +10,6 @@ const ChapterList = ({ chapterList, book }) => {
     try {
       const { read_history } = await fetchWithToken(url);
       setReadHistory(read_history);
-      // console.log(read_history);
     } catch (e) {
       console.error(e);
     }

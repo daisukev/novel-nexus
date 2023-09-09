@@ -47,12 +47,15 @@ const Recent = () => {
     if (author && areMoreChapters) {
       (async () => {
         try {
-          const chapters = await fetchRecentlyUpdatedChapters(author.id);
-          if (chapters.length < limit) {
-            setAreMoreChapters(false);
+          const authorId = author.id;
+          if (authorId) {
+            const chapters = await fetchRecentlyUpdatedChapters(authorId);
+            if (chapters.length < limit) {
+              setAreMoreChapters(false);
+            }
+            setOffset(chapters.length);
+            setRecentChapters(chapters);
           }
-          setOffset(chapters.length);
-          setRecentChapters(chapters);
         } catch (e) {
           console.error(e);
         }
