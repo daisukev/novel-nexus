@@ -64,7 +64,7 @@ export default function SignupForm() {
 
       if (res.ok) {
         try {
-          login(userData.username, userData.password);
+          await login(userData.username, userData.password);
         } catch (e) {
           createMessage("Could not log in", MESSAGE_TYPES.ERROR);
           setIsPending(false);

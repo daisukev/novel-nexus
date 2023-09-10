@@ -8,6 +8,7 @@ import { useMessageContext } from "../MessageContext";
 
 export default function LoginForm() {
   const { createMessage, MESSAGE_TYPES } = useMessageContext();
+  const [isPending, setIsPending] = useState(false);
   const navigate = useNavigate();
   const [message, setMessage] = useState("");
   const { login, token, logout } = useToken();
@@ -31,11 +32,12 @@ export default function LoginForm() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (token) {
-      logout();
+      await logout();
     }
     try {
       await login(formData.username, formData.password);
     } catch (error) {
+      createMessage("Incorrect username or password.", MESSAGE_TYPES.ERROR);
       setMessage("Incorrect username or password.");
     }
   };
@@ -78,7 +80,9 @@ export default function LoginForm() {
               />
               <span className={styles.error}>{message}</span>
             </div>
-            <button type="submit">Log In</button>
+            <button type="submit" disabled={isPending}>
+              {isPending ? "Pending..." : "Log In"}
+            </button>
           </form>
         </div>
       </div>
