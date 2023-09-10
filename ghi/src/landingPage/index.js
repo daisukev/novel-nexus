@@ -6,77 +6,67 @@ import Feature from "./Feature";
 import featureData from "./Feature/data/feature";
 import Logo from "./Images/Novel-Nexus-Logo.png";
 
-function LandingPage() {
-  return (
-    <div className="landing-page">
-      <Link to="/">
-        <img className="landing-page-logo" src={Logo} alt="logo" />
-      </Link>
-      <Link to="/books">
-        <button className="landing-page-browse-book landing-page-intro-btn landing-page-logo">
-          Browse book
-        </button>
-      </Link>
-      <div className="landing-page-intro">
-        <div className="landing-page-intro-title">
-          <h1 style={{ fontSize: 80 }}>Novel Nexus</h1>
-          <p style={{ fontSize: 30 }}>
-            Your unique literary journey starts here.
-          </p>
-          <Link to="/accounts/signup">
-            <button className="landing-page-intro-btn">Sign up</button>
-          </Link>
-          <Link to="/accounts/login">
-            <button className="landing-page-intro-btn sign-in">Sign in</button>
-          </Link>
+function LandingPage()
+{
+    return (
+        <div className='landing-page'>
+            <div className="landing-page-intro">
+                <Link to='/'>
+                    <img className='landing-page-logo landing-page-main-logo' src={Logo} alt='logo'/>
+                </Link>
+                <Link to='/books'>
+                    <button className='landing-page-browse-book landing-page-intro-btn landing-page-logo'>
+                        Browse book
+                    </button>
+                </Link>
+                <div className='landing-page-intro-title'>
+                    <h1 style={{fontSize: 80}}>Novel Nexus</h1>
+                    <p style={{fontSize: 30}}>Your unique literary journey starts here.</p>
+                    <Link to='/accounts/signup'>
+                        <button className='landing-page-intro-btn landing-page-sign-btn'>Sign up</button>
+                    </Link>
+                    <Link to='/accounts/login'>
+                        <button className='landing-page-intro-btn landing-page-sign-btn sign-in'>Sign in</button>
+                    </Link>
+                </div>
+            </div>
+            <div className='landing-page-break-line'></div>
+            <div className='landing-page-intro-description'>
+                    We'll help you <b>track your reading</b> and <b>discover your next book</b> from new/upcoming authors.
+            </div>
+            <div className='landing-page-break-line'></div>
+            <div className='landing-page-detail'>
+                {
+                    detailData.map((eachData) => {
+                        return (
+                            <Detail isImageFirst={eachData.isImageFirst} icon={eachData.icon } title={eachData.title}
+                            description={eachData.description} detailImg={eachData.img} />
+                        )
+                    })
+                }
+            </div>
+            <div className='landing-page-break-line'></div>
+            <div className='landing-page-feature'>
+                <div className='landing-page-feature-title'>
+                    <h1> A digital reading alternative that supports authors with your support</h1>
+                    <h3>Novel Nexus is your one-stop destination for all your reading needs.</h3>
+                </div>
+                <div className='landing-page-feature-detail'>
+                    {
+                        featureData.map((eachData) => {
+                            return (
+                                <Feature icon={eachData.icon} feature={eachData.feature} details={eachData.details} />
+                            )
+                        })
+                    }
+                </div>
+            </div>
+            <div className='landing-page-break-line'></div>
+            <div className='landing-page-footer'>
+                <p>Ready to get started? let your literary adventure begin now! Click the "Sign Up" button to create your account, or "Sign In" to view the latest stories!</p>
+            </div>
         </div>
-      </div>
-      <div className="landing-page-break-line"></div>
-      <div className="landing-page-intro-description">
-        We'll help you <b>track your reading</b> and{" "}
-        <b>discover your next book</b> from new/upcoming authors.
-      </div>
-      <div className="landing-page-break-line"></div>
-      <div className="landing-page-detail">
-        {detailData.map((eachData) => {
-          return (
-            <Detail
-              isImageFirst={eachData.isImageFirst}
-              icon={eachData.icon}
-              title={eachData.title}
-              description={eachData.description}
-              detailImg={eachData.img}
-            />
-          );
-        })}
-      </div>
-      <div className="landing-page-break-line"></div>
-      <div className="landing-page-feature">
-        <div className="landing-page-feature-title">
-          <h1>
-            {" "}
-            A digital reading alternative that supports authors with your
-            support
-          </h1>
-          <h3>
-            Novel Nexus is your one-stop destination for all your reading needs.
-          </h3>
-        </div>
-        <div className="landing-page-feature-detail">
-          {featureData.map((eachData) => {
-            return (
-              <Feature
-                icon={eachData.icon}
-                feature={eachData.feature}
-                details={eachData.details}
-              />
-            );
-          })}
-        </div>
-      </div>
-      <div className="landing-page-break-line"></div>
-    </div>
-  );
+    );
 }
 
 export default LandingPage;

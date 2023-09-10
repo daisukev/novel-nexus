@@ -11,7 +11,7 @@ function Detail(props) {
                             {props.icon}
                         </div>
                         <h2>{props.title}</h2>
-                        <h5>{props.description}</h5>
+                        <p>{props.description}</p>
                     </div>
                     {!props.isImageFirst ? <img className='detail-image' src={ props.detailImg } alt='a person'/> : <></>}
                 </div>

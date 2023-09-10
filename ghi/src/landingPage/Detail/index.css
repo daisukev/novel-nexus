@@ -13,6 +13,14 @@
     width: 30%;
 }
 
+.detail-description > h2 {
+    font-size: 28px;
+}
+
+.detail-description > p {
+    font-size: 20px;
+}
+
 .detail-image {
     height: 80%;
     border: 1px solid white;

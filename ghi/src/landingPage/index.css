@@ -11,6 +11,10 @@
   z-index: 9999;
 }
 
+.landing-page-main-logo {
+    left: 10px
+}
+
 .landing-page-browse-book {
   right: 1%;
   top: 10px;
@@ -25,19 +29,23 @@
 }
 
 .landing-page-intro-title {
-  position: absolute;
-  top: 30%;
-  left: 10%;
+    position: absolute;
+    top: 35%;
+    left: 10%;
 }
 
 .landing-page-intro-btn {
-  height: 40px;
-  width: 80px;
-  border-radius: 5px;
-  cursor: pointer;
-  border: none;
-  background: var(--primary);
-  color: var(--background-lighter);
+    height: 40px;
+    width: 80px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.landing-page-sign-btn {
+    margin-top: 15px;
+    height: 60px;
+    width: 140px;
+    font-size: 25px;
 }
 
 .sign-in {
@@ -79,4 +87,14 @@
   justify-content: space-between;
   max-width: 1000px;
   margin: 0 auto;
+}
+
+.landing-page-footer {
+    height: 200px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 30px;
+    font-weight: bold;
 }
