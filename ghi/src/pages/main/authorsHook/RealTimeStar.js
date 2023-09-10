@@ -34,15 +34,15 @@ function RealTimeStar() {
                 Followers: 12,345
               </span>
               <span className="author-content margin">
-                Content Published: 56
+                Likes 30K
               </span>
             </div>
             </div>
              <div>
                     <ul className="rising-star-content-list">
-                    <li>Chapter 10 - Building Investment </li>
-                    <li>Chapter 9 - The tic tac toe</li>
-                    <li>Chapter 8 - Stock Learning Process</li>
+                    <li>Chapter 3 - Splashdow</li>
+                    <li>Chapter 2 - Under the Ackee Tree</li>
+                    <li>Chapter 1 - In Flux </li>
                     </ul>
               </div>
                  <Link to={`/authors/${risingAuthor.username}`}>

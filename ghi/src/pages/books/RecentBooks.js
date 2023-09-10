@@ -32,8 +32,8 @@ function RecentBooks() {
   }
 
 
-const booksLimit = bookList.length > 0 ? bookList.slice(0, 6) : [];
-const recentBooks = booksLimit.filter((book) => book.cover).slice(0,6)
+const booksLimit = bookList.length > 0 ? bookList.slice(0, 10) : [];
+const recentBooks = booksLimit.filter((book) => book.cover)
 
 return (
     <>
