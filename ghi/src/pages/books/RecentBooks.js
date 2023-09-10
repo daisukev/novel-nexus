@@ -12,6 +12,7 @@ function RecentBooks() {
 
       if (response.ok) {
         const data = await response.json();
+           setBookList(data);
         return data;
       } else {
         throw new Error("Failed to fetch recent books");
@@ -23,28 +24,23 @@ function RecentBooks() {
   }
 
   useEffect(() => {
-    (async () => {
-      try {
-        const recentBooks = await fetchRecentBooks();
-        setBookList(recentBooks);
-      } catch (e) {
-        console.error(e);
-      }
-    })();
+    fetchRecentBooks()
   }, []);
 
-  if (!bookList) {
-    return null;
+  if (bookList === undefined) {
+    return;
   }
 
 
-  const recentBooksLimit = bookList.slice(0, 6)
-  return (
+const booksLimit = bookList.length > 0 ? bookList.slice(0, 6) : [];
+const recentBooks = booksLimit.filter((book) => book.cover).slice(0,6)
+
+return (
     <>
       <div className="main-recent-books">
         <h1 className="main-recent-books-header">Recent Books</h1>
         <div className="main-recent-books-container">
-            {recentBooksLimit.map((book) => (
+            {recentBooks.map((book) => (
               <div key={book.id} className="recent-img-card">
                   <Link to={`/books/${book.id}`}>
                       <img
@@ -53,18 +49,11 @@ function RecentBooks() {
                         className="recent-book-img"
                       />
                     </Link>
-
-                    <div className="recent-book-title">
-                      <h3 >{book.title}</h3>
-                 </div>
-
-            </div>
+               </div>
             ))}
-
       </div>
-      </div>
-
-    </>
+    </div>
+  </>
   );
 }
 
