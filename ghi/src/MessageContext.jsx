@@ -11,6 +11,7 @@ const MESSAGE_TYPES = {
   ERROR: "ERROR",
   SUCCESS: "SUCCESS",
   INFO: "INFO",
+  CHAPTER_UPDATE: "CHAPTER_UPDATE",
 };
 
 const messageReducer = (state, action) => {
@@ -37,12 +38,13 @@ const MessageProvider = ({ children }) => {
     });
   };
 
-  const createMessage = (text, type, timeout = 5000) => {
+  const createMessage = (text, type, timeout = 5000, href) => {
     dispatch({
       type: MESSAGE_ACTIONS.ADD_MESSAGE,
       payload: {
         text: text,
         type: type,
+        href: href,
         id: window.crypto.randomUUID(),
         timeout: timeout,
       },

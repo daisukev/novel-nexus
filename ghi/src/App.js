@@ -31,6 +31,7 @@ import ReadHistory from "./pages/chapters/ReadHistory";
 import Recent from "./pages/profiles/Recent";
 import AllBooks from "./pages/profiles/AllBooks";
 import Following from "./pages/following";
+import WebSocketClient from "./components/WebSockets";
 
 export const SidebarContext = createContext();
 export const UserContext = createContext();
@@ -142,6 +143,7 @@ function App() {
                   </Route>
                 </Route>
               </Routes>
+              <WebSocketClient />
             </div>
           </SidebarContext.Provider>
           <MessageQueue />

@@ -20,5 +20,4 @@ class GenresQueries:
                         record[column.name] = row[i]
                     results.append(Genre(**record))
 
-                print("genres: ", results)
                 return results

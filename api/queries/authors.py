@@ -80,7 +80,6 @@ class AuthorQueries:
 
                 record = None
                 row = cur.fetchone()
-                print("row: ", row)
                 if row is not None:
                     record = {}
                     for (
@@ -130,7 +129,6 @@ class AuthorQueries:
 
                 record = None
                 row = cur.fetchone()
-                print(row)
                 if row is not None:
                     record = {}
                     for (
@@ -157,7 +155,6 @@ class AuthorQueries:
                     if isinstance(value, HttpUrl):
                         value = str(value)
                     query_list.append(f"{key} = %s")
-                print(update_author)
                 cur.execute(
                     f"""
                     UPDATE authors
@@ -168,7 +165,6 @@ class AuthorQueries:
                     (*update_author.values(), author_id),
                 )
                 row = cur.fetchone()
-                print(row)
                 if row is not None:
                     record = {}
                     for (

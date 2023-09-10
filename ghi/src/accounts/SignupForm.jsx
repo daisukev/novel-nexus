@@ -63,7 +63,6 @@ export default function SignupForm() {
       });
 
       if (res.ok) {
-        console.log(res);
         try {
           login(userData.username, userData.password);
         } catch (e) {

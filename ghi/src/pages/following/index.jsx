@@ -12,7 +12,6 @@ const Following = () => {
     const url = `${process.env.REACT_APP_API_HOST}/api/my/follows`;
     try {
       const { authors } = await fetchWithToken(url);
-      console.log(authors);
       setFollowedAuthors(authors);
     } catch (e) {
       console.error(e);

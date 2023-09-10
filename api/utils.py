@@ -1,7 +1,26 @@
+from typing import Optional
 from fastapi import UploadFile, HTTPException
 import httpx
 from api_pool import pool
 import os
+
+
+connected_authors = {}
+
+
+async def broadcast_to_all_authors(message: str):
+    for id, client in connected_authors.items():
+        set([id for id in connected_authors.keys()])
+        await client.send_json(message)
+
+
+async def broadcast_to_followers(message: str, authors: Optional[list]):
+    for id, client in connected_authors.items():
+        authors_set = set(authors)
+        connected_authors_set = set([id for id in connected_authors.keys()])
+        intersection = authors_set.intersection(connected_authors_set)
+        if id in intersection:
+            await client.send_json(message)
 
 
 def get_book_author(book_id: int) -> int | None:
@@ -16,7 +35,6 @@ def get_book_author(book_id: int) -> int | None:
             )
             row = cur.fetchone()
             if row is not None:
-                print("row: ", row[0])
                 return row[0]
 
 

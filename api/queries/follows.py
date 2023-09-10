@@ -121,3 +121,23 @@ class FollowQueries:
                     return AuthorListOut(authors=results)
                 except Exception as e:
                     print(e)
+
+    def get_followers_ids(self, author_id: int):
+        with pool.connection() as conn:
+            with conn.cursor() as cur:
+                try:
+                    cur.execute(
+                        """
+                    SELECT follower_id
+                    FROM follows
+                    WHERE author_id = %s
+                    """,
+                        (author_id,),
+                    )
+                    results = []
+                    for row in cur.fetchall():
+                        for i, column in enumerate(cur.description):
+                            results.append(row[i])
+                    return results
+                except Exception as e:
+                    print(e)

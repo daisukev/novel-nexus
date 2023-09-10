@@ -1,6 +1,7 @@
 import styles from "./styles/MessageQueue.module.css";
 import { useMessageContext } from "../MessageContext";
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 const MessageQueue = () => {
   const { state, removeMessage, MESSAGE_TYPES } = useMessageContext();
   const [timers, setTimers] = useState({});
@@ -53,6 +54,7 @@ ${shouldFadeOut ? styles.fadeOut : ""}
 `}
     >
       <p>{message.text}</p>
+      {message.href ? <Link to={message.href}>View.</Link> : ""}
       <button
         className={styles.removeButton}
         onClick={() => {

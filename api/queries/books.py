@@ -211,7 +211,6 @@ class BookRepository:
                         for i, column in enumerate(cur.description):
                             record[column.name] = row[i]
                         results.append(BooksAuthorsOut(**record))
-                        print(results[0])
 
                     return results
 
@@ -316,7 +315,6 @@ class BookRepository:
                 # get a cursor (something to run SQL with)
                 with conn.cursor() as db:
                     # Run our SELECT statement
-                    print("query is: ", q)
 
                     db.execute(
                         """

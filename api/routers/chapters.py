@@ -14,7 +14,8 @@ from models.chapters import (
 
 from queries.chapters import ChapterQueries
 from authenticator import authenticator
-from utils import get_book_author
+from queries.follows import FollowQueries
+from utils import broadcast_to_followers, get_book_author
 from psycopg.errors import ForeignKeyViolation
 
 router = APIRouter()
@@ -133,11 +134,12 @@ def get_all_chapters_by_book_id(
     tags=["Chapters"],
     response_model=ChapterOut,
 )
-def update_chapter(
+async def update_chapter(
     book_id: int,
     chapter_id: int,
     chapter: ChapterUpdate,
     queries: ChapterQueries = Depends(),
+    follow_queries: FollowQueries = Depends(),
     account_data: dict = Depends(authenticator.get_current_account_data),
 ):
     book_author = get_book_author(book_id)
@@ -147,7 +149,22 @@ def update_chapter(
             detail="You do not have permission to update this chapter.",
         )
     try:
-        return queries.update_chapter(chapter_id, chapter)
+        chapter = queries.update_chapter(chapter_id, chapter)
+        if chapter.is_published:
+            author_follows = follow_queries.get_followers_ids(
+                account_data["id"]
+            )
+            await broadcast_to_followers(
+                {
+                    "type": "CHAPTER",
+                    "message": f"{account_data['username']}"
+                    f" published {chapter.title}",
+                    "chapter_id": f"{chapter.id}",
+                    "book_id": f"{chapter.book_id}",
+                },
+                author_follows,
+            )
+        return chapter
     except Exception as e:
         print(e)
         raise HTTPException(

@@ -1,4 +1,4 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, WebSocket, WebSocketDisconnect
 from fastapi.middleware.cors import CORSMiddleware
 from routers import (
     authors,
@@ -11,6 +11,8 @@ from routers import (
 )
 from authenticator import authenticator
 import os
+from jose import jwt
+from utils import connected_authors
 
 app = FastAPI()
 
@@ -22,6 +24,24 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+
+@app.websocket("/ws")
+async def chapter_update_followers(websocket: WebSocket, token: str):
+    await websocket.accept()
+    user_jwt = jwt.decode(
+        token, os.environ["SIGNING_KEY"], algorithms=["HS256"]
+    )
+    account = user_jwt["account"]
+    print(f"{account['username']} connected")
+    connected_authors[account["id"]] = websocket
+    try:
+        while True:
+            message = await websocket.receive_text()
+            await websocket.send_json(message)
+    except WebSocketDisconnect:
+        del connected_authors[account["id"]]
+        print("Client Disconnected.")
 
 
 @app.get("/api/launch-details")

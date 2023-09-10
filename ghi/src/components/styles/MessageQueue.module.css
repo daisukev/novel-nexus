@@ -5,6 +5,10 @@
   overflow: hidden;
 }
 
+.messageQueue a {
+  text-decoration: underline;
+}
+
 .message {
   position: absolute;
   margin: 1rem;

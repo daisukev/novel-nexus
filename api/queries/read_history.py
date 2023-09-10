@@ -93,7 +93,6 @@ class ReadHistoryQueries:
                         record[column.name] = row[i]
                     results.append(AuthorReadHistory(**record))
 
-                print("read_history: ", results)
                 return results
 
     def get_book_view_count(self, book_id: int):
