@@ -92,6 +92,9 @@ html {
 }
 
 @media screen and (max-width: 768px) {
+  .banner-video {
+    display: none;
+  }
   .main-banner-container {
     height: auto;
     padding: 20px;
@@ -104,7 +107,6 @@ html {
   .first-img {
     display: none;
   }
-
   .main-banner-content,
   .main-banner-visual {
     width: 90%;
