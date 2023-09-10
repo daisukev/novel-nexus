@@ -1,7 +1,7 @@
 .header {
   background: hsl(36, 28%, 93%);
   overflow: hidden;
-  padding-inline: 5rem;
+  padding-inline: 1rem;
   padding-top: 1rem;
   padding-bottom: 1rem;
   display: flex;
@@ -177,4 +177,3 @@
 /*     gap: 0.5rem; */
 /*   } */
 /* } */
-

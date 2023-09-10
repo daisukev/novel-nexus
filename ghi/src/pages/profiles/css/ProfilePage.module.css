@@ -1,146 +1,4 @@
 .container {
-  --margin-top: 5rem;
-  height: 100%;
-}
-.profilePage {
-}
-.header {
-  display: grid;
-  flex-direction: row;
-  grid-template-columns: 5fr 2fr;
-  justify-content: space-between;
-  align-items: flex-end;
-  padding-inline: 5rem;
-  min-height: 18rem;
-  height: 30vh;
-  max-height: 300px;
-  background: var(--background-slightly-darker);
-}
-
-.profilePage h1 {
-  font-size: 4rem;
-  transform: translateY(1.5rem);
-}
-
-.avatarContainer {
-  --avatar-size: 18rem;
-  justify-self: center;
-  border-radius: 50%;
-  height: var(--avatar-size);
-  width: var(--avatar-size);
-  background: var(--background-lighter);
-  transform: translateY(calc(var(--avatar-size) / 2));
-  overflow: hidden;
-  border: 6px solid var(--background-lighter);
-  box-shadow: 4px 4px 4px 2px rgb(0 0 0 /0.1);
-}
-
-.avatarContainer img {
-  height: 100%;
-  width: 100%;
-  object-fit: cover;
-}
-
-.content h2 {
-  font-size: 2rem;
-}
-
-.content {
-  display: grid;
-  grid-template-columns: 5fr 2fr;
-  grid-template-rows: auto auto 1fr;
-  padding-inline: 5rem;
-  padding-top: 5rem;
-}
-
-.tabs {
-  display: flex;
-  grid-area: 1/1;
-  gap: 2rem;
-  font-size: 1.3rem;
-  border-bottom: 1px solid var(--background-slightly-darker);
-}
-
-.tabs a.active {
-  position: relative;
-}
-
-.tabs a {
-  position: relative;
-  transition: 0.3s;
-}
-
-.tabs a::before {
-  content: "";
-  z-index: 3;
-  position: absolute;
-  width: calc(100% + 1rem);
-  height: 4px;
-  border-radius: 4px;
-  background-color: var(--accent);
-  bottom: 0;
-  left: 0;
-  transform-origin: right;
-  transform: scaleX(0);
-  transition: transform 0.2s ease-in-out;
-}
-
-.tabs a:hover::before {
-  transform-origin: left;
-  transform: scaleX(1);
-}
-
-.tabs a::after {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  content: "";
-  width: 0;
-  background: var(--secondary);
-  height: 4px;
-}
-
-.tabs a.active::after {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  content: "";
-  width: calc(100% + 1rem);
-  background: var(--background-slightly-darker);
-  height: 4px;
-}
-
-.sidebar {
-  display: grid;
-  place-items: center;
-  grid-area: 1/2 / span 2 / span 1;
-  justify-self: center;
-  border: 1px solid var(--background-slightly-darker);
-  min-width: 18rem;
-  max-width: 18rem;
-  margin-top: -5rem;
-  padding: 1.5rem;
-  padding-top: 10rem;
-  box-shadow: 4px 4px 4px 2px rgb(0 0 0 /0.1);
-  background: var(--background);
-  border-radius: 10px;
-  min-height: 400px;
-  margin-bottom: 3rem;
-}
-
-.sidebar h2 {
-  text-align: center;
-  margin-block: 1rem;
-}
-
-.sidebar p {
-  font-size: 0.9rem;
-  line-height: 1.5;
-}
-
-.outlet {
-  grid-area: 2/1 / span 2 / span 1;
-  width: 100%;
 }
 
 .followButton {
@@ -161,4 +19,176 @@
 .followButton:active {
   background: var(--primary);
   transform: translate(1px, 1px);
+}
+.header {
+  padding-block: 1rem;
+}
+.avatarContainer {
+  width: 100%;
+  overflow: hidden;
+}
+.profilePage h1 {
+  text-align: center;
+  font-size: 6vw;
+}
+.avatarContainer img {
+  width: 100%;
+}
+.tabs {
+  padding-top: 2rem;
+  grid-row: 2;
+  display: flex;
+  gap: 2rem;
+  font-size: 1.3rem;
+  border-bottom: 1px solid var(--background-slightly-darker);
+}
+
+.content {
+  padding: 1rem;
+  display: grid;
+}
+@media (min-width: 1200px) {
+  .container {
+    --margin-top: 5rem;
+    height: 100%;
+  }
+  .header {
+    display: grid;
+    flex-direction: row;
+    grid-template-columns: 5fr 2fr;
+    justify-content: space-between;
+    align-items: flex-end;
+    padding-inline: 5rem;
+    min-height: 18rem;
+    height: 30vh;
+    max-height: 300px;
+    background: var(--background-slightly-darker);
+  }
+
+  .profilePage h1 {
+    font-size: 4rem;
+    transform: translateY(1.5rem);
+  }
+
+  .avatarContainer {
+    --avatar-size: 18rem;
+    justify-self: center;
+    border-radius: 50%;
+    height: var(--avatar-size);
+    width: var(--avatar-size);
+    background: var(--background-lighter);
+    transform: translateY(calc(var(--avatar-size) / 2));
+    overflow: hidden;
+    border: 6px solid var(--background-lighter);
+    box-shadow: 4px 4px 4px 2px rgb(0 0 0 /0.1);
+  }
+
+  .avatarContainer img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+  }
+
+  .content h2 {
+    font-size: 2rem;
+  }
+
+  .content {
+    display: grid;
+    grid-template-columns: 5fr 2fr;
+    grid-template-rows: auto auto 1fr;
+    padding-inline: 5rem;
+    padding-top: 5rem;
+  }
+
+  .tabs {
+    padding-top: initial;
+    display: flex;
+    grid-area: 1/1;
+    gap: 2rem;
+    font-size: 1.3rem;
+    border-bottom: 1px solid var(--background-slightly-darker);
+  }
+
+  .tabs a.active {
+    position: relative;
+  }
+
+  .tabs a {
+    position: relative;
+    transition: 0.3s;
+  }
+
+  .tabs a::before {
+    content: "";
+    z-index: 3;
+    position: absolute;
+    width: calc(100% + 1rem);
+    height: 4px;
+    border-radius: 4px;
+    background-color: var(--accent);
+    bottom: 0;
+    left: 0;
+    transform-origin: right;
+    transform: scaleX(0);
+    transition: transform 0.2s ease-in-out;
+  }
+
+  .tabs a:hover::before {
+    transform-origin: left;
+    transform: scaleX(1);
+  }
+
+  .tabs a::after {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    content: "";
+    width: 0;
+    background: var(--secondary);
+    height: 4px;
+  }
+
+  .tabs a.active::after {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    content: "";
+    width: calc(100% + 1rem);
+    background: var(--background-slightly-darker);
+    height: 4px;
+  }
+
+  .sidebar {
+    display: grid;
+    place-items: center;
+    grid-area: 1/2 / span 2 / span 1;
+    justify-self: center;
+    border: 1px solid var(--background-slightly-darker);
+    min-width: 18rem;
+    max-width: 18rem;
+    margin-top: -5rem;
+    padding: 1.5rem;
+    padding-top: 10rem;
+    box-shadow: 4px 4px 4px 2px rgb(0 0 0 /0.1);
+    background: var(--background);
+    border-radius: 10px;
+    min-height: 400px;
+    margin-bottom: 3rem;
+  }
+
+  .sidebar h2 {
+    text-align: center;
+    margin-block: 1rem;
+  }
+
+  .sidebar p {
+    font-size: 0.9rem;
+    line-height: 1.5;
+  }
+
+  .outlet {
+    grid-area: 2/1 / span 2 / span 1;
+    width: 100%;
+  }
 }

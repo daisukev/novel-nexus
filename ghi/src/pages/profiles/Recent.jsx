@@ -73,7 +73,7 @@ const Recent = () => {
           <div>
             <strong>Chapter Title</strong>
           </div>
-          <div>
+          <div className={styles.updatedAt}>
             <strong>Updated Date</strong>
           </div>
         </div>
@@ -91,7 +91,9 @@ const Recent = () => {
             >
               {chapter.chapter_title}
             </Link>
-            <div>{new Date(chapter.updated_at).toLocaleDateString()}</div>
+            <div className={styles.updatedAt}>
+              {new Date(chapter.updated_at).toLocaleDateString()}
+            </div>
           </div>
         );
       })}

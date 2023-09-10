@@ -3,7 +3,7 @@
   background: var(--background);
   font-family: var(--serif-font);
   color: var(--text);
-  grid-template-columns: 1fr;
+  grid-template-columns: auto auto auto;
   min-height: 100vh;
   height: auto;
   padding-bottom: 6rem;
@@ -31,7 +31,6 @@
 
 .chapterContent {
   writing-mode: horizontal-tb;
-  width: 100%;
   max-width: 65ch;
   line-height: 1.9;
   margin-bottom: 7rem;
@@ -97,7 +96,7 @@
   text-decoration-color: var(--accent);
 }
 
-@media (min-width: 768px) {
+@media (min-width: 1024px) {
   .navContainer {
     display: grid;
     grid-template-columns: 1fr;
@@ -111,7 +110,7 @@
     border-bottom: 5px solid hsl(36, 13%, 85%);
   }
   .chapterView {
-    grid-template-columns: 1fr minmax(75ch, auto) 1fr;
+    grid-template-columns: 1fr minmax(45ch, 100%) 1fr;
   }
   .chapterContainer {
     grid-column: 2;

@@ -1,14 +1,27 @@
 .bookList {
-  padding-inline: 5rem;
+  padding-inline: 1rem;
   padding-bottom: 5rem;
 }
 
 .sectionHeader {
-  margin-block: 3rem;
+  margin-block: 1rem;
 }
 
 .bookListContainer {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(min(400px, 100%), 1fr));
+  display: flex;
+  flex-direction: column;
   gap: 3rem;
+}
+@media (min-width: 768px) {
+  .sectionHeader {
+    margin-block: 3rem;
+  }
+  .bookList {
+    padding-inline: 5rem;
+    padding-bottom: 5rem;
+  }
+  .bookListContainer {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(400px, 100%), 1fr));
+  }
 }

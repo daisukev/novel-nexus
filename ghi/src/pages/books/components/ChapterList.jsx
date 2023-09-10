@@ -51,7 +51,9 @@ const ChapterList = ({ chapterList, book }) => {
             >
               {chapter.title}
             </Link>
-            <span>{new Date(chapter.created_at).toLocaleDateString()}</span>
+            <span className={styles.date}>
+              {new Date(chapter.created_at).toLocaleDateString()}
+            </span>
             <Link
               to={`/books/${book.id}/chapters/${chapter.id}`}
               className={styles.readNowButton}

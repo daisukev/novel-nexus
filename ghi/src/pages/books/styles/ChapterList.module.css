@@ -1,62 +1,97 @@
+.bookImage {
+  display: none;
+}
+
+.date {
+  display: none;
+}
+
 .chapterList {
-  padding-block: 3rem;
+  padding-block: 2rem;
 }
 
 .chapterListRow {
-  font-size: 1.25rem;
   display: grid;
-  grid-template-columns: 35px 35px 1fr auto auto 50px;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
+  grid-template-columns: auto 1fr auto 25px;
   width: 100%;
   border-bottom: 1px dotted var(--background-slightly-darker);
-  gap: 1rem;
 }
 
-.chapterListRow a {
-}
-.header {
-  font-size: 1rem;
-  color: var(--secondary);
-}
-
-.chapterListRow:hover {
-  background: var(--background);
-}
-
-.bookImage {
-  aspect-ratio: 6/9;
-  width: 35px;
-}
-
-.chapterTitle {
-  display: block;
-  display: grid;
-  align-items: center;
-  height: 100%;
-  flex-grow: 1;
-  overflow: hidden;
-  white-space: wrap;
-  text-overflow: ellipsis;
+.chapterListRow * {
+  padding: 0.5rem;
 }
 
 .readNowButton {
-  text-align: center;
-  background: var(--primary);
-  color: var(--background-lighter);
-  font-size: 1rem;
-  padding-inline: 1rem;
-  padding-block: 0.25rem;
+  display: none;
 }
 
-.readNowButton:hover {
-  cursor: pointer;
-  background: hsl(222, 36%, 43%);
-}
+@media (min-width: 1200px) {
+  .date {
+    display: initial;
+  }
+  .chapterList {
+    padding-block: 3rem;
+  }
 
-.updateButton {
-  border: none;
-  background: var(--success-color);
-  color: var(--background-lighter);
+  .chapterListRow {
+    font-size: 1.25rem;
+    display: grid;
+    grid-template-columns: 35px 35px 1fr auto auto 50px;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    gap: 1rem;
+  }
+
+  .chapterListRow a {
+  }
+  .header {
+    font-size: 1rem;
+    color: var(--secondary);
+  }
+
+  .chapterListRow:hover {
+    background: var(--background);
+  }
+
+  .bookImage {
+    display: initial;
+    aspect-ratio: 6/9;
+    width: 35px;
+  }
+
+  .chapterTitle {
+    display: block;
+    display: grid;
+    align-items: center;
+    height: 100%;
+    flex-grow: 1;
+    overflow: hidden;
+    white-space: wrap;
+    text-overflow: ellipsis;
+  }
+
+  .updateButton {
+    border: none;
+    background: var(--success-color);
+    color: var(--background-lighter);
+  }
+
+  .readNowButton {
+    height: 2rem;
+    display: inline-block;
+    place-content: center;
+    text-align: center;
+    background: var(--primary);
+    color: var(--background-lighter);
+    font-size: 1rem;
+    padding-inline: 1rem;
+    padding-block: 0.25rem;
+  }
+
+  .readNowButton:hover {
+    cursor: pointer;
+    background: hsl(222, 36%, 43%);
+  }
 }

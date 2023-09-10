@@ -142,7 +142,7 @@ function Profile({ authenticatedUser }) {
             </NavLink>
           </div>
           <div className={styles.sidebar}>
-            {user.id !== author?.id && (
+            {user.id !== author?.id && token && (
               <button className={styles.followButton} onClick={toggleFollow}>
                 {isFollowing ? "Unfollow" : "Follow"}
               </button>

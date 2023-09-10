@@ -81,7 +81,7 @@
 @media (min-width: 768px) {
   .sidebarOpen {
     position: static;
-    width: 325px;
+    width: 275px;
   }
   .nav ul li {
     align-self: initial;
