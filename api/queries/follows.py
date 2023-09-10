@@ -2,6 +2,7 @@ import os
 from typing import List, Union
 
 from fastapi import HTTPException
+from models.authors import AuthorListOut, AuthorOut
 from models.follows import FollowRequest
 from psycopg_pool import ConnectionPool
 
@@ -94,3 +95,29 @@ class FollowQueries:
         except Exception as e:
             print(f"Error while unfollowing {e}")
             return False
+
+    def get_followed_authors(self, follower_id: int) -> AuthorListOut:
+        with pool.connection() as conn:
+            with conn.cursor() as cur:
+                try:
+                    cur.execute(
+                        """SELECT a.id, a.username,
+                        a.biography, a.avatar,
+                        a.first_name,
+                        a.last_name from follows f
+                        JOIN authors a ON f.author_id = a.id
+                        WHERE f.follower_id= %s
+                        ORDER BY a.username ASC;
+                        """,
+                        (follower_id,),
+                    )
+                    results = []
+                    for row in cur.fetchall():
+                        record = {}
+                        for i, column in enumerate(cur.description):
+                            record[column.name] = row[i]
+                        results.append(AuthorOut(**record))
+
+                    return AuthorListOut(authors=results)
+                except Exception as e:
+                    print(e)

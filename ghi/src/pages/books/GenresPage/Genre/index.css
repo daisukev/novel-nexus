@@ -1,11 +1,35 @@
 .genre-box {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: 1px solid black;
-    border-radius: 10px;
-    width: 135px;
-    height: 135px;
-    text-align: center;
-    color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid black;
+  border-radius: 10px;
+  width: 135px;
+  height: 135px;
+  text-align: center;
+  color: white;
+  position: relative;
+  transition: box-shadow 0.3s ease;
+  z-index: 1;
+}
+
+.genre-box p {
+  z-index: 3;
+}
+
+.genre-box::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.3);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 2;
+}
+
+.genre-box:hover::before {
+  opacity: 1;
 }

@@ -1,18 +1,18 @@
 .genres {
-    padding: 50px;
-    background-color: d8bfd8;
+  padding: 50px;
+  background-color: d8bfd8;
 }
 
 .genres-title {
-    text-align: center;
-    margin-top: 20px;
+  text-align: center;
+  margin-top: 20px;
 }
 
 .genre-display {
-    margin-top: 30px;
-    display: grid;
-    grid-template-columns: repeat(5, 150px);
-    justify-content: center;
-    align-items: center;
-    grid-gap: 10px;
+  margin-top: 30px;
+  display: grid;
+  grid-template-columns: repeat(5, 150px);
+  justify-content: center;
+  align-items: center;
+  grid-gap: 10px;
 }

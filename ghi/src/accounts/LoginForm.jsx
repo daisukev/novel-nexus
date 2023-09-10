@@ -63,7 +63,7 @@ export default function LoginForm() {
                 name="username"
                 onChange={handleChange}
                 value={formData.username}
-                autofocus
+                autoFocus
               />
             </div>
 

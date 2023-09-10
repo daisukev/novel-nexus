@@ -25,7 +25,7 @@ export default function ChapterEditor() {
   const { fetchWithToken, token } = useToken();
   const editor = useEditor({
     extensions: [StarterKit, Typography],
-    autofocus: true,
+    autoFocus: true,
     injectCSS: false,
     content: content,
     onUpdate: ({ editor }) => {

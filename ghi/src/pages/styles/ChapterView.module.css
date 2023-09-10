@@ -6,6 +6,7 @@
   grid-template-columns: 1fr;
   min-height: 100vh;
   height: auto;
+  padding-bottom: 6rem;
 }
 .chapterTitle {
   text-align: center;

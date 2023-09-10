@@ -55,6 +55,7 @@ html {
 }
 
 .main-banner-btn:hover {
+  cursor: pointer;
   background-color: #8e44ad;
   color: white;
   transform: scale(1.05);

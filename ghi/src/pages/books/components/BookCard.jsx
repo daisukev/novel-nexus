@@ -8,9 +8,14 @@ const BookCard = ({ book }) => {
       <Link
         to={`/books/${book.id}`}
         className={styles.bookCover}
-        style={{ backgroundImage: `url(${book.cover})` }}
+        // style={{ backgroundImage: `url(${book.cover})` }}
       >
         {!book.cover && book.title}
+        {book.cover !== null ? (
+          <img src={book.cover} alt={book.title} loading="lazy" />
+        ) : (
+          ""
+        )}
       </Link>
       <div className={styles.container}></div>
       <div className={styles.content}>

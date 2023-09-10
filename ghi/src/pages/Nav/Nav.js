@@ -7,23 +7,17 @@ import Avatar from "./Avatar";
 import useToken from "../../jwt.tsx";
 
 function Nav() {
-  const navigate = useNavigate();
   const location = useLocation();
   const { token } = useToken();
-  const { openSidebar, sidebarOpened } = useContext(SidebarContext);
+  const { openSidebar, sidebarOpened, closeSidebar } =
+    useContext(SidebarContext);
   const { user } = useContext(UserContext);
-  const [query, setQuery] = useState("");
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    navigate(`/books/search?q=${query}`);
-  };
 
   return (
     <>
       <header className={styles.header}>
         {!sidebarOpened && (
-          <>
+          <div className={styles.logoBurger}>
             <div>
               <button
                 type="button"
@@ -47,23 +41,9 @@ function Nav() {
                 </h1>
               </NavLink>
             </div>
-          </>
+          </div>
         )}
-        <form onSubmit={handleSubmit} className={styles.searchBar}>
-          <input
-            type="text"
-            name="q"
-            placeholder="Search for books"
-            value={query}
-            onChange={(e) => {
-              setQuery(e.target.value);
-            }}
-            className={styles.searchInput}
-          />
-          <button className={styles.searchButton}>
-            <i className="ri-search-line" />
-          </button>
-        </form>
+        <Search />
         {token ? (
           <div className={styles.sideLinks}>
             <NavLink to="/accounts/logout">Log Out</NavLink>
@@ -74,7 +54,9 @@ function Nav() {
             <NavLink to={`/accounts/login/?prev=${location.pathname}`}>
               Log In
             </NavLink>
-            <NavLink to="/accounts/signup">Sign Up</NavLink>
+            <NavLink to="/accounts/signup" className={styles.sideLinks}>
+              Sign Up
+            </NavLink>
           </div>
         )}
       </header>
@@ -83,3 +65,31 @@ function Nav() {
 }
 
 export default Nav;
+
+export const Search = () => {
+  const navigate = useNavigate();
+  const [query, setQuery] = useState("");
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    navigate(`/books/search?q=${query}`);
+  };
+
+  return (
+    <form onSubmit={handleSubmit} className={styles.searchBar}>
+      <input
+        type="text"
+        name="q"
+        placeholder="Search for books"
+        value={query}
+        onChange={(e) => {
+          setQuery(e.target.value);
+        }}
+        className={styles.searchInput}
+      />
+      <button className={styles.searchButton}>
+        <i className="ri-search-line" />
+      </button>
+    </form>
+  );
+};

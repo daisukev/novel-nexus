@@ -13,7 +13,7 @@ function TopBooks() {
 
       if (response.ok) {
         const data = await response.json();
-        setBookList(data.slice(0, 3));
+        if (data.message !== "") setBookList(data.slice(0, 3));
       } else {
         throw new Error("Failed to fetch top books");
       }

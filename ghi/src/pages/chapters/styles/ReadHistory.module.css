@@ -3,6 +3,18 @@
   padding-inline: 5rem;
 }
 
+.cover {
+  aspect-ratio: 6/9;
+  overflow: hidden;
+  position: relative;
+}
+.cover img {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
 .readHistoryTable {
   width: 100%;
   margin-block: 2rem;
@@ -24,7 +36,7 @@
 }
 
 tr:nth-child(even) {
-  background: var(--background-slightly-darker);
+  background: var(--background-darker);
 }
 
 .readHistoryTable button {

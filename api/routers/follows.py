@@ -1,3 +1,4 @@
+from models.authors import AuthorListOut
 from models.follows import FollowRequest, FollowedList
 from models.follows import FollowResponse, UnfollowResponse
 from fastapi import APIRouter, Depends, HTTPException
@@ -89,3 +90,12 @@ def unfollow_author(
     success = queries.unfollow_author(follower_id, author_id)
 
     return {"is_not_following": success}
+
+
+@router.get("/api/my/follows", tags=["Follow"], response_model=AuthorListOut)
+def get_followed_authors(
+    account_data: dict = Depends(authenticator.get_current_account_data),
+    queries: FollowQueries = Depends(),
+):
+    follower_id = account_data["id"]
+    return queries.get_followed_authors(follower_id)

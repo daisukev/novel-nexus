@@ -5,12 +5,12 @@ import { UserContext } from "../../../App";
 import { useMessageContext } from "../../../MessageContext";
 
 function AvatarUpload() {
-  const { createMessage, MESSAGE_TYPES } = useMessageContext();
   const { fetchLoggedInUser, user } = useContext(UserContext);
-  const { token, fetchWithToken } = useToken();
+  const { createMessage, MESSAGE_TYPES } = useMessageContext();
+  const { fetchWithToken } = useToken();
+  const [prevImage, setPrevImage] = useState(null);
   const [selectedImage, setSelectedImage] = useState(null);
   const fileInputRef = useRef(null);
-  const [prevImage, setPrevImage] = useState(null);
 
   useEffect(() => {
     if (user.avatar) {
@@ -27,72 +27,41 @@ function AvatarUpload() {
     const options = {
       body: formData,
     };
-    const headers = {
-      // "Content-Type": "multipart/form-data",
-    };
+    const headers = {};
 
     try {
       const data = await fetchWithToken(url, "POST", headers, options);
       createMessage("Updated profile avatar.", MESSAGE_TYPES.SUCCESS);
+      setPrevImage(data.href);
       fetchLoggedInUser();
-      // setPrevImage(data.href);
     } catch (e) {
       console.error(e);
       createMessage("Could not update profile avatar.", MESSAGE_TYPES.ERROR);
       setSelectedImage(null);
     }
   };
-  const handleImageUpload = async (event) => {
-    const file = event.target.files[0];
-    const formData = new FormData();
-    formData.append("image", file);
-
-    try {
-      const response = await fetch(
-        `${process.env.REACT_APP_API_HOST}/api/authors/avatar`,
-        {
-          method: "POST",
-          body: formData,
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-
-      if (response.ok) {
-        const imageResponse = await response.json();
-        fetchLoggedInUser();
-      } else {
-        console.error("Image upload failed");
-      }
-    } catch (error) {
-      console.error("Error uploading image:", error);
-    }
-  };
 
   return (
     <>
-      <div className="profile-image-container">
+      <div
+        className="profile-image-container"
+        onClick={() => fileInputRef.current.click()}
+      >
+        Upload Photo
         <img
           src={selectedImage ? URL.createObjectURL(selectedImage) : prevImage}
           alt={user.username}
         />
-        <button
-          className="profile-image-label"
-          style={{ opacity: prevImage ? 0 : 1 }}
-          onClick={() => fileInputRef.current.click()}
-        >
-          Select Image
-        </button>
         <input
-          ref={fileInputRef}
           type="file"
+          hidden
+          name="image"
+          ref={fileInputRef}
           id="profileImageInput"
-          accept="image/*"
+          accept="image/png,image/jpeg"
           onChange={(e) => {
             imageChangeHandler(e);
           }}
-          style={{ display: "none" }}
         />
       </div>
     </>

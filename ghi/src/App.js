@@ -30,6 +30,7 @@ import { fetchAuthor } from "./actions";
 import ReadHistory from "./pages/chapters/ReadHistory";
 import Recent from "./pages/profiles/Recent";
 import AllBooks from "./pages/profiles/AllBooks";
+import Following from "./pages/following";
 
 export const SidebarContext = createContext();
 export const UserContext = createContext();
@@ -81,11 +82,16 @@ function App() {
             <div className={styles.main}>
               <Routes>
                 <Route path="*" element={<NoMatch />} />
-                <Route index element={<LandingPage />} />
+                {token ? (
+                  <Route index element={<Home token={token} user={user} />} />
+                ) : (
+                  <Route index element={<LandingPage />} />
+                )}
                 <Route
                   path="/home"
                   element={<Home token={token} user={user} />}
                 />
+                <Route path="/following" element={<Following />} />
                 <Route path="my">
                   <Route
                     path="settings/:author_id"

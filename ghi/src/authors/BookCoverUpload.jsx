@@ -3,7 +3,6 @@ import styles from "./styles/BookCoverUpload.module.css";
 import useToken from "../jwt.tsx";
 import { useMessageContext } from "../MessageContext";
 
-// TODO: loading indicators... success indicator.
 const BookCoverUpload = ({ book }) => {
   const { createMessage, MESSAGE_TYPES } = useMessageContext();
   const { token, fetchWithToken } = useToken();
@@ -55,15 +54,15 @@ const BookCoverUpload = ({ book }) => {
             alt={book.title}
           />
           <div className={styles.hoverIndicator}></div>
+          <input
+            type="file"
+            hidden
+            name="image"
+            ref={imgRef}
+            accept="image/png,image/jpeg"
+            onChange={(e) => imageChangeHandler(e)}
+          />
         </div>
-        <input
-          type="file"
-          hidden
-          name="image"
-          ref={imgRef}
-          accept="image/png,image/jpeg"
-          onChange={(e) => imageChangeHandler(e)}
-        />
       </>
     );
 };

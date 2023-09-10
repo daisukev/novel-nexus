@@ -14,16 +14,18 @@ const Avatar = () => {
     return (
       <div className={styles.side}>
         <Link to={`/authors/${user.username}`}>{user.username}</Link>
-        <div
-          className={styles.avatar}
-          styles={{ backgroundImage: `url${backup}${user.username}` }}
-        >
-          <img
-            src={user.avatar ? user.avatar : ""}
-            alt={`${user.username}`}
-            onError={handleError}
-          />
-        </div>
+        <Link to={`/authors/${user.username}`}>
+          <div
+            className={styles.avatar}
+            styles={{ backgroundImage: `url${backup}${user.username}` }}
+          >
+            <img
+              src={user.avatar ? user.avatar : ""}
+              alt={`${user.username}`}
+              onError={handleError}
+            />
+          </div>
+        </Link>
       </div>
     );
 };

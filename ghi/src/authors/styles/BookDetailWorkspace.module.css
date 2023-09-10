@@ -53,6 +53,13 @@
   background: transparent;
   font-weight: 700;
 }
+.addChapterButton:hover {
+  cursor: pointer;
+}
+
+.addChapterButton:active {
+  transform: translate(1px, 1px);
+}
 
 .bookTitle {
   padding: 1rem;

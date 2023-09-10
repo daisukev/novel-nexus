@@ -34,8 +34,9 @@ const DetailHero = ({ book, author, children }) => {
         <address>
           by{" "}
           <Link to={`/authors/${author.username}`}>
-            {author.first_name || author.lastname
-              ? `${author.first_name} ${author.last_name}`
+            {author.first_name || author.last_name
+              ? (author.first_name !== null ? author.first_name : "") +
+                (author.last_name !== null ? " " + author.last_name : "")
               : author.username}
           </Link>
         </address>

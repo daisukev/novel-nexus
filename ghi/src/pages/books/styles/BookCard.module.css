@@ -31,6 +31,13 @@
   place-items: center;
   padding: 0.25rem;
   text-align: center;
+  position: relative;
+}
+
+.bookCover img {
+  position: absolute;
+  height: 100%;
+  width: 100%;
 }
 
 .titleLink {

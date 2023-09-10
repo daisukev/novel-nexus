@@ -10,9 +10,12 @@
 }
 .nav ul {
   padding-top: 2rem;
-  display: flex;
-  flex-direction: column;
   gap: 0.5rem;
+  display: grid;
+}
+
+.nav ul > li > * {
+  text-align: center;
 }
 
 .sidebar {
@@ -24,9 +27,14 @@
   transition: width 80ms cubic-bezier(0.1, -0.6, 0.2, 0);
 }
 
+.sidebarLink {
+  width: 100%;
+}
+
 .sidebarHeader {
   display: flex;
-  justify-content: space-around;
+
+  justify-content: space-between;
 }
 
 .closeButton {
@@ -38,6 +46,10 @@
 }
 
 .sidebarOpen {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
   padding-inline: 1rem;
   padding-top: 0.5rem;
   width: 100%;
@@ -66,8 +78,19 @@
   text-decoration-color: var(--accent);
 }
 
-@media (min-width: 600px) {
+@media (min-width: 768px) {
   .sidebarOpen {
+    position: static;
     width: 325px;
+  }
+  .nav ul li {
+    align-self: initial;
+  }
+  .nav ul > li > * {
+    text-align: initial;
+  }
+
+  .sidebarHeader {
+    justify-content: space-around;
   }
 }

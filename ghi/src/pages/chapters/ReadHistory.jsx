@@ -64,11 +64,13 @@ const ReadHistory = () => {
               return (
                 <tr key={item.book_title + item.chapter_id}>
                   <td>
-                    <img
-                      src={item.book_cover}
-                      height="50px"
-                      alt={item.book_title}
-                    />
+                    <div className={styles.cover}>
+                      <img
+                        src={item.book_cover}
+                        alt={item.book_title}
+                        loading="lazy"
+                      />
+                    </div>
                   </td>
                   <td>
                     <Link to={`/books/${item.book_id}`}>{item.book_title}</Link>

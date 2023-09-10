@@ -5,19 +5,8 @@ import detailData from "./Detail/data/detail";
 import Feature from "./Feature";
 import featureData from "./Feature/data/feature";
 import Logo from "./Images/Novel-Nexus-Logo.png";
-import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
-import useToken from "../jwt.tsx";
 
 function LandingPage() {
-  const { token } = useToken();
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    if (token) {
-      navigate("/home");
-    }
-  }, [token]);
   return (
     <div className="landing-page">
       <Link to="/">
