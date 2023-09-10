@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "../css/settings.css";
-import  "../css/settings.module.css";
+import "../css/settings.module.css";
 import AvatarUpload from "./AvatarUpload";
 import UpdateUserInfo from "./UpdateUserInfo";
 import Nav from "../../Nav/Nav";

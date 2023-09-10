@@ -7,8 +7,9 @@ import { useMessageContext } from "../MessageContext";
 
 export default function SignupForm() {
   const navigate = useNavigate();
+  const [isPending, setIsPending] = useState(false);
   const { createMessage, MESSAGE_TYPES } = useMessageContext();
-  const { register, token } = useToken();
+  const { token, login } = useToken();
   const [formData, setFormData] = useState({
     username: "",
     password: "",
@@ -32,13 +33,16 @@ export default function SignupForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsPending(true);
     if (!formData.confirmPassword || !formData.password || !formData.username) {
       setShowError(true);
+      setIsPending(false);
       setErrorMesage("You must fill out all fields.");
       return;
     }
     if (formData.confirmPassword !== formData.password) {
       setShowError(true);
+      setIsPending(false);
       setErrorMesage("Passwords must match!");
       return;
     }
@@ -48,10 +52,32 @@ export default function SignupForm() {
       password: formData.password,
     };
 
-    const url = `${process.env.REACT_APP_API_HOST}/api/authors`;
-    register(userData, url);
+    try {
+      const url = `${process.env.REACT_APP_API_HOST}/api/authors`;
+      const res = await fetch(url, {
+        method: "POST",
+        body: JSON.stringify(userData),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
 
-    // navigate to home page
+      if (res.ok) {
+        console.log(res);
+        try {
+          login(userData.username, userData.password);
+        } catch (e) {
+          createMessage("Could not log in", MESSAGE_TYPES.ERROR);
+          setIsPending(false);
+        }
+      } else {
+        throw new Error("Could not create user account.");
+      }
+    } catch (e) {
+      // console.error(e);
+      setIsPending(false);
+      createMessage(e.message, MESSAGE_TYPES.ERROR);
+    }
   };
 
   useEffect(() => {
@@ -107,7 +133,9 @@ export default function SignupForm() {
               />
               {showError && passwordMismatch}
             </div>
-            <button type="submit">Submit</button>
+            <button type="submit" disabled={isPending}>
+              {isPending ? "Pending..." : "Submit"}
+            </button>
           </form>
         </div>
       </div>
