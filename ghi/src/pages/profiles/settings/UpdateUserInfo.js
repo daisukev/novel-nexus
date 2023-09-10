@@ -13,7 +13,6 @@ function UpdateUserInfo({ token }) {
     username: "",
     password: "",
     biography: "",
-    avatar: "",
     first_name: "",
     last_name: "",
     email: "",
