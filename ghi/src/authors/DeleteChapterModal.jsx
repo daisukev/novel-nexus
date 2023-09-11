@@ -95,16 +95,23 @@ export default function DeleteChapterModal({
               className={styles.deleteConfirmation}
             />
           </p>
-          <button type="button" onClick={() => closeDeleteModal()}>
-            Cancel
-          </button>
-          <button
-            type="submit"
-            disabled={!canDelete}
-            className={styles.deleteButton}
-          >
-            Delete
-          </button>
+
+          <div className={styles.buttons}>
+            <button
+              type="button"
+              onClick={() => closeDeleteModal()}
+              className={styles.cancelButton}
+            >
+              Cancel
+            </button>
+            <button
+              type="submit"
+              disabled={!canDelete}
+              className={styles.deleteButton}
+            >
+              Delete
+            </button>
+          </div>
         </form>
       </div>
     </div>

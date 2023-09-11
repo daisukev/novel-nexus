@@ -1,17 +1,7 @@
 .container {
   display: grid;
-  place-items: center;
-  padding: 5rem;
+  padding: 1rem;
 }
-.signupForm {
-  border: 1px solid var(--secondary);
-  padding: 5rem;
-  display: grid;
-  padding: 2rem;
-  width: 500px;
-  box-shadow: 4px 4px 8px 2px rgba(50, 50, 50, 0.1);
-}
-
 .signupForm input {
   border: 2px solid transparent;
   height: 2rem;
@@ -45,4 +35,18 @@
 
 .error {
   color: var(--error-color);
+}
+@media (min-width: 768px) {
+  .container {
+    place-items: center;
+    padding: 5rem;
+  }
+  .signupForm {
+    border: 1px solid var(--secondary);
+    padding: 5rem;
+    display: grid;
+    padding: 2rem;
+    width: 500px;
+    box-shadow: 4px 4px 8px 2px rgba(50, 50, 50, 0.1);
+  }
 }

@@ -96,6 +96,7 @@ const Sidebar = ({ authenticatedUser, sidebarOpened, closeSidebar }) => {
               </li>
               <li className="menu-list">
                 <NavLink
+                  onClick={handleNavClick}
                   to={`/my/settings/${authenticatedUser.id}`}
                   className={styles.sidebarLink}
                 >
@@ -112,7 +113,11 @@ const Sidebar = ({ authenticatedUser, sidebarOpened, closeSidebar }) => {
                 </NavLink>
               </li>
               <li className="menu-list">
-                <NavLink to={`/following`} className={styles.sidebarLink}>
+                <NavLink
+                  onClick={handleNavClick}
+                  to={`/following`}
+                  className={styles.sidebarLink}
+                >
                   Following
                 </NavLink>
               </li>

@@ -28,6 +28,21 @@
   min-width: 5rem;
 }
 
+.buttons {
+  display: flex;
+  justify-content: end;
+  gap: 1rem;
+}
+
+.buttons button {
+  padding: 0.5em 1em;
+  border: none;
+  cursor: pointer;
+}
+.buttons button {
+  padding: 0.5em 1em;
+  border: none;
+}
 .cancelButton {
   background: var(--secondary);
   color: var(--background);
@@ -39,4 +54,9 @@
 }
 .deleteButton:hover {
   cursor: pointer;
+}
+.deleteButton:disabled {
+  filter: grayscale(50%) saturate(50%);
+
+  cursor: no-drop;
 }
