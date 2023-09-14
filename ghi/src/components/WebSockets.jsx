@@ -2,7 +2,7 @@ import { useEffect, useReducer } from "react";
 import { useMessageContext } from "../MessageContext";
 import useToken from "../jwt.tsx";
 
-const MESSAGE_TYPES = {
+const WS_MESSAGE_TYPES = {
   CHAPTER: "CHAPTER",
   FOLLOW: "FOLLOW",
 };
@@ -22,9 +22,9 @@ const WebSocketClient = () => {
 
       socket.onmessage = (event) => {
         const message = JSON.parse(event.data);
-        // console.log("Received:", message);
-        switch (message.TYPE) {
-          case MESSAGE_TYPES.CHAPTER:
+        // console.log("Received:", message, "type: ", message.type);
+        switch (message.type) {
+          case WS_MESSAGE_TYPES.CHAPTER:
             createMessage(
               message.message,
               MESSAGE_TYPES.INFO,
@@ -32,8 +32,13 @@ const WebSocketClient = () => {
               `/books/${message.book_id}/chapters/${message.chapter_id}`
             );
             break;
-          case MESSAGE_TYPES.FOLLOW:
-            createMessage(message.message, MESSAGE_TYPES.INFO);
+          case WS_MESSAGE_TYPES.FOLLOW:
+            createMessage(
+              message.message,
+              MESSAGE_TYPES.INFO,
+              5000,
+              `/authors/${message.follower}`
+            );
             break;
           default:
             break;

@@ -2,8 +2,10 @@ from models.authors import AuthorListOut
 from models.follows import FollowRequest, FollowedList
 from models.follows import FollowResponse, UnfollowResponse
 from fastapi import APIRouter, Depends, HTTPException
+from queries.authors import AuthorQueries
 from queries.follows import FollowQueries
 from authenticator import authenticator
+from utils import broadcast_to_user
 
 router = APIRouter()
 
@@ -13,7 +15,7 @@ router = APIRouter()
     tags=["Follow"],
     response_model=FollowResponse,
 )
-def create_follow(
+async def create_follow(
     followee: FollowRequest,
     queries: FollowQueries = Depends(),
     account_data: dict = Depends(authenticator.get_current_account_data),
@@ -26,6 +28,17 @@ def create_follow(
     success = queries.follow(follower_id, author_id)
     if not success:
         raise HTTPException(status_code=500, detail="Following Request Failed")
+
+    author_queries = AuthorQueries()
+    follower = author_queries.get_author_by_id(follower_id)
+    await broadcast_to_user(
+        {
+            "type": "FOLLOW",
+            "message": f"{follower.username} is now following!",
+            "follower": f"{follower.username}",
+        },
+        author_id,
+    )
     return {"is_following": success}
 
 

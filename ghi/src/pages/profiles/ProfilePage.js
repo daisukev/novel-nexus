@@ -140,6 +140,12 @@ function Profile({ authenticatedUser }) {
             >
               All Books
             </NavLink>
+            <NavLink
+              to="chat"
+              className={({ isActive }) => (isActive ? styles.active : "")}
+            >
+              Chat
+            </NavLink>
           </div>
           <div className={styles.sidebar}>
             {user.id !== author?.id && token && (

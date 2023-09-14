@@ -27,7 +27,7 @@ app.add_middleware(
 
 
 @app.websocket("/ws")
-async def chapter_update_followers(websocket: WebSocket, token: str):
+async def ws_updates(websocket: WebSocket, token: str):
     await websocket.accept()
     user_jwt = jwt.decode(
         token, os.environ["SIGNING_KEY"], algorithms=["HS256"]
@@ -38,10 +38,64 @@ async def chapter_update_followers(websocket: WebSocket, token: str):
     try:
         while True:
             message = await websocket.receive_text()
+            print(message)
             await websocket.send_json(message)
     except WebSocketDisconnect:
         del connected_authors[account["id"]]
         print("Client Disconnected.")
+
+
+chatrooms = {}
+
+
+@app.websocket("/chat/{username}")
+async def user_chat(websocket: WebSocket, token: str, username: str):
+    await websocket.accept()
+    user_jwt = jwt.decode(
+        token, os.environ["SIGNING_KEY"], algorithms=["HS256"]
+    )
+    account = user_jwt["account"]
+
+    if username not in chatrooms:
+        chatrooms[username] = {}
+
+    chatrooms[username][account["username"]] = websocket
+    print(f"{account['username']} connected to {username}'s chat'")
+
+    for user in chatrooms[username].values():
+        await user.send_json(
+            {
+                "user": "server",
+                "message": f"<em>{account['username']} has connected.</em>",
+            }
+        )
+
+    try:
+        while True:
+            message = await websocket.receive_text()
+            print(message)
+            for user in chatrooms[username].values():
+                print(account["username"])
+                await user.send_json(
+                    {"user": f"{account['username']}", "message": message}
+                )
+
+    except WebSocketDisconnect as e:
+        del chatrooms[username][account["username"]]
+        if not chatrooms[username]:
+            print("chatroom is empty, deleting.")
+            del chatrooms[username]
+        print(chatrooms)
+
+        for user in chatrooms[username].values():
+            await user.send_json(
+                {
+                    "user": "server",
+                    "message": f"<em>{account['username']}"
+                    f" has disconnected.</em>",
+                }
+            )
+        print(f"WebSocketDisconnect: {str(e)}")
 
 
 @app.get("/api/launch-details")

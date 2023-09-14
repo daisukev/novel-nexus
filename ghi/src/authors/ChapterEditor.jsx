@@ -5,7 +5,6 @@ import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 // https://tiptap.dev/api/extensions/typography
 import Typography from "@tiptap/extension-typography";
-import { useOutletContext } from "react-router-dom";
 import { ChaptersContext } from "./BookDetailWorkspace";
 import { useMessageContext } from "../MessageContext";
 import styles from "./styles/ChapterEditor.module.css";

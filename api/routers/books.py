@@ -1,4 +1,11 @@
-from fastapi import APIRouter, Depends, Response, HTTPException, UploadFile
+from fastapi import (
+    APIRouter,
+    Depends,
+    Query,
+    Response,
+    HTTPException,
+    UploadFile,
+)
 from queries.books import (
     BookInNew,
     BookRepository,
@@ -41,8 +48,17 @@ def create_book(
     tags=["Books"],
     response_model=Union[List[BooksAuthorsOut], Error],
 )
-def get_all(repo: BookRepository = Depends()):
-    return repo.get_all()
+def get_all(
+    limit: int = Query(None, description="Limit to the number of results"),
+    offset: int = Query(
+        None, description="Starting point from where to fetch results"
+    ),
+    repo: BookRepository = Depends(),
+):
+    if limit is None and offset is None:
+        return repo.get_all()
+    else:
+        return repo.get_some_books(limit, offset)
 
 
 @router.get(

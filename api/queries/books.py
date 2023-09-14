@@ -503,3 +503,51 @@ class BookRepository:
                     return results
                 except Exception as e:
                     print(e)
+
+    def get_some_books(
+        self, limit: int = 10, offset: int = 0
+    ) -> Union[Error, List[BooksAuthorsOut]]:
+        try:
+            # connect the database
+            with pool.connection() as conn:
+                # get a cursor (something to run SQL with)
+                with conn.cursor() as cur:
+                    # Run our SELECT statement
+                    cur.execute(
+                        """
+                        SELECT
+                        b.id,
+                        b.title,
+                        b.summary,
+                        b.cover,
+                        b.is_published,
+                        b.created_at,
+                        b.updated_at,
+                        a.id AS author_id,
+                        a.first_name AS author_first_name,
+                        a.last_name AS author_last_name,
+                        a.username AS author_username
+                        FROM
+                        books b
+                        JOIN authors a ON b.author_id = a.id
+                        WHERE
+                        b.is_published = TRUE
+                        ORDER BY
+                        b.title
+                        LIMIT %s OFFSET %s;
+                        """,
+                        [limit, offset],
+                    )
+                    results = []
+                    all = cur.fetchall()
+                    for row in all:
+                        record = {}
+                        for i, column in enumerate(cur.description):
+                            record[column.name] = row[i]
+                        results.append(BooksAuthorsOut(**record))
+
+                    return results
+
+        except Exception as e:
+            print(e)
+            return {"message": "Error at get all books"}

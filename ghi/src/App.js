@@ -32,6 +32,7 @@ import Recent from "./pages/profiles/Recent";
 import AllBooks from "./pages/profiles/AllBooks";
 import Following from "./pages/following";
 import WebSocketClient from "./components/WebSockets";
+import ChatClient from "./pages/profiles/Chat";
 
 export const SidebarContext = createContext();
 export const UserContext = createContext();
@@ -139,6 +140,7 @@ function App() {
                     }
                   >
                     <Route index element={<Recent />} />
+                    <Route path="chat" element={<ChatClient />} />
                     <Route path="all" element={<AllBooks />} />
                   </Route>
                 </Route>

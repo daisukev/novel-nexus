@@ -1,10 +1,9 @@
-import { useEffect, useState } from "react";
+import { forwardRef } from "react";
 import { Link } from "react-router-dom";
-import { fetchAuthor } from "../../../actions";
 import styles from "../styles/BookCard.module.css";
-const BookCard = ({ book }) => {
+const BookCard = forwardRef(function BookCard({ book }, ref) {
   return (
-    <div className={styles.card}>
+    <div className={styles.card} ref={ref}>
       <Link
         to={`/books/${book.id}`}
         className={styles.bookCover}
@@ -46,6 +45,6 @@ const BookCard = ({ book }) => {
       </div>
     </div>
   );
-};
+});
 
 export default BookCard;

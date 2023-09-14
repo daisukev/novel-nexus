@@ -1,0 +1,69 @@
+.container {
+  padding-top: 1rem;
+  display: grid;
+  grid-template-rows: 1fr auto;
+  min-height: 10rem;
+}
+
+.container > * {
+  word-break: break-all;
+}
+.editorContainer {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  place-content: center;
+}
+.chatEditor {
+  margin: 0;
+  padding: 0;
+  max-height: 4rem;
+  padding: 0.25em 0.5em;
+  background: var(--background-darker);
+  border-radius: 0;
+}
+.chatEditor > * {
+  font-family: var(--sans-serif-font);
+}
+
+.sendButton {
+  cursor: pointer;
+  padding: 0.25em 1em;
+  border: none;
+  background: var(--primary);
+  color: var(--background-lighter);
+}
+
+.sendButton:hover {
+  background: var(--primary-lighter);
+}
+
+.sendButton:active {
+  transform: translate(1px, 1px);
+}
+
+.chatContainer {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  grid-template-rows: min-content;
+  place-content: start center;
+  margin-bottom: 0.25rem;
+  background: var(--background-darker);
+  padding: 1rem;
+  width: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.userName {
+  grid-column: 1;
+  padding-right: 0.5rem;
+  font-weight: bold;
+}
+
+.message {
+  grid-column: 2;
+}
+
+.serverMsg {
+  grid-column: 1/-1;
+}
