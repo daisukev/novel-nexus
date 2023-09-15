@@ -39,7 +39,7 @@ function PopularBooks() {
         <h2 className="latest-releases-header">Top Books</h2>
         <div className="latest-releases-container">
           {topList.map((book) => (
-            <div key={book.id} className="release-card">
+            <div key={book.book_id} className="release-card">
               <Link to={`/books/${book.book_id}`}>
                 <img
                   src={book.cover}

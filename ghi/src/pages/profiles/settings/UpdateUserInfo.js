@@ -153,7 +153,7 @@ function UpdateUserInfo({ token }) {
           </div>
           <div className="setting-btn-box">
             <button className="setting-save-btn" type="submit">
-              Update
+              Update Profile
             </button>
           </div>
           {updateSuccess && (
