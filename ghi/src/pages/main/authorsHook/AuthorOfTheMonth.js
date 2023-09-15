@@ -13,7 +13,6 @@ function AuthorOfTheMonth() {
     featuredUsernames.includes(author.username)
   );
 
-  // Check if topAuthor is defined before rendering
   if (!topAuthor) {
     return (
       <div className="top-author-spotlight">
