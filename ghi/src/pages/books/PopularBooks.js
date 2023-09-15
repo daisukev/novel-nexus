@@ -28,9 +28,6 @@ function PopularBooks() {
   }, []);
 
 
-  if (topList === undefined || topList.length === 0) {
-    return <div>Loading or no data available.</div>;
-  }
 
   if (topList === undefined) {
     return;
