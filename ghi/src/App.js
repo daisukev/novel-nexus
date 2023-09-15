@@ -93,6 +93,7 @@ function App() {
                   path="/home"
                   element={<Home token={token} user={user} />}
                 />
+                {/* < SliderComponent /> */}
                 <Route path="/following" element={<Following />} />
                 <Route path="my">
                   <Route
@@ -101,6 +102,7 @@ function App() {
                       <Settings token={token} authenticatedUser={user} />
                     }
                   />
+
                   <Route path="read-history" element={<ReadHistory />} />
                   <Route path="workspace">
                     <Route path="*" element={<NoMatch />} />

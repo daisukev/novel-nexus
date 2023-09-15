@@ -8,14 +8,14 @@ import recent4 from "../images/recent-4.png";
 import recent9 from "../images/recent-9.png";
 import recent10 from "../images/recent-10.png";
 import RecentBooks from "../books/RecentBooks";
-import TopBooks from "../books/TopBooks";
 import Nav from "../Nav/Nav";
 import Footer from "../Nav/Footer";
 import FeaturedAuthor from "./authorsHook/FeaturedAuthor";
 import AuthorOfTheMonth from "./authorsHook/AuthorOfTheMonth";
 import RealTimeStar from "./authorsHook/RealTimeStar";
+import PopularBooks from "../books/PopularBooks";
 
-function Home({ token, user, setRecentBooks }) {
+function Home({ token, user, setRecentBooks, topList }) {
   return (
     <>
       <Nav token={token} authenticatedUser={user} />
@@ -57,7 +57,7 @@ function Home({ token, user, setRecentBooks }) {
       </div>
 
       <div className="render-top-books-list">
-        <TopBooks />
+        <PopularBooks topList={topList} />
       </div>
 
       <div className="render-rising-author">

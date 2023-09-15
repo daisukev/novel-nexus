@@ -15,8 +15,8 @@ from queries.books import (
     Error,
     SearchListOut,
     RecentBooksOut,
-    TopBooksOut,
-    BooksViewOut,
+    PopularBookListOut,
+    PopularBookOut,
 )
 
 from typing import Union, List, Optional
@@ -176,34 +176,22 @@ def get_recent_books(repo: BookRepository = Depends()):
 
 
 @router.get(
-    "/api/track/books/visit", tags=["Books"], response_model=List[BooksViewOut]
+    "/api/popular/books", tags=["Popular"], response_model=PopularBookListOut
 )
-def track_books_view(repo: BookRepository = Depends()):
-    updated_book = repo.book_views_counter()
-    if updated_book:
-        return updated_book
-    else:
-        raise HTTPException(status_code=404, detail="Book not found")
+def get_popular_books(repo: BookRepository = Depends()) -> PopularBookListOut:
+    popular_books = repo.get_popular_books()
+    return PopularBookListOut(popular=popular_books)
 
 
 @router.get(
-    "/api/top/books",
-    tags=["Books"],
-    response_model=Union[List[TopBooksOut], Error],
+    "/api/books/popular/{book_id}/views",
+    tags=["Popular"],
+    response_model=PopularBookOut,
 )
-def get_top_books(limit: int = 3, repo: BookRepository = Depends()):
-    try:
-        top_visited_books = repo.get_top_books(limit=limit)
-
-        if top_visited_books:
-            return top_visited_books
-        else:
-            raise HTTPException(
-                status_code=404, detail="No top visited books found"
-            )
-    except Exception as e:
-        error_message = str(e)
-        return Error(message=error_message)
+def get_book_view_count(
+    book_id: int, queries: BookRepository = Depends()
+) -> PopularBookOut:
+    return queries.get_popular_book_by_book_id(book_id)
 
 
 @router.get(
