@@ -1,6 +1,8 @@
 fastapi[all]==0.92.0
+uvloop==0.17.0
 uvicorn[standard]==0.17.6
 pytest
-psycopg[binary,pool]==3.1.10
+https://files.pythonhosted.org/packages/01/27/89a0024ac7e7f872eccb5785707d4bc2162b8da8cb2fd4202813969a9952/psycopg-3.1.10-py3-none-any.whl
+psycopg-pool==3.1.8
 jwtdown-fastapi==0.5.0
 python-multipart==0.0.5
